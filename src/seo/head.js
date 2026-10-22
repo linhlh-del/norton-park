@@ -1,5 +1,6 @@
-import { SITE, absUrl, notFound, pages } from './site-meta';
+import { LANG_META, SITE, absUrl, hiddenPages, langUrl, notFound, pageMeta, pages } from './site-meta';
 import { structuredData } from './structured-data';
+import { MODIFIED } from './build-date';
 
 /* Mã xác minh Google Search Console (phương thức "Thẻ HTML"): đặt VITE_GSC_VERIFICATION trong .env.production.
    Chỉ chèn khi có giá trị. Có thể xác minh bằng bản ghi DNS thay thế — xem docs/SEO.md. */
@@ -8,11 +9,13 @@ const GSC = import.meta.env?.VITE_GSC_VERIFICATION || '';
 /**
  * Toàn bộ thẻ <head> SEO cho một route, dạng dữ liệu thuần để dùng cả ở trình duyệt (<Seo>) lẫn lúc prerender.
  * Mỗi thẻ có `key` để cập nhật đúng thẻ cũ khi chuyển trang thay vì chèn thêm.
+ * path: đường dẫn tiếng Việt ("/tin-tuc"); lang: "vi" | "en" (bản en nằm ở "/en/tin-tuc").
  */
-export function headFor(path) {
+export function headFor(path, lang = 'vi') {
   const page = pages[path];
-  const p = page || notFound;
-  const url = absUrl(path);
+  const p = pageMeta(page || hiddenPages[path] || notFound, lang);
+  const url = langUrl(path, lang);
+  const other = lang === 'en' ? 'vi' : 'en';
   const image = absUrl(SITE.ogImage);
 
   const meta = [
@@ -20,17 +23,19 @@ export function headFor(path) {
     ['name', 'robots', p.noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'],
     ['property', 'og:type', 'website'],
     ['property', 'og:site_name', SITE.name],
-    ['property', 'og:locale', SITE.locale],
-    ['property', 'og:title', p.title],
-    ['property', 'og:description', p.description],
+    ['property', 'og:locale', LANG_META[lang].locale],
+    page && ['property', 'og:locale:alternate', LANG_META[other].locale],
+    ['property', 'og:title', p.ogTitle || p.title],
+    ['property', 'og:description', p.ogDescription || p.description],
+    page && ['property', 'article:modified_time', `${MODIFIED}T00:00:00+07:00`],
     ['property', 'og:url', url],
     ['property', 'og:image', image],
     ['property', 'og:image:width', '1200'],
     ['property', 'og:image:height', '630'],
     ['property', 'og:image:alt', SITE.ogImageAlt],
     ['name', 'twitter:card', 'summary_large_image'],
-    ['name', 'twitter:title', p.title],
-    ['name', 'twitter:description', p.description],
+    ['name', 'twitter:title', p.ogTitle || p.title],
+    ['name', 'twitter:description', p.ogDescription || p.description],
     ['name', 'twitter:image', image],
     SITE.twitterSite && ['name', 'twitter:site', SITE.twitterSite],
     GSC && ['name', 'google-site-verification', GSC],
@@ -38,11 +43,13 @@ export function headFor(path) {
 
   const links = page ? [
     { tag: 'link', key: 'canonical', attrs: { rel: 'canonical', href: url } },
-    { tag: 'link', key: 'alternate-vi', attrs: { rel: 'alternate', hreflang: 'vi', href: url } },
-    { tag: 'link', key: 'alternate-x', attrs: { rel: 'alternate', hreflang: 'x-default', href: url } },
+    /* hreflang: mỗi bản trỏ tới cả hai bản (kể cả chính nó); x-default = tiếng Việt */
+    { tag: 'link', key: 'alternate-vi', attrs: { rel: 'alternate', hreflang: 'vi', href: langUrl(path, 'vi') } },
+    { tag: 'link', key: 'alternate-en', attrs: { rel: 'alternate', hreflang: 'en', href: langUrl(path, 'en') } },
+    { tag: 'link', key: 'alternate-x', attrs: { rel: 'alternate', hreflang: 'x-default', href: langUrl(path, 'vi') } },
   ] : [];
 
-  return { title: p.title, tags: [...meta, ...links], jsonld: page ? structuredData(path) : null };
+  return { title: p.title, lang, tags: [...meta, ...links], jsonld: page ? structuredData(path, lang) : null };
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -51,8 +58,8 @@ const LS = String.fromCharCode(0x2028), PS = String.fromCharCode(0x2029), BS = S
 export const safeJson = (o) => JSON.stringify(o).replaceAll('<', BS + 'u003c').replaceAll(LS, BS + 'u2028').replaceAll(PS, BS + 'u2029');
 
 /** Chuỗi HTML cho bước prerender */
-export function headHtml(path) {
-  const h = headFor(path);
+export function headHtml(path, lang = 'vi') {
+  const h = headFor(path, lang);
   const tags = h.tags.map((t) => `<${t.tag} data-seo="${esc(t.key)}" ${Object.entries(t.attrs).map(([k, v]) => `${k}="${esc(v)}"`).join(' ')} />`);
   if (h.jsonld) tags.push(`<script type="application/ld+json" data-seo="jsonld">${safeJson(h.jsonld)}</script>`);
   return { title: `<title>${esc(h.title)}</title>`, tags: tags.join('\n    ') };

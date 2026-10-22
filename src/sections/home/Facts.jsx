@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom';
-import { collections, facts } from '@/data/site';
+import { Link, useSite, useT } from '@/i18n';
 import SectionHeading from '@/components/ui/SectionHeading';
 import CountUp from '@/components/motion/CountUp';
-import { FlowerMark } from '@/components/ui/Icons';
+import QuachoMark from '@/components/ui/QuachoMark';
 
 export default function Facts() {
+  const t = useT();
+  const { collections, facts } = useSite();
   return (
     <section id="facts" className="bg-ivory py-section">
       <div className="container-site flex flex-col gap-16">
         <div className="flex flex-col items-center gap-4">
-          <FlowerMark data-reveal="zoom" className="text-bronze-deep" />
-          <SectionHeading align="center" eyebrow="Tổng quan dự án" title="Thông tin và số liệu" />
+          <QuachoMark tone="light" data-reveal="zoom" />
+          <SectionHeading align="center" eyebrow={t('facts.eyebrow')} title={t('facts.title')} />
         </div>
 
         <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(min(100%,13.75rem),1fr))] border-t border-line">
@@ -31,13 +32,13 @@ export default function Facts() {
               {c.units.map((u) => (
                 <Link key={u.name} to="/#residences" className="flex items-baseline justify-between gap-4 border-b border-line py-3.5 text-hoadau no-underline hover:text-bronze-deep">
                   <span className="font-display text-2xl">{u.label}</span>
-                  <span className="font-sub text-[13px] tracking-[0.06em] text-ink-soft"><CountUp value={u.gfa} duration={1200} /></span>
+                  <span className="font-sub text-[13px] tracking-[0.06em] text-ink-soft"><CountUp value={u.gfa} duration={1800} /></span>
                 </Link>
               ))}
             </div>
           ))}
         </div>
-        <p className="m-0 text-[13px] text-ink-soft">*Diện tích sàn căn tiêu biểu</p>
+        <p className="m-0 text-[13px] text-ink-soft">{t('facts.note')}</p>
       </div>
     </section>
   );

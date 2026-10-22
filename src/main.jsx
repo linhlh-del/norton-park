@@ -3,10 +3,11 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App';
 import './lib/trustedTypes'; // tạo policy trước mọi script khác (GTM cần default policy)
 import { initAnalytics } from './lib/analytics';
-import './styles/webfonts';
+import { initCtaFx } from './lib/ctaFx';
 import './styles/index.css';
 
 initAnalytics();
+initCtaFx();
 
 const root = document.getElementById('root');
 const app = (
@@ -19,7 +20,7 @@ const app = (
 const path = location.pathname.replace(/\/+$/, '') || '/';
 const prerendered = root.dataset.route;
 /* dist/404.html được server trả cho mọi URL không tồn tại → khớp trang NotFound phía client */
-if (prerendered && (prerendered === path || prerendered === '/404')) hydrateRoot(root, app);
+if (prerendered && (prerendered === path || prerendered.endsWith('/404'))) hydrateRoot(root, app);
 else {
   root.replaceChildren();
   createRoot(root).render(app);

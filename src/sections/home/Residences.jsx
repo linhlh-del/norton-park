@@ -1,29 +1,32 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { collections } from '@/data/site';
-import Media from '@/components/ui/Media';
+import { Link, useSite, useT } from '@/i18n';
+import FloorPlans from '@/components/ui/FloorPlans';
 import SectionHeading from '@/components/ui/SectionHeading';
 import CountUp from '@/components/motion/CountUp';
 
 export default function Residences() {
+  const t = useT();
+  const { collections, priceTypes } = useSite();
   const [col, setCol] = useState(0);
   const [unitIdx, setUnitIdx] = useState(0);
   const current = collections[col];
   const unit = current.units[unitIdx] || current.units[0];
+  /* nút "Xem giá dự kiến" mở bảng tính giá đúng loại căn đang xem */
+  const typeIdx = Math.max(0, priceTypes.findIndex((p) => p.name === unit.name));
 
   const rows = [
-    ['Phòng', unit.rooms],
-    ['Diện tích sàn', <CountUp value={unit.gfa} duration={900} />],
-    ['Diện tích sử dụng', <CountUp value={unit.nsa} duration={900} />],
-    ['Cảnh quan', unit.view],
+    [t('res.rooms'), unit.rooms],
+    [t('res.gfa'), <CountUp value={unit.gfa} duration={1300} />],
+    [t('res.nsa'), <CountUp value={unit.nsa} duration={1300} />],
+    [t('res.view'), unit.view],
   ];
 
   return (
     <section id="residences" className="bg-cream py-section">
       <div className="container-site flex flex-col gap-10">
-        <SectionHeading eyebrow="Mặt bằng căn hộ" title="Những căn nhà cho nhịp sống hiện đại" />
+        <SectionHeading eyebrow={t('res.eyebrow')} title={t('res.title')} />
 
-        <div data-reveal="up" role="tablist" aria-label="Bộ sưu tập" className="flex flex-wrap gap-x-6">
+        <div data-reveal="up" role="tablist" aria-label={t('res.collections')} className="flex flex-wrap gap-x-6">
           {collections.map((c, i) => (
             <button key={c.key} type="button" role="tab" aria-selected={i === col}
               onClick={() => { setCol(i); setUnitIdx(0); }}
@@ -39,12 +42,11 @@ export default function Residences() {
           ))}
         </div>
 
-        <div role="tabpanel" data-reveal="zoom" className="grid gap-10 rounded-panel bg-ivory p-[clamp(1.25rem,4vw,3rem)] lg:grid-cols-2">
-          <Media key={unit.name} src={unit.code.startsWith('[') ? undefined : `/images/plan-${unit.code.toLowerCase()}.jpg`} label={`Mặt bằng minh hoạ: ${unit.name}`}
-            className="aspect-square rounded-lg border border-line" sizes="(min-width: 1024px) 38vw, 100vw" />
+        <div role="tabpanel" data-reveal="zoom" className="grid gap-10 rounded-panel bg-white p-[clamp(1.25rem,4vw,3rem)] lg:grid-cols-2">
+          <FloorPlans key={unit.name} plans={unit.plans} name={unit.label} />
           <div className="flex flex-col justify-center gap-5">
             <p className="eyebrow text-bronze-deep">{current.title}</p>
-            <p className="eyebrow text-ink-soft">Căn tiêu biểu {unit.code}</p>
+            <p className="eyebrow text-ink-soft">{t('res.typical', { code: unit.code })}</p>
             <h3 className="heading-2">{unit.name}</h3>
             <dl className="m-0 flex flex-col">
               {rows.map(([k, v]) => (
@@ -54,7 +56,10 @@ export default function Residences() {
                 </div>
               ))}
             </dl>
-            <div><Link to="/#register" className="btn btn-solid">Đăng ký quan tâm</Link></div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/#register" className="btn btn-solid" data-track="cta_click" data-track-label="residences_register">{t('cta.registerInterest')}</Link>
+              <Link to={`/bang-tinh-gia?loai=${typeIdx}`} className="btn btn-ghost" data-track="cta_click" data-track-label="residences_price">{t('res.price')} →</Link>
+            </div>
           </div>
         </div>
       </div>

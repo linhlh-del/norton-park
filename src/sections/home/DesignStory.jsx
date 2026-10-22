@@ -1,18 +1,21 @@
-import { images } from '@/data/site';
+import { useSite, useT } from '@/i18n';
 import StoryBackdrop from './StoryBackdrop';
 
 export default function DesignStory() {
+  const t = useT();
+  const { images } = useSite();
   return (
     <StoryBackdrop
       id="design-story"
       image={images.designStory}
-      imageAlt="Phối cảnh các toà tháp Norton Park với đỉnh mái uốn cong như cánh hoa dầu"
-      imageLabel="Ảnh nền: phối cảnh các toà tháp"
-      eyebrow="Nguồn cảm hứng thi vị"
-      title="Vũ khúc hoa trong gió"
+      imageAlt={t('design.imageAlt')}
+      imageLabel={t('design.imageLabel')}
+      eyebrow={t('design.eyebrow')}
+      title={t('design.title')}
+      cta={{ label: t('design.cta'), to: '/#position', track: 'design_story_directions' }}
     >
-      <p className="lead">Cảm hứng đến từ những cánh hoa xoay theo gió, hình ảnh gắn bó với miền đất phương Nam.</p>
-      <p className="lead">Chuyển động ấy được dịch thành ngôn ngữ kiến trúc và cảnh quan, hiện lên trong dáng hình thanh mảnh của từng toà tháp.</p>
+      <p className="lead">{t('design.p1')}</p>
+      <p className="lead">{t('design.p2')}</p>
     </StoryBackdrop>
   );
 }

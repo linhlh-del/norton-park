@@ -1,0 +1,78 @@
+/* ============================================================
+   NÚT NỔI (FloatingButtons.jsx): gọi điện · Zalo · Bảng giá — chuyển động lấy từ bộ nút của Sensa Park.
+   Khai báo trong @theme để dùng dạng class Tailwind: animate-fb-phone-glow, animate-fb-ring-1…
+   ============================================================ */
+@theme {
+  --animate-fb-phone-wobble: fbPhoneWobble 2.2s ease-in-out infinite;
+  --animate-fb-phone-glow: fbPhoneGlow 2.2s ease-in-out infinite;
+  --animate-fb-ring-1: fbRing 2.2s ease-out infinite;
+  --animate-fb-ring-2: fbRing 2.2s ease-out infinite 0.7s;
+  --animate-fb-zalo-shake: fbZaloShake 1.6s ease-in-out infinite;
+  --animate-fb-zalo-ring-1: fbZaloRing1 2s ease-out infinite;
+  --animate-fb-zalo-ring-2: fbZaloRing2 2s ease-out infinite 0.5s;
+  --animate-fb-zalo-ring-3: fbZaloRing3 2s ease-out infinite 1s;
+  --animate-fb-price-wobble: fbPriceWobble 2.4s ease-in-out infinite;
+  --animate-fb-price-glow: fbPriceGlow 2.4s ease-in-out infinite;
+  --animate-fb-price-ring-1: fbPriceRing 2.4s ease-out infinite;
+  --animate-fb-price-ring-2: fbPriceRing 2.4s ease-out infinite 0.8s;
+
+  @keyframes fbPhoneWobble {
+    0%, 60%, 100% { transform: rotate(0deg) scale(1); }
+    10% { transform: rotate(-15deg) scale(1.05); }
+    20% { transform: rotate(12deg) scale(1.05); }
+    30% { transform: rotate(-10deg) scale(1.02); }
+    40% { transform: rotate(8deg) scale(1.02); }
+    50% { transform: rotate(-4deg) scale(1); }
+  }
+  @keyframes fbPhoneGlow {
+    0%, 100% { box-shadow: 0 4px 20px rgba(0, 104, 255, 0.5), 0 0 0 0 rgba(0, 104, 255, 0.45); }
+    50% { box-shadow: 0 4px 28px rgba(0, 104, 255, 0.7), 0 0 0 12px rgba(0, 104, 255, 0); }
+  }
+  @keyframes fbRing {
+    0% { transform: scale(1); opacity: 0.65; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  @keyframes fbZaloShake {
+    0%, 80%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(-6deg); }
+    20% { transform: rotate(6deg); }
+    30% { transform: rotate(-5deg); }
+    40% { transform: rotate(5deg); }
+    50% { transform: rotate(-3deg); }
+    60% { transform: rotate(3deg); }
+    70% { transform: rotate(-1deg); }
+  }
+  @keyframes fbZaloRing1 {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes fbZaloRing2 {
+    0% { transform: scale(1); opacity: 0.45; }
+    100% { transform: scale(2.8); opacity: 0; }
+  }
+  @keyframes fbZaloRing3 {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(3.4); opacity: 0; }
+  }
+  @keyframes fbPriceWobble {
+    0%, 60%, 100% { transform: rotate(0deg) scale(1); }
+    10% { transform: rotate(-15deg) scale(1.05); }
+    20% { transform: rotate(12deg) scale(1.05); }
+    30% { transform: rotate(-10deg) scale(1.02); }
+    40% { transform: rotate(8deg) scale(1.02); }
+    50% { transform: rotate(-4deg) scale(1); }
+  }
+  @keyframes fbPriceGlow {
+    0%, 100% { box-shadow: 0 4px 20px rgba(211, 167, 105, 0.5), 0 0 0 0 rgba(211, 167, 105, 0.5); }
+    50% { box-shadow: 0 4px 28px rgba(211, 167, 105, 0.7), 0 0 0 12px rgba(211, 167, 105, 0); }
+  }
+  @keyframes fbPriceRing {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+}
+
+/* người dùng bật "giảm chuyển động": nút đứng yên */
+@media (prefers-reduced-motion: reduce) {
+  .floating-buttons * { animation: none !important; }
+}

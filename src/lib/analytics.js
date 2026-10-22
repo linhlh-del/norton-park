@@ -40,7 +40,7 @@ const store = {
 /** Xác định nguồn của lượt truy cập hiện tại */
 function detectTouch() {
   const q = new URLSearchParams(location.search);
-  const t = { landing_page: location.pathname + location.search, ts: Date.now() };
+  const t = { landing_page: location.pathname + location.search, landing_url: location.href.slice(0, 500), ts: Date.now() };
   for (const k of UTM) if (q.get(k)) t[k] = q.get(k).slice(0, 150);
   for (const [k, [src, med]] of Object.entries(CLICK_IDS)) {
     if (q.get(k)) { t[k] = q.get(k).slice(0, 200); t.utm_source ??= src; t.utm_medium ??= med; }
@@ -79,6 +79,33 @@ const pick = (t, prefix) => t ? Object.fromEntries(
 export function attribution() {
   if (typeof window === 'undefined') return {};
   return { ...pick(store.get(FIRST_KEY), 'ft_'), ...pick(store.get(LAST_KEY), 'lt_') };
+}
+
+/**
+ * Trường nguồn theo đúng schema Google Sheet (Worker be/norton-park-lead-worker → Apps Script RAW_LEAD):
+ * utm_* / source_url = lần đầu khách tới (first-touch); lt_utm_* = nguồn gần nhất không phải direct.
+ */
+export function leadAttribution() {
+  if (typeof window === 'undefined') return {};
+  const ft = store.get(FIRST_KEY) || {};
+  const lt = store.get(LAST_KEY) || {};
+  /* giữ cả "(direct)/(none)", "google/organic", "facebook/social"… (suy từ referrer) để Sheet thấy rõ kênh */
+  const direct = (v) => v || '';
+  return {
+    source_url: ft.landing_url || ft.landing_page || '',
+    referrer: ft.referrer || lt.referrer || '',
+    utm_source: direct(ft.utm_source),
+    utm_medium: direct(ft.utm_medium),
+    utm_campaign: ft.utm_campaign || '',
+    utm_content: ft.utm_content || '',
+    utm_term: ft.utm_term || '',
+    gclid: lt.gclid || ft.gclid || '',
+    fbclid: lt.fbclid || ft.fbclid || '',
+    ttclid: lt.ttclid || ft.ttclid || '',
+    lt_utm_source: direct(lt.utm_source),
+    lt_utm_medium: direct(lt.utm_medium),
+    lt_utm_campaign: lt.utm_campaign || '',
+  };
 }
 
 /** page_view cho SPA — gọi mỗi lần đổi route (kể cả lần đầu). GA4 trong GTM tắt page_view tự động, dùng sự kiện này. */

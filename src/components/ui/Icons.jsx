@@ -23,9 +23,3 @@ export const CloseIcon = (p) => (
     <path d="M6 6l12 12M18 6L6 18" />
   </svg>
 );
-
-export const FlowerMark = (p) => (
-  <svg viewBox="0 0 40 40" width="40" height="40" strokeWidth="1.2" {...base} {...p}>
-    <path d="M20 4c4 6 4 10 0 16-4-6-4-10 0-16zM36 20c-6 4-10 4-16 0 6-4 10-4 16 0zM20 36c-4-6-4-10 0-16 4 6 4 10 0 16zM4 20c6-4 10-4 16 0-6 4-10 4-16 0z" />
-  </svg>
-);

@@ -7,9 +7,13 @@ import { hasImage, pictureSources } from '@/lib/images';
  * - Nếu ảnh đã được tối ưu (npm run images) → tự dùng <picture> AVIF/WebP nhiều kích thước.
  * - priority: ảnh nằm trong màn hình đầu (hero) → tải ngay, fetchpriority="high", không làm mờ (giữ LCP nhanh).
  * - sizes: gợi ý bề rộng hiển thị cho trình duyệt chọn file phù hợp.
+ * - fit="contain": giữ trọn ảnh (mặt bằng căn hộ, logo) thay vì cắt lấp đầy khung.
+ * - mobileSrc: ảnh khác cho điện thoại cầm dọc (vd. hero bản dọc) — trình duyệt chỉ tải một trong hai.
  * tone="dark" cho ô nằm trên nền tối.
  */
-export default function Media({ src, alt = '', label, className = '', tone = 'light', style, priority = false, sizes = '100vw' }) {
+const MOBILE = '(max-width: 767px) and (orientation: portrait)';
+
+export default function Media({ src, mobileSrc, alt = '', label, className = '', tone = 'light', style, priority = false, sizes = '100vw', fit = 'cover' }) {
   /* ảnh chưa có trong public/images → hiện khung chờ ngay, không phát sinh request 404 */
   const [failed, setFailed] = useState(!hasImage(src));
   const [loaded, setLoaded] = useState(false);
@@ -23,6 +27,7 @@ export default function Media({ src, alt = '', label, className = '', tone = 'li
     ? { '--media-bg': 'var(--color-hoadau-soft)', '--media-ink': 'rgb(244 240 231 / 0.72)' }
     : {};
   const sources = !failed && src ? pictureSources(src) : null;
+  const mobile = sources && hasImage(mobileSrc) ? pictureSources(mobileSrc) : null;
 
   const img = !failed && (
     <img
@@ -36,7 +41,7 @@ export default function Media({ src, alt = '', label, className = '', tone = 'li
       loading={priority ? 'eager' : 'lazy'}
       fetchpriority={priority ? 'high' : undefined}
       decoding={priority ? undefined : 'async'}
-      className="media-img absolute inset-0 h-full w-full object-cover"
+      className={`media-img absolute inset-0 h-full w-full ${fit === 'contain' ? 'object-contain' : 'object-cover'}`}
       data-state={priority ? undefined : loaded ? 'loaded' : 'loading'}
       data-priority={priority ? '' : undefined}
       onLoad={() => setLoaded(true)}
@@ -48,6 +53,8 @@ export default function Media({ src, alt = '', label, className = '', tone = 'li
     <div className={`media ${className}`} style={{ ...toneStyle, ...style }} data-loading={!failed && !loaded && !priority ? 'true' : undefined}>
       {img && sources ? (
         <picture>
+          {mobile?.avif && <source media={MOBILE} type="image/avif" srcSet={mobile.avif} sizes="100vw" />}
+          {mobile?.webp && <source media={MOBILE} type="image/webp" srcSet={mobile.webp} sizes="100vw" />}
           {sources.avif && <source type="image/avif" srcSet={sources.avif} sizes={sizes} />}
           {sources.webp && <source type="image/webp" srcSet={sources.webp} sizes={sizes} />}
           {img}

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { useInView } from '@/lib/motion';
 import Hero from '@/sections/home/Hero';
 import DesignStory from '@/sections/home/DesignStory';
@@ -22,7 +22,7 @@ const LocationMap = lazy(() => import('@/sections/home/LocationMap/LocationMap')
 function DeferredMap(props) {
   const ref = useRef(null);
   const near = useInView(ref, { rootMargin: '100% 0px', threshold: 0 });
-  const fallback = <div ref={ref} id="position" className="h-[clamp(640px,100svh,980px)] bg-paper" aria-busy="true" />;
+  const fallback = <section ref={ref} id="position" className="h-[clamp(640px,100svh,980px)] bg-paper" aria-busy="true" />;
   if (!near) return fallback;
   return <Suspense fallback={fallback}><LocationMap {...props} /></Suspense>;
 }
@@ -30,7 +30,17 @@ function DeferredMap(props) {
 /* nối analytics (GA4 / GTM…) tại đây */
 const track = (ev, label) => window.dataLayer?.push({ event: 'locmap_' + ev, label });
 
+/* trang chủ: mỗi lần vuốt / lăn chuột chuyển đúng một section (CSS: html.snap-y trong index.css) */
+function useSectionSnap() {
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.add('snap-y');
+    return () => root.classList.remove('snap-y');
+  }, []);
+}
+
 export default function Home() {
+  useSectionSnap();
   return (
     <>
       <Hero />

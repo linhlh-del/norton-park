@@ -1,12 +1,14 @@
-import { faq } from '@/data/site';
+import { useSite, useT } from '@/i18n';
 
 export default function Faq() {
+  const t = useT();
+  const { faq } = useSite();
   return (
     <section id="faq" className="bg-ivory py-section">
       <div className="container-site grid items-start gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
         <div data-reveal="left" className="flex flex-col gap-4">
-          <p className="eyebrow text-bronze-deep">Câu hỏi thường gặp</p>
-          <h2 className="heading-2">Về dự án Norton Park — A Gamuda Land Community</h2>
+          <p className="eyebrow text-bronze-deep">{t('faq.eyebrow')}</p>
+          <h2 className="heading-2">{t('faq.title')}</h2>
         </div>
         <div className="flex flex-col">
           {faq.map((item, i) => (

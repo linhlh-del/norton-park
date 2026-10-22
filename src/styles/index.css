@@ -1,11 +1,13 @@
 @import "tailwindcss";
 @import "./theme.css";
 @import "./fonts.css";
+@import "./floating-buttons.css";
 
 /* ---------- nền tảng ---------- */
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h); /* nhảy tới #anchor không bị header dính che */
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -60,11 +62,28 @@
   }
   .carousel-track::-webkit-scrollbar { display: none; }
   .carousel-track:focus-visible { outline-offset: 6px; }
+  /* ---------- trang chủ: cuộn theo từng section ---------- */
+  /* html.snap-y do Home.jsx bật. Mỗi section ≥ 1 màn hình (trừ header), nội dung căn giữa theo chiều dọc;
+     một lần vuốt / lăn chuột dừng đúng đầu section kế (scroll-snap-stop: always không cho trượt qua nhiều section).
+     Section cao hơn màn hình (mặt bằng, form, FAQ trên điện thoại) vẫn cuộn tự do bên trong rồi mới sang section sau. */
+  html.snap-y { scroll-snap-type: y mandatory; }
+  html.snap-y main > section {
+    min-height: calc(100svh - var(--header-h));
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); /* carousel bên trong không được nới rộng cột */
+    align-content: center;
+  }
+  html.snap-y footer { scroll-snap-align: end; }
+
   /* ---------- hiệu năng ---------- */
   /* Section dưới màn hình đầu: trình duyệt bỏ qua style/layout/paint cho tới khi cuộn gần tới (giảm mạnh thời gian
      main thread trên điện thoại). "auto 900px" = kích thước ước lượng trước lần vẽ đầu, sau đó nhớ kích thước thật.
      Trừ bản đồ (#position): script bản đồ cần đo khung ngay khi khởi tạo. */
-  main > section:nth-child(n + 3):not(#position) {
+  /* (không áp dụng ở trang chủ cuộn theo section: snap cần vị trí thật của từng section, ước lượng sai làm
+     nhảy tới #anchor lệch section) */
+  html:not(.snap-y) main > section:nth-child(n + 3):not(#position) {
     content-visibility: auto;
     contain-intrinsic-size: auto 900px;
   }
@@ -75,17 +94,17 @@
   .count-up::before { content: attr(data-final); grid-area: 1 / 1; visibility: hidden; }
 
   /* ảnh hiện dần khi tải xong (ảnh thường); ảnh ưu tiên (hero) chỉ thu nhẹ, không làm mờ để không trễ LCP */
-  .media-img { transition: opacity 0.9s var(--ease-soft), transform 1.4s var(--ease-soft); }
+  .media-img { transition: opacity 1.3s var(--ease-soft), transform 2s var(--ease-soft); }
   .media-img[data-state="loading"] { opacity: 0; transform: scale(1.04); }
   .media-img[data-state="loaded"] { opacity: 1; transform: none; }
-  .media-img[data-priority] { animation: np-settle 2.4s var(--ease-soft) both; }
+  .media-img[data-priority] { animation: np-settle 3.4s var(--ease-soft) both; }
   .media[data-loading="true"] { animation: np-shimmer 1.6s ease-in-out infinite; }
 
   /* hiện dần khi cuộn tới — xem src/components/motion/useRevealObserver.js */
   .reveal-ready [data-reveal] {
     opacity: 0;
-    transition: opacity 0.9s var(--ease-soft), transform 0.9s var(--ease-soft);
-    transition-delay: calc(var(--reveal-i, 0) * 90ms);
+    transition: opacity 1.3s var(--ease-soft), transform 1.3s var(--ease-soft);
+    transition-delay: calc(var(--reveal-i, 0) * 140ms);
   }
   .reveal-ready [data-reveal="up"],
   .reveal-ready [data-reveal=""] { transform: translate3d(0, 28px, 0); }
@@ -95,11 +114,55 @@
   .reveal-ready [data-reveal].is-revealed { opacity: 1; transform: none; }
 
   /* hero: vào cảnh ngay khi tải trang (không chờ cuộn) */
-  .hero-in { animation: np-rise 1s var(--ease-soft) both; animation-delay: calc(var(--reveal-i, 0) * 120ms + 150ms); }
+  .hero-in { animation: np-rise 1.4s var(--ease-soft) both; animation-delay: calc(var(--reveal-i, 0) * 180ms + 200ms); }
 
   @media (prefers-reduced-motion: reduce) {
     .media-img, .media-img[data-priority], .media[data-loading="true"], .hero-in { animation: none; transition: none; }
     .media-img[data-state="loading"] { opacity: 1; transform: none; }
+  }
+
+  /* zoom ảnh khi rê chuột (mọi ô ảnh, như section tiện ích / tin tức); ảnh nền section phóng rất chậm.
+     Chỉ trên thiết bị có chuột — trên cảm ứng ảnh đã có hiệu ứng thu nhẹ khi tải. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .media:not(.media-static) .media-img[data-state="loaded"] { transition: opacity 1.3s var(--ease-soft), transform 1.6s var(--ease-soft); }
+    .media:not(.media-static):hover .media-img[data-state="loaded"],
+    .group:hover .media:not(.media-static) .media-img[data-state="loaded"] { transform: scale(1.06); }
+    .media-backdrop .media-img[data-state="loaded"] { transition: opacity 1.3s var(--ease-soft), transform 8s var(--ease-soft); }
+    section:hover > .media-backdrop .media-img[data-state="loaded"] { transform: scale(1.05); }
+  }
+
+  /* CTA: vệt sáng lướt qua định kỳ + quầng sáng theo con trỏ (--rx/--ry do src/lib/ctaFx.js cập nhật) */
+  .btn-solid, .btn-light, .btn-cta, button[type="submit"].btn { position: relative; overflow: hidden; isolation: isolate; }
+  .btn-solid::after, .btn-light::after, .btn-cta::after, button[type="submit"].btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    left: -70px;
+    background: linear-gradient(105deg, transparent, rgb(255 255 255 / 0.55), transparent);
+    transform: skewX(-18deg);
+    animation: btnShine 3.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .btn-solid::before, .btn-light::before, .btn-cta::before, button[type="submit"].btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(140px circle at var(--rx, 50%) var(--ry, 50%), rgb(255 255 255 / 0.22), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .btn-solid:hover::before, .btn-light:hover::before, .btn-cta:hover::before, button[type="submit"].btn:hover::before { opacity: 1; }
+  .btn:active { transform: translateY(1px); }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-solid::after, .btn-light::after, .btn-cta::after, button[type="submit"].btn::after { animation: none; display: none; }
+  }
+  @keyframes btnShine {
+    0% { left: -70px; }
+    55%, 100% { left: calc(100% + 70px); }
   }
 
   @keyframes np-settle { from { transform: scale(1.08); } }

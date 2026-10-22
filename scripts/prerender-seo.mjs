@@ -21,7 +21,7 @@ const dist = join(root, 'dist');
 const env = { ...loadEnv('production', root, ''), ...process.env };
 
 const ssr = await import(pathToFileURL(join(root, '.ssr/entry-server.js')).href);
-const { render, headHtml, routes, SITE_URL, SITE, sections, pages, absUrl } = ssr;
+const { render, headHtml, routes, SITE_URL, SITE, sections, pages, absUrl, langUrl } = ssr;
 
 const write = (rel, content) => {
   const file = join(dist, rel);
@@ -49,30 +49,43 @@ if (cssLink) {
   template = template.replace(cssLink[0], () => `<style>${css}</style>`);
 }
 
-const page = (path, url = path) => {
-  const head = headHtml(path);
+/* path: đường dẫn tiếng Việt của trang; lang: "vi" | "en". URL thật của bản en = "/en" + path */
+const urlOf = (path, lang) => (lang === 'en' ? '/en' + (path === '/' ? '' : path) : path);
+const page = (path, lang = 'vi') => {
+  const url = urlOf(path, lang);
+  const head = headHtml(path, lang);
   return template
+    /* <html lang> theo ngôn ngữ; trang chủ bật sẵn cuộn theo section (khỏi giật khi JS gắn class) */
+    .replace('<html lang="vi">', `<html lang="${lang}"${path === '/' ? ' class="snap-y"' : ''}>`)
     .replace(/<title>[\s\S]*?<\/title>/, head.title)
     .replace(/\s*<meta name="description"[^>]*>/, '')
     .replace('</head>', `    ${head.tags}\n  </head>`)
-    .replace('<div id="root"></div>', `<div id="root" data-route="${path}">${render(url)}</div>`);
+    .replace('<div id="root"></div>', `<div id="root" data-route="${url}">${render(url)}</div>`);
 };
+const fileOf = (url) => (url === '/' ? 'index.html' : `${url.slice(1)}/index.html`);
 
 console.log('Prerender:');
-for (const r of routes) write(r === '/' ? 'index.html' : `${r.slice(1)}/index.html`, page(r));
-write('404.html', page('/404', '/404'));
+for (const lang of ['vi', 'en']) {
+  for (const r of routes) write(fileOf(urlOf(r, lang)), page(r, lang));
+  for (const r of Object.keys(ssr.hiddenPages)) write(fileOf(urlOf(r, lang)), page(r, lang)); // noindex, không vào sitemap
+}
+write('404.html', page('/404'));
+write('en/404.html', page('/404', 'en'));
 
 /* ---------- 2. sitemap / robots / llms / ARD ---------- */
 const today = new Date().toISOString().slice(0, 10);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${routes.map((r) => `  <url>
-    <loc>${absUrl(r)}</loc>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${['vi', 'en'].flatMap((lang) => routes.map((r) => `  <url>
+    <loc>${langUrl(r, lang)}</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="${langUrl(r, 'vi')}" />
+    <xhtml:link rel="alternate" hreflang="en" href="${langUrl(r, 'en')}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${langUrl(r, 'vi')}" />
     <lastmod>${today}</lastmod>
     <changefreq>${pages[r].changefreq}</changefreq>
-    <priority>${pages[r].priority.toFixed(1)}</priority>${pages[r].image ? `
+    <priority>${(lang === 'en' ? pages[r].priority * 0.8 : pages[r].priority).toFixed(1)}</priority>${pages[r].image ? `
     <image:image><image:loc>${absUrl(pages[r].image)}</image:loc></image:image>` : ''}
-  </url>`).join('\n')}
+  </url>`)).join('\n')}
 </urlset>
 `);
 
@@ -99,6 +112,9 @@ ${sections.map((s) => `- [${s.subtitle}](${absUrl('/')}#${s.id}): ${s.summary}`)
 
 ## Câu hỏi thường gặp
 ${faq.map((f) => `- **${f.q}** ${f.a}`).join('\n')}
+
+## English
+${routes.map((r) => `- [${ssr.pageMeta(pages[r], 'en').breadcrumb}](${langUrl(r, 'en')}): ${ssr.pageMeta(pages[r], 'en').description}`).join('\n')}
 
 ## Cho AI agent
 - [Danh mục tài nguyên agent (ARD)](${ardUrl})

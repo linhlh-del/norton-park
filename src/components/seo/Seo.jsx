@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { headFor } from '@/seo/head';
+import { langFromPath, stripLang } from '@/i18n';
 import { pageView } from '@/lib/analytics';
 
 /**
@@ -11,9 +12,12 @@ import { pageView } from '@/lib/analytics';
 export default function Seo() {
   const { pathname } = useLocation();
   useEffect(() => {
-    const path = pathname.replace(/\/+$/, '') || '/';
-    const h = headFor(path);
+    const clean = pathname.replace(/\/+$/, '') || '/';
+    const lang = langFromPath(clean);
+    const path = stripLang(clean);
+    const h = headFor(path, lang);
     document.title = h.title;
+    document.documentElement.lang = lang;
     const head = document.head;
     for (const t of h.tags) {
       let el = head.querySelector(`[data-seo="${CSS.escape(t.key)}"]`);
@@ -30,7 +34,7 @@ export default function Seo() {
       ld.textContent = JSON.stringify(h.jsonld);
     } else ld?.remove();
 
-    pageView(path, h.title);
+    pageView(clean, h.title);
   }, [pathname]);
   return null;
 }

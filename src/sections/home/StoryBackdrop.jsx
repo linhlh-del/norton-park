@@ -1,16 +1,19 @@
 import { Children } from 'react';
+import { Link } from '@/i18n';
 import Media from '@/components/ui/Media';
 
 /**
  * Section câu chuyện với ẢNH NỀN TOÀN SECTION. Chữ nằm trên lớp phủ tối để luôn đủ tương phản.
- * Khối chữ trượt vào từ phía nó đứng (trái / phải), các đoạn hiện so le.
+ * Khối chữ trượt vào từ phía nó đứng (trái / phải), các đoạn hiện so le; ảnh nền phóng rất chậm khi rê chuột.
  * align: "left" | "right" — phía đặt khối chữ.
+ * cta: { label, to, track } — nút dẫn tới giá trị chính (vd. bản đồ vị trí).
  */
-export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, eyebrow, title, children, align = 'left' }) {
+export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, eyebrow, title, children, align = 'left', cta }) {
   const dir = align === 'right' ? 'right' : 'left';
+  const n = Children.count(children);
   return (
     <section id={id} className="relative isolate flex min-h-[clamp(640px,100svh,920px)] items-center overflow-hidden bg-hoadau text-on-dark">
-      <Media src={image} alt={imageAlt} label={imageLabel} tone="dark" className="!absolute inset-0 -z-20" />
+      <Media src={image} alt={imageAlt} label={imageLabel} tone="dark" className="media-backdrop !absolute inset-0 -z-20" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hoadau-deep/55" />
       <div className={`container-site flex py-section ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
         <div className="flex max-w-xl flex-col gap-6">
@@ -21,6 +24,13 @@ export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, ey
               <div data-reveal={dir} style={{ '--reveal-i': i + 2 }}>{child}</div>
             ))}
           </div>
+          {cta && (
+            <div data-reveal={dir} style={{ '--reveal-i': n + 2 }}>
+              <Link to={cta.to} className="btn btn-light" data-track="cta_click" data-track-label={cta.track}>
+                {cta.label} <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>

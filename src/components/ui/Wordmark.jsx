@@ -1,13 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useT } from '@/i18n';
 
-/** Chữ thương hiệu tạm thời — thay bằng file logo SVG chính thức khi có. */
-export default function Wordmark({ size = 'md', className = '' }) {
-  const big = size === 'lg';
+/* Logo chính thức (SVG): bản màu be cho nền tối (header, footer), bản màu gốc cho nền sáng. Tỉ lệ 688.8 × 114.72.
+   Điện thoại: thu nhỏ để header còn chỗ cho nút Tư vấn + menu. */
+const LOGO = {
+  dark: '/images/imgi_1_norton-park-logo-primary-beige.svg',
+  light: '/images/imgi_2_norton-park-logo-primary.svg',
+};
+
+export default function Wordmark({ size = 'md', tone = 'dark', className = '' }) {
+  const t = useT();
+  const w = size === 'lg' ? 240 : 190;
   return (
-    <Link to="/" className={`flex flex-col gap-0.5 text-on-dark no-underline hover:text-on-dark ${className}`}>
-      <span className={`font-display leading-none tracking-logo ${big ? 'text-[28px]' : 'text-[26px]'}`}>NORTON PARK</span>
-      <span className="font-sub text-[8px] tracking-eyebrow text-on-dark-soft">A GAMUDA LAND COMMUNITY</span>
-      <span className="sr-only"> — Trang chủ</span>
+    <Link to="/" className={`inline-flex shrink-0 no-underline ${className}`}>
+      <img src={LOGO[tone]} alt="Norton Park — A Gamuda Land Community" width={w} height={Math.round(w * 114.72 / 688.8)}
+        className={`block h-auto ${size === 'lg' ? 'w-[240px]' : 'w-[140px] sm:w-[190px]'}`} decoding="async" />
+      <span className="sr-only"> {t('logo.home')}</span>
     </Link>
   );
 }

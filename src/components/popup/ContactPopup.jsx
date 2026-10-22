@@ -1,11 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { contact, registerTypes } from '@/data/site';
-import { isVnPhone, submitLead } from '@/lib/lead';
+import { useSite, useT } from '@/i18n';
+import { isVnPhone } from '@/lib/lead';
+import useLeadSubmit from '@/hooks/useLeadSubmit';
 import { track } from '@/lib/analytics';
 import { hasImage } from '@/lib/images';
 
-const LOGO = '/images/logos/norton-park-logo-primary.svg';
-const SIDE = '/images/amenity-overview-portrait.jpg';
+const LOGO = '/images/imgi_2_norton-park-logo-primary.svg';
+const SIDE = '/images/imgi_32_amenity-overview-portrait.jpg';
 import { CloseIcon } from '@/components/ui/Icons';
 
 const PopupCtx = createContext({ open: () => {}, close: () => {} });
@@ -19,9 +20,9 @@ const storage = {
 };
 
 /**
- * Provider + popup "Nhận tư vấn". autoOpenMs: tự mở sau N ms, mỗi phiên trình duyệt một lần (0 = tắt).
+ * Provider + popup "Nhận tư vấn". autoOpenMs: thời gian tối thiểu trước khi tự mở (0 = tắt).
  */
-export function ContactPopupProvider({ children, autoOpenMs = 8000 }) {
+export function ContactPopupProvider({ children, autoOpenMs = 25000 }) {
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState('popup');
   const lastFocus = useRef(null);
@@ -38,10 +39,23 @@ export function ContactPopupProvider({ children, autoOpenMs = 8000 }) {
     lastFocus.current?.focus?.();
   }, []);
 
+  /* Tự mở MỘT lần mỗi phiên, chỉ khi khách đã ở lại đủ lâu VÀ đã cuộn xem nội dung (≥ 40% trang).
+     Không bật ngay khi vào trang: Google coi popup che nội dung lúc vừa tới từ trang tìm kiếm (nhất là trên điện thoại)
+     là "intrusive interstitial" và hạ thứ hạng. Không mở trên trang cảm ơn. */
   useEffect(() => {
     if (!autoOpenMs || storage.get()) return undefined;
-    const t = setTimeout(() => open('popup_auto'), autoOpenMs);
-    return () => clearTimeout(t);
+    let timeUp = false;
+    let scrolled = false;
+    const tryOpen = () => {
+      if (timeUp && scrolled && !storage.get() && !location.pathname.includes('/cam-on')) open('popup_auto');
+    };
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      if (max > 0 && scrollY / max >= 0.4) { scrolled = true; removeEventListener('scroll', onScroll); tryOpen(); }
+    };
+    const t = setTimeout(() => { timeUp = true; tryOpen(); }, autoOpenMs);
+    addEventListener('scroll', onScroll, { passive: true });
+    return () => { clearTimeout(t); removeEventListener('scroll', onScroll); };
   }, [autoOpenMs, open]);
 
   return (
@@ -56,10 +70,13 @@ const errCls = 'min-h-4 text-xs font-normal normal-case tracking-normal text-[#b
 const inputCls = 'min-h-12 w-full rounded-lg border border-line-strong bg-ivory px-3.5 font-body text-base text-hoadau placeholder:text-ink-soft/80 aria-[invalid=true]:border-[#b3412e]';
 
 function ContactPopup({ position, onClose }) {
+  const t = useT();
+  const { contact, registerTypes } = useSite();
   const panel = useRef(null);
   const firstInput = useRef(null);
   const [errors, setErrors] = useState({});
-  const [state, setState] = useState('idle'); // idle | sending | done | failed
+  /* form_type trên Sheet: popup / popup_auto / popup_header / popup_floating_price… */
+  const { send, status, error } = useLeadSubmit(position.startsWith('popup') ? position : `popup_${position}`);
   const [logoOk, setLogoOk] = useState(() => hasImage(LOGO));
   const [mediaOk, setMediaOk] = useState(() => hasImage(SIDE));
 
@@ -85,22 +102,17 @@ function ContactPopup({ position, onClose }) {
     e.preventDefault();
     const fd = Object.fromEntries(new FormData(e.currentTarget));
     const next = {};
-    if (!String(fd.fullname || '').trim()) next.fullname = 'Vui lòng nhập họ và tên.';
-    if (!isVnPhone(fd.phone || '')) next.phone = 'Số điện thoại chưa đúng (10 số, bắt đầu bằng 0).';
-    if (!fd.consent) next.consent = 'Vui lòng đồng ý để chúng tôi liên hệ.';
+    if (!String(fd.fullname || '').trim()) next.fullname = t('form.err.name');
+    if (!isVnPhone(fd.phone || '')) next.phone = t('form.err.phone');
+    if (!fd.consent) next.consent = t('form.err.consent');
     setErrors(next);
     if (Object.keys(next).length) {
       e.currentTarget.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
-    if (fd.website) { setState('done'); return; } /* honeypot: bot điền ô ẩn */
-    setState('sending');
-    try {
-      await submitLead({ ...fd, form_position: position }, 'popup');
-      setState('done');
-    } catch {
-      setState('failed');
-    }
+    /* thành công → đóng popup, chuyển sang /cam-on (honeypot "website" được Worker xử lý) */
+    const ok = await send({ name: fd.fullname, phone: fd.phone, email: fd.email, unitType: fd.unit_interest, website: fd.website });
+    if (ok) onClose();
   };
 
   const field = (name) => ({ 'aria-invalid': errors[name] ? 'true' : undefined, 'aria-describedby': `err-p-${name}` });
@@ -118,34 +130,26 @@ function ContactPopup({ position, onClose }) {
           ) : (
             <p className="m-0 font-display text-2xl tracking-logo text-hoadau">NORTON PARK</p>
           )}
-          <p id="popSub" className="m-0 leading-relaxed">Để lại thông tin, đội ngũ cố vấn sẽ liên hệ và gửi bộ tài liệu dự án.</p>
+          <p id="popSub" className="m-0 leading-relaxed">{t('popup.intro')}</p>
 
-          {state === 'done' ? (
-            <div role="status" className="flex flex-col items-start gap-3 rounded-card bg-cream p-6">
-              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--color-bronze-deep)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M7.5 12.5l3 3 6-7" /></svg>
-              <h3 className="heading-3">Thông tin đã được ghi nhận</h3>
-              <p className="m-0 leading-relaxed">Đội ngũ cố vấn sẽ liên hệ trong thời gian sớm nhất.</p>
-              <button type="button" className="btn btn-ghost mt-2" onClick={onClose}>Đóng</button>
-            </div>
-          ) : (
             <form noValidate onSubmit={submit} className="flex flex-col gap-3">
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="pName" className="sr-only">Họ và tên</label>
-                  <input ref={firstInput} id="pName" name="fullname" type="text" autoComplete="name" placeholder="Họ và tên" className={inputCls} {...field('fullname')} />
+                  <label htmlFor="pName" className="sr-only">{t('form.name')}</label>
+                  <input ref={firstInput} id="pName" name="fullname" type="text" autoComplete="name" placeholder={t('form.name')} className={inputCls} {...field('fullname')} />
                   <span id="err-p-fullname" className={errCls} aria-live="polite">{errors.fullname}</span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="pPhone" className="sr-only">Số điện thoại</label>
-                  <input id="pPhone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Số điện thoại" className={inputCls} {...field('phone')} />
+                  <label htmlFor="pPhone" className="sr-only">{t('form.phone')}</label>
+                  <input id="pPhone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder={t('form.phone')} className={inputCls} {...field('phone')} />
                   <span id="err-p-phone" className={errCls} aria-live="polite">{errors.phone}</span>
                 </div>
               </div>
               <label htmlFor="pEmail" className="sr-only">Email</label>
               <input id="pEmail" name="email" type="email" autoComplete="email" placeholder="Email" className={inputCls} />
-              <label htmlFor="pUnit" className="sr-only">Loại căn quan tâm</label>
+              <label htmlFor="pUnit" className="sr-only">{t('form.unitType')}</label>
               <select id="pUnit" name="unit_interest" defaultValue="" className={`${inputCls} mt-3`}>
-                <option value="">Loại căn quan tâm</option>
+                <option value="">{t('form.unitType')}</option>
                 {registerTypes.map((g) => (
                   <optgroup key={g.title} label={g.title}>
                     {g.items.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -155,7 +159,7 @@ function ContactPopup({ position, onClose }) {
 
               <label className="mt-3 flex items-start gap-3 text-sm leading-relaxed">
                 <input type="checkbox" name="consent" className="mt-0.5 size-5 shrink-0 accent-bronze-deep" {...field('consent')} />
-                <span>Đồng ý được liên hệ về Norton Park và đồng ý với <a href="#legal" onClick={onClose}>chính sách bảo mật</a>.</span>
+                <span>{t('form.consent')} <a href="#legal" onClick={onClose}>{t('form.policy')}</a>.</span>
               </label>
               <span id="err-p-consent" className={errCls} aria-live="polite">{errors.consent}</span>
 
@@ -166,13 +170,12 @@ function ContactPopup({ position, onClose }) {
               </div>
               <input type="hidden" name="page_variant" value="norton_park_lead_a" />
 
-              {state === 'failed' && <p role="alert" className="m-0 text-sm text-[#b3412e]">Chưa gửi được thông tin, vui lòng thử lại hoặc gọi {contact.hotline}.</p>}
-              <button type="submit" className="btn btn-solid mt-1 w-full" disabled={state === 'sending'}>
-                {state === 'sending' ? 'Đang gửi…' : 'Nhận tư vấn ngay'}
+              {status === 'failed' && <p role="alert" className="m-0 text-sm text-[#b3412e]">{error || t('form.err.send')} {t('form.err.orCall', { phone: contact.hotline })}</p>}
+              <button type="submit" className="btn btn-solid mt-1 w-full" disabled={status === 'sending'}>
+                {status === 'sending' ? t('sending') : t('popup.submit')}
                 <span aria-hidden="true">→</span>
               </button>
             </form>
-          )}
         </div>
 
         {/* ảnh + thông tin liên hệ */}
@@ -183,12 +186,12 @@ function ContactPopup({ position, onClose }) {
           )}
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hoadau-deep/60" />
           <div className="flex flex-col gap-4">
-            <h3 className="heading-3">Thông tin liên hệ</h3>
+            <h3 className="heading-3">{t('contact.title')}</h3>
             {[
               ['Hotline', contact.hotline, contact.hotlineHref],
               ['Email', contact.email, 'mailto:' + contact.email],
               ['Fanpage', contact.fanpage, contact.fanpageUrl, true],
-              ['Địa chỉ dự án', contact.address, contact.mapUrl, true],
+              [t('contact.address'), contact.address, contact.mapUrl, true],
             ].map(([k, v, href, ext]) => (
               <div key={k} className="flex flex-col gap-1">
                 <span className="eyebrow text-[10px] text-on-dark-soft">{k}</span>
@@ -198,7 +201,7 @@ function ContactPopup({ position, onClose }) {
           </div>
         </div>
 
-        <button type="button" onClick={onClose} aria-label="Đóng"
+        <button type="button" onClick={onClose} aria-label={t('close')}
           className="absolute right-3 top-3 grid size-11 cursor-pointer place-items-center rounded-full border-0 bg-ivory/90 text-hoadau hover:bg-ivory">
           <CloseIcon />
         </button>

@@ -1,14 +1,29 @@
+import { Link, useSite, useT } from '@/i18n';
+import Media from '@/components/ui/Media';
+
 export default function Location() {
+  const t = useT();
+  const { images } = useSite();
   return (
     <section id="location" className="bg-sand pb-16 pt-section">
-      <div className="container-site grid items-end gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
-        <div data-reveal="left" className="flex flex-col gap-5">
-          <p className="eyebrow text-walnut">Trung tâm của mọi kết nối</p>
-          <h2 className="heading-2">Toạ độ tinh chọn của cộng đồng chuyên gia</h2>
+      <div className="container-site flex flex-col gap-[clamp(2.5rem,5vw,4rem)]">
+        <div className="grid items-end gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
+          <div data-reveal="left" className="flex flex-col gap-5">
+            <p className="eyebrow text-walnut">{t('location.eyebrow')}</p>
+            <h2 className="heading-2">{t('location.title')}</h2>
+          </div>
+          <div data-reveal="right" style={{ '--reveal-i': 1 }} className="flex flex-col gap-4">
+            <p className="lead">{t('location.p1')}</p>
+            <p className="lead">{t('location.p2')}</p>
+            <div className="pt-2">
+              <Link to="/#position" className="btn btn-solid" data-track="cta_click" data-track-label="location_map">
+                {t('location.cta')} <span aria-hidden="true">↓</span>
+              </Link>
+            </div>
+          </div>
         </div>
-        <div data-reveal="right" style={{ '--reveal-i': 1 }} className="flex flex-col gap-4">
-          <p className="lead">Nằm trên trục Đại lộ Bình Dương (Quốc lộ 13), Norton Park có vị trí khó lặp lại: giữa một hệ sinh thái đã trưởng thành và những động lực phát triển mới.</p>
-          <p className="lead">Nhu cầu thực tích luỹ qua nhiều thập kỷ cùng hạ tầng kết nối đang mở rộng tạo nền cho một chuẩn sống mới của khu vực.</p>
+        <div data-reveal="zoom">
+          <Media src={images.masterplan} alt={t('location.imageAlt')} label={t('location.imageLabel')} className="aspect-[16/9] rounded-card" sizes="84vw" />
         </div>
       </div>
     </section>

@@ -4,8 +4,9 @@
    ============================================================ */
 
 export const images = {
-  hero: '/images/overview_hero-facade-sunset.jpg',
-  designStory: '/images/hero_design-story-facade.jpg',
+  hero: '/images/hero_design-story-facade.jpg',
+  heroPortrait: '/images/imgi_34_hero-facade-plot-portrait.jpg', // điện thoại dọc
+  designStory: '/images/imgi_4_hero-facade-sunset.jpg',
   landscapeStory: '/images/imgi_6_landscape-story.jpg',
   masterplan: '/images/imgi_12_masterplan-birdview-r16.webp',
   blockB: '/images/block-b.jpg',
@@ -20,6 +21,8 @@ export const contact = {
   email: 'info@nortonpark.com.vn',
   fanpage: 'Norton Park by Gamuda Land',
   fanpageUrl: 'https://www.facebook.com/NortonParkbyGLVN',
+  zaloUrl: 'https://zalo.me/2522093664370221137',
+  tour360Url: 'https://360.nortonpark.com.vn/',
   legalName: '[TÊN PHÁP NHÂN]',
   legalAddress: '[ĐỊA CHỈ PHÁP NHÂN]',
 };
@@ -78,21 +81,21 @@ export const collections = [
     key: 'global',
     title: GLOBAL,
     units: [
-      { name: 'Studio', label: 'Studio', code: 'ST1.1A', rooms: '1 phòng ngủ, 1 phòng vệ sinh', gfa: '42,12 m²', nsa: '38,13 m²', view: 'Công viên nội khu, Khu dân cư Home Canary' },
-      { name: '1PN+', label: '1 phòng ngủ+', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '50,65 m²', nsa: 'Từ 46,46 m²', view: '[Đang cập nhật]' },
-      { name: '2PN', label: '2 phòng ngủ', code: '[Mã căn]', rooms: '2 phòng ngủ', gfa: '79,24 m²', nsa: 'Từ 60,80 m²', view: '[Đang cập nhật]' },
-      { name: '2PN+', label: '2 phòng ngủ+', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '87,20 m²', nsa: 'Từ 79,96 m²', view: '[Đang cập nhật]' },
-      { name: '3PN', label: '3 phòng ngủ', code: '[Mã căn]', rooms: '3 phòng ngủ', gfa: '113,65 m²', nsa: 'Từ 88,56 m²', view: '[Đang cập nhật]' },
+      { name: 'Studio', plans: [{ src: '/images/canho/studio.jpg' }], label: 'Studio', code: 'ST1.1A', rooms: '1 phòng ngủ, 1 phòng vệ sinh', gfa: '42,12 m²', nsa: '38,13 m²', view: 'Công viên nội khu, Khu dân cư Home Canary' },
+      { name: '1PN+', plans: [{ src: '/images/canho/1pn-a1-1a.jpg' }], label: '1 phòng ngủ+', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '50,65 m²', nsa: 'Từ 46,46 m²', view: '[Đang cập nhật]' },
+      { name: '2PN', plans: [{ src: '/images/canho/2pn-b1-4a.jpg' }], label: '2 phòng ngủ', code: '[Mã căn]', rooms: '2 phòng ngủ', gfa: '79,24 m²', nsa: 'Từ 60,80 m²', view: '[Đang cập nhật]' },
+      { name: '2PN+', plans: [{ src: '/images/canho/2pn-plus-b2-2a.jpg' }], label: '2 phòng ngủ+', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '87,20 m²', nsa: 'Từ 79,96 m²', view: '[Đang cập nhật]' },
+      { name: '3PN', plans: [{ src: '/images/canho/3pn-c4-1a.jpg' }], label: '3 phòng ngủ', code: '[Mã căn]', rooms: '3 phòng ngủ', gfa: '113,65 m²', nsa: 'Từ 88,56 m²', view: '[Đang cập nhật]' },
     ],
   },
   {
     key: 'special',
     title: SPECIAL,
     units: [
-      { name: 'Căn hộ sân vườn', label: 'Căn hộ sân vườn', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: 'Từ 51,08 m²', nsa: 'Từ 47,15 m²', view: '[Đang cập nhật]' },
-      { name: 'Duplex', label: 'Duplex', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '156,07 m²', nsa: 'Từ 128,56 m²', view: '[Đang cập nhật]' },
-      { name: 'Duplex sân vườn', label: 'Duplex sân vườn', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '139,86 m²', nsa: '128,96 m²', view: '[Đang cập nhật]' },
-      { name: 'Podium Shop', label: 'Podium Shop', code: '[Mã căn]', rooms: '—', gfa: '189,01 m²', nsa: 'Từ 129,97 m²', view: '[Đang cập nhật]' },
+      { name: 'Căn hộ sân vườn', plans: [{ src: '/images/canho/canho-sanvuon-pes-c3-1c.jpg' }], label: 'Căn hộ sân vườn', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: 'Từ 51,08 m²', nsa: 'Từ 47,15 m²', view: '[Đang cập nhật]' },
+      { name: 'Duplex', plans: [{ src: '/images/canho/duplex-d2-1c-t1-r8.webp', label: 'Tầng 1' }, { src: '/images/canho/duplex-d2-1c-t2.webp', label: 'Tầng 2' }], label: 'Duplex', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '156,07 m²', nsa: 'Từ 128,56 m²', view: '[Đang cập nhật]' },
+      { name: 'Duplex sân vườn', plans: [{ src: '/images/canho/duplex-san-vuon-d1-1c-t1.webp', label: 'Tầng 1' }, { src: '/images/canho/duplex-san-vuon-d1-1c-t2.webp', label: 'Tầng 2' }], label: 'Duplex sân vườn', code: '[Mã căn]', rooms: '[Đang cập nhật]', gfa: '139,86 m²', nsa: '128,96 m²', view: '[Đang cập nhật]' },
+      { name: 'Podium Shop', plans: [{ src: '/images/canho/shophouse-sh04-t1.webp', label: 'Tầng 1' }, { src: '/images/canho/shophouse-sh04-t2.webp', label: 'Tầng 2' }], label: 'Podium Shop', code: '[Mã căn]', rooms: '—', gfa: '189,01 m²', nsa: 'Từ 129,97 m²', view: '[Đang cập nhật]' },
     ],
   },
 ];
@@ -103,20 +106,20 @@ export const registerTypes = [
 ];
 
 export const lifestyle = [
-  { tag: 'Wellness', image: '/images/lifestyle-pool.jpg', imageLabel: 'Hồ bơi trung tâm', title: 'Đánh thức nguồn năng lượng mỗi ngày', body: 'Hồ bơi rộng giữa những tầng cây, cho những vòng bơi sớm mai khởi đầu ngày mới.' },
-  { tag: 'Xanh và tĩnh', image: '/images/lifestyle-walk.jpg', imageLabel: 'Lối dạo cây xanh', title: 'Từ những khoảnh khắc thân thương', body: 'Lối dạo rợp bóng, thảm cỏ mềm — nơi cả nhà cùng sống chậm lại.' },
-  { tag: 'Làm việc và tập trung', image: '/images/lifestyle-workhub.jpg', imageLabel: 'Work Hub', title: 'Khơi mở không gian, đánh thức tiềm năng', body: 'Góc làm việc ngập sáng, không gian nhóm và phòng họp riêng cho mọi nhu cầu.' },
-  { tag: 'Cộng đồng', image: '/images/lifestyle-plaza.jpg', imageLabel: 'Quảng trường & BBQ', title: 'Từ kết nối tự nhiên, dệt nên bản sắc cộng đồng', body: 'Quảng trường, BBQ giữa rừng và những buổi hẹn cuối tuần của cư dân đa thế hệ.' },
-  { tag: 'Mua sắm và cà phê', image: '/images/lifestyle-podium.jpg', imageLabel: 'Podium Shop', title: 'Nhịp sống toàn cầu lan toả phố xá', body: 'Quán cà phê góc phố, dãy Podium Shop và khối cửa hàng độc lập nối liền nhau.' },
+  { tag: 'Wellness', image: '/images/tienich/1-life-wellness.jpg', imageLabel: 'Hồ bơi trung tâm', title: 'Đánh thức nguồn năng lượng mỗi ngày', body: 'Hồ bơi rộng giữa những tầng cây, cho những vòng bơi sớm mai khởi đầu ngày mới.' },
+  { tag: 'Xanh và tĩnh', image: '/images/tienich/2-life-green.jpg', imageLabel: 'Lối dạo cây xanh', title: 'Từ những khoảnh khắc thân thương', body: 'Lối dạo rợp bóng, thảm cỏ mềm — nơi cả nhà cùng sống chậm lại.' },
+  { tag: 'Làm việc và tập trung', image: '/images/tienich/3-life-work-r8.jpg', imageLabel: 'Work Hub', title: 'Khơi mở không gian, đánh thức tiềm năng', body: 'Góc làm việc ngập sáng, không gian nhóm và phòng họp riêng cho mọi nhu cầu.' },
+  { tag: 'Cộng đồng', image: '/images/tienich/4-life-community.jpg', imageLabel: 'Quảng trường & BBQ', title: 'Từ kết nối tự nhiên, dệt nên bản sắc cộng đồng', body: 'Quảng trường, BBQ giữa rừng và những buổi hẹn cuối tuần của cư dân đa thế hệ.' },
+  { tag: 'Mua sắm và cà phê', image: '/images/tienich/5-life-retail.jpg', imageLabel: 'Podium Shop', title: 'Nhịp sống toàn cầu lan toả phố xá', body: 'Quán cà phê góc phố, dãy Podium Shop và khối cửa hàng độc lập nối liền nhau.' },
 ];
 
 export const posts = [
-  { cat: 'Thị trường & báo chí', date: '14 tháng 10, 2026', src: 'CafeF', featured: true, title: 'Nguồn cung nâng hạng, giá căn hộ phía Bắc TP.HCM thiết lập mặt bằng mới', body: 'Năm 2026, phân khúc căn hộ phía Bắc TP.HCM tăng tốc rõ rệt, giá bán lên mặt bằng mới khi nhiều chủ đầu tư lớn cùng tham gia.' },
-  { cat: 'Thị trường & báo chí', date: '12 tháng 10, 2026', src: 'VietNamNet', title: 'Gamuda Land đưa chuẩn sống quốc tế đến phía Bắc TP.HCM', body: 'Norton Park — dự án 7,9 ha, sáu toà tháp, mật độ xây dựng khoảng 20% — là bước đi mới của Gamuda Land tại khu vực.' },
-  { cat: 'Tin tức dự án', date: '10 tháng 10, 2026', src: 'VnEconomy', title: 'Norton Park ra mắt ấn tượng tại The Sync Show, thu hút 2.000 chuyên viên kinh doanh', body: 'Sự kiện The Sync Show là lần đầu Gamuda Land giới thiệu Norton Park tới khoảng 2.000 chuyên viên kinh doanh.' },
-  { cat: 'Tin tức dự án', date: '9 tháng 10, 2026', src: 'VnExpress', title: 'Hơn 2.000 người tham gia lễ ra quân dự án Norton Park', body: 'Lễ ra quân giới thiệu dự án 7,9 ha với 1.286 sản phẩm tại phía Bắc TP.HCM.' },
-  { cat: 'Thị trường & báo chí', date: '6 tháng 10, 2026', src: 'VietNamNet', title: 'Bất động sản phía bắc TP.HCM bước vào ‘cuộc đua’ nâng chuẩn không gian sống', body: 'Khu vực chuyển từ công xưởng sản xuất sang cực tăng trưởng công nghệ cao, kéo theo nhu cầu nhà ở tích hợp.' },
-  { cat: 'Thị trường & báo chí', date: '[Ngày đăng]', src: 'Cafeland', title: 'Từ “thủ phủ công nghiệp” đến cực tăng trưởng mới: thị trường bất động sản phía Bắc TP.HCM bước vào cuộc đua nâng chuẩn', body: 'Nền tảng công nghiệp của phía Bắc TP.HCM đang mở ra nhu cầu về một chuẩn sống mới.' },
+  { cat: 'Thị trường & báo chí', date: '14 tháng 10, 2026', image: '/images/news/nguon-cung-nang-hang.webp', src: 'CafeF', featured: true, title: 'Nguồn cung nâng hạng, giá căn hộ phía Bắc TP.HCM thiết lập mặt bằng mới', body: 'Năm 2026, phân khúc căn hộ phía Bắc TP.HCM tăng tốc rõ rệt, giá bán lên mặt bằng mới khi nhiều chủ đầu tư lớn cùng tham gia.' },
+  { cat: 'Thị trường & báo chí', date: '12 tháng 10, 2026', image: '/images/news/gamuda-chuan-song-hcm.webp', src: 'VietNamNet', title: 'Gamuda Land đưa chuẩn sống quốc tế đến phía Bắc TP.HCM', body: 'Norton Park — dự án 7,9 ha, sáu toà tháp, mật độ xây dựng khoảng 20% — là bước đi mới của Gamuda Land tại khu vực.' },
+  { cat: 'Tin tức dự án', date: '10 tháng 10, 2026', image: '/images/news/ra-mat-the-sync-show.webp', src: 'VnEconomy', title: 'Norton Park ra mắt ấn tượng tại The Sync Show, thu hút 2.000 chuyên viên kinh doanh', body: 'Sự kiện The Sync Show là lần đầu Gamuda Land giới thiệu Norton Park tới khoảng 2.000 chuyên viên kinh doanh.' },
+  { cat: 'Tin tức dự án', date: '9 tháng 10, 2026', image: '/images/news/2000-kick-off.jpg', src: 'VnExpress', title: 'Hơn 2.000 người tham gia lễ ra quân dự án Norton Park', body: 'Lễ ra quân giới thiệu dự án 7,9 ha với 1.286 sản phẩm tại phía Bắc TP.HCM.' },
+  { cat: 'Thị trường & báo chí', date: '6 tháng 10, 2026', image: '/images/news/other.jpg', src: 'VietNamNet', title: 'Bất động sản phía bắc TP.HCM bước vào ‘cuộc đua’ nâng chuẩn không gian sống', body: 'Khu vực chuyển từ công xưởng sản xuất sang cực tăng trưởng công nghệ cao, kéo theo nhu cầu nhà ở tích hợp.' },
+  { cat: 'Thị trường & báo chí', date: '[Ngày đăng]', image: '/images/news/other.jpg', src: 'Cafeland', title: 'Từ “thủ phủ công nghiệp” đến cực tăng trưởng mới: thị trường bất động sản phía Bắc TP.HCM bước vào cuộc đua nâng chuẩn', body: 'Nền tảng công nghiệp của phía Bắc TP.HCM đang mở ra nhu cầu về một chuẩn sống mới.' },
 ];
 
 /* bài báo hiển thị ở section Tin tức trang chủ (carousel). Ảnh đặt tại public/images/news/ */
@@ -126,7 +129,7 @@ export const homeNews = [
     cat: 'Sự kiện',
     src: 'VnEconomy',
     url: 'https://en.vneconomy.vn/norton-park-makes-a-striking-debut-at-the-sync-show-drawing-2000-sales-professionals.htm',
-    image: '/images/news/vneconomy-the-sync-show.webp',
+    image: '/images/news/ra-mat-the-sync-show.webp',
     alt: 'Sân khấu lễ ra quân Norton Park tại The Sync Show, hàng nghìn khán giả vẫy cờ dưới ánh đèn',
     title: 'Norton Park ra mắt ấn tượng tại The Sync Show, thu hút 2.000 chuyên viên kinh doanh',
     excerpt: 'Hai nghìn chuyên viên kinh doanh tề tựu tại The Sync Show, nơi Gamuda Land lần đầu giới thiệu Norton Park, dự án quy mô 7,9 ha với sáu tòa tháp.',
@@ -136,7 +139,7 @@ export const homeNews = [
     cat: 'Thị trường',
     src: 'CafeF',
     url: 'https://cafef.vn/nguon-cung-nang-hang-gia-can-ho-phia-bac-tphcm-thiet-lap-mat-bang-moi-188261013104820842.chn',
-    image: '/images/news/cafef-nguon-cung-nang-hang.webp',
+    image: '/images/news/nguon-cung-nang-hang.webp',
     alt: 'Toàn cảnh trục Đại lộ Bình Dương và khu dân cư phía Bắc TP.HCM nhìn từ trên cao, phía xa là các tòa nhà cao tầng trung tâm',
     title: 'Nguồn cung nâng hạng, giá căn hộ phía Bắc TP.HCM thiết lập mặt bằng mới',
     excerpt: 'Năm 2026 chứng kiến sự tăng tốc rõ nét của thị trường căn hộ phía Bắc TP.HCM, với giá bán thiết lập mặt bằng mới và nhiều chủ đầu tư lớn cùng gia nhập “đường đua”.',
@@ -146,7 +149,7 @@ export const homeNews = [
     cat: 'Thị trường',
     src: 'VietNamNet',
     url: 'https://vietnamnet.vn/gamuda-land-dua-chuan-song-quoc-te-den-phia-bac-tp-hcm-2563454.html',
-    image: '/images/news/vietnamnet-chuan-song-quoc-te.webp',
+    image: '/images/news/gamuda-chuan-song-hcm.webp',
     alt: 'Phối cảnh hồ bơi, lối đi cảnh quan và quán cà phê kính cong trong khu nội khu Norton Park',
     title: 'Gamuda Land đưa chuẩn sống quốc tế đến phía Bắc TP.HCM',
     excerpt: 'Norton Park đánh dấu bước tiến mới của Gamuda Land tại phía Bắc TP.HCM, dự án quy mô 7,9 ha với sáu tòa tháp và mật độ xây dựng khoảng 20%.',
@@ -164,12 +167,12 @@ export const team = [
 ];
 
 export const faq = [
-  { q: 'Norton Park nằm ở đâu?', a: 'Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, TP.HCM — liền kề AEON Mall Thuận Giao và gần KCN VSIP 1.' },
-  { q: 'Quy mô và mật độ xây dựng?', a: 'Tổng thể 7,9 ha, 1.286 căn, mật độ xây dựng 20% và 2,5 ha cảnh quan, chia thành hai phân khu B và C.' },
-  { q: 'Dự án có những loại sản phẩm nào?', a: 'Bộ sưu tập chuẩn sống toàn cầu (Studio, 1PN+, 2PN, 2PN+, 3PN) và bộ sưu tập chuẩn sống đặc tuyển (căn hộ sân vườn, Duplex, Duplex sân vườn, Podium Shop, Standalone Shop).' },
-  { q: 'Chủ đầu tư là ai?', a: 'Gamuda Land — mảng bất động sản của tập đoàn Gamuda Berhad (Malaysia).' },
-  { q: 'Khi nào bàn giao?', a: 'Dự kiến quý 3 năm 2029.' },
-  { q: 'Kênh thông tin chính thức?', a: '[Danh sách kênh chính thức]' },
+  { q: 'Dự án Norton Park nằm ở đâu?', a: 'Norton Park tọa lạc tại Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, Thành phố Hồ Chí Minh — vị trí tâm điểm kết nối kế cận AEON Mall Thuận Giao, Khu công nghiệp VSIP 1 và đối diện Sân Golf Sông Bé.' },
+  { q: 'Quy mô và mật độ xây dựng của Norton Park như thế nào?', a: 'Dự án có tổng diện tích 7,9 ha với mật độ xây dựng chỉ 20% và 2,5 ha diện tích cảnh quan, nơi các tầng cây được vun bồi theo phương pháp trồng rừng Miyawaki Nhật Bản. Tổng thể gồm 2 phân khu B và C với 6 tòa tháp cao 19 tầng (và 1 tầng hầm), 5 tòa shop độc lập, cung cấp 1.286 sản phẩm và tỷ lệ chỗ đỗ xe 3:1.' },
+  { q: 'Norton Park có những loại hình sản phẩm nào?', a: 'Norton Park gồm hai bộ sưu tập: Bộ sưu tập chuẩn sống toàn cầu gồm Studio (căn tiêu biểu 42,12 m²), 1 phòng ngủ+ (50,65 m²), 2 phòng ngủ (79,24 m²), 2 phòng ngủ+ (87,20 m²), 3 phòng ngủ (113,65 m²); và Bộ sưu tập chuẩn sống đặc tuyển gồm Căn hộ sân vườn (từ 51,08 m²), Duplex (156,07 m²), Duplex sân vườn (139,86 m²), Podium Shop (189,01 m²) cùng Standalone Shop.' },
+  { q: 'Chủ đầu tư dự án Norton Park là ai?', a: 'Norton Park được phát triển bởi Gamuda Land (thành lập năm 1995) — bộ phận phát triển bất động sản của Tập đoàn Gamuda Berhad (Malaysia) với hơn 30 năm kinh nghiệm kiến tạo các khu đô thị bền vững tại Malaysia, Singapore, Việt Nam, Anh và Úc. Tại Việt Nam, Gamuda Land ghi dấu ấn với 11 dự án đáp ứng hệ thống kiểm soát chất lượng công trình toàn diện GQUAS.' },
+  { q: 'Thời gian dự kiến bàn giao dự án Norton Park là khi nào?', a: 'Dự án Norton Park dự kiến bàn giao vào Quý 3/2029 (thông tin tiến độ và điều kiện bàn giao cụ thể sẽ được quy định chi tiết tại Hợp đồng mua bán và thông báo chính thức của Chủ đầu tư).' },
+  { q: 'Kênh thông tin, bảng tính giá dự kiến và bản đồ 360° chính thức của Norton Park ở đâu?', a: 'Website chính thức duy nhất của dự án Norton Park (Chủ đầu tư Gamuda Land — Pháp nhân: Công ty TNHH Skybridge, MST 3700755234) là https://www.nortonpark.com.vn/. Khách hàng có thể tham khảo công cụ Bảng tính giá dự kiến và tra cứu 63 mặt bằng Phân khu B chính thức tại https://www.nortonpark.com.vn/bang-tinh-gia, khám phá bản đồ 360° tại https://360.nortonpark.com.vn/ hoặc liên hệ Hotline chính thức 093 860 90 23 và email info@nortonpark.com.vn.' },
 ];
 
 /* ---------- bảng tính giá ---------- */

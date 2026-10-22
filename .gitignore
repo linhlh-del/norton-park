@@ -5,3 +5,6 @@ dist
 # ảnh sinh bởi npm run images
 public/images/_optimized
 .ssr
+# biến môi trường (chứa endpoint / ID thật)
+.env*
+!.env.example

@@ -3,6 +3,7 @@ import markup from './generated/markup.html?raw';
 import data from './generated/data.json';
 import logoUrl from './assets/location-map-logo.png';
 import { createLocationMap } from './createLocationMap';
+import { useT } from '@/i18n';
 import './location-map.css';
 
 /**
@@ -16,6 +17,7 @@ import './location-map.css';
  * onTrack(ev, label): tuỳ chọn, nhận sự kiện tương tác (bấm điểm, mốc thời gian, bộ lọc…) để gửi analytics.
  */
 export default function LocationMap({ onTrack }) {
+  const t = useT();
   const host = useRef(null);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function LocationMap({ onTrack }) {
   }, [onTrack]);
 
   return (
-    <section id="position" aria-label="Bản đồ vị trí và kết nối vùng" className="np-locmap">
+    <section id="position" aria-label={t('map.aria')} className="np-locmap">
       <div ref={host} className="h-full" />
     </section>
   );

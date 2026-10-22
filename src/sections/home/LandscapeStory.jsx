@@ -1,19 +1,22 @@
-import { images } from '@/data/site';
+import { useSite, useT } from '@/i18n';
 import StoryBackdrop from './StoryBackdrop';
 
 export default function LandscapeStory() {
+  const t = useT();
+  const { images } = useSite();
   return (
     <StoryBackdrop
       id="landscape-story"
       align="right"
       image={images.landscapeStory}
-      imageAlt="Cảnh quan rừng Miyawaki trong khuôn viên Norton Park"
-      imageLabel="Ảnh nền: cảnh quan rừng Miyawaki"
-      eyebrow="Câu chuyện cảnh quan"
-      title="Nhịp điệu rừng xanh trên đại lộ"
+      imageAlt={t('landscape.imageAlt')}
+      imageLabel={t('landscape.imageLabel')}
+      eyebrow={t('landscape.eyebrow')}
+      title={t('landscape.title')}
+      cta={{ label: t('landscape.cta'), to: '/#position', track: 'landscape_story_amenities' }}
     >
-      <p className="lead">Dưới tán lá, nắng dịu lại và không khí mát lành hơn — một khoảng xanh yên tĩnh ngay bên Đại lộ Bình Dương nhộn nhịp.</p>
-      <p className="lead">Mật độ xây dựng chỉ 20%, các toà nhà nằm giữa 2,5 ha cảnh quan, với các tầng cây trồng theo phương pháp Miyawaki của Nhật Bản để lớn lên cùng năm tháng.</p>
+      <p className="lead">{t('landscape.p1')}</p>
+      <p className="lead">{t('landscape.p2')}</p>
     </StoryBackdrop>
   );
 }

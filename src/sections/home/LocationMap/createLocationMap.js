@@ -118,7 +118,7 @@ export function createLocationMap(host, { markup, data, logoUrl }) {
     const a = { ...vb }, t0 = performance.now();
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     const step = (now) => {
-      const t = Math.min(1, (now - t0) / ms), k = ease(t);
+      const t = Math.min(1, Math.max(0, (now - t0) / ms)), k = ease(t);
       setVB({ x: a.x + (v.x - a.x) * k, y: a.y + (v.y - a.y) * k, w: a.w + (v.w - a.w) * k, h: a.h + (v.h - a.h) * k });
       tween = t < 1 ? raf(step) : null;
     };
@@ -513,7 +513,7 @@ export function createLocationMap(host, { markup, data, logoUrl }) {
       river.setAttribute('clip-path', 'url(#rvRiver)');
       const t0 = performance.now(), R = 1500, ms = 1900;
       const st = (now) => {
-        const t = Math.min(1, (now - t0) / ms), k = 1 - Math.pow(1 - t, 3);
+        const t = Math.min(1, Math.max(0, (now - t0) / ms)), k = 1 - Math.pow(1 - t, 3);
         c.setAttribute('r', (R * k).toFixed(1));
         if (t < 1) raf(st); else { river.removeAttribute('clip-path'); cp.remove(); }
       };

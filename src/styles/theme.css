@@ -42,9 +42,9 @@
   --color-line-dark: rgb(244 240 231 / 0.22);
 
   /* ---------- font (đổi sang font thương hiệu tại src/styles/fonts.css) ---------- */
-  --font-display: "Norton Seasons", "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-sub: "Norton Futura", "Montserrat", "Century Gothic", system-ui, sans-serif;
-  --font-body: "Norton Gotham", "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Norton Seasons", Georgia, "Times New Roman", serif;
+  --font-sub: "Norton Futura", "Century Gothic", system-ui, sans-serif;
+  --font-body: "Norton Gotham", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* ---------- cỡ chữ ---------- */
   --text-display-1: clamp(2.6rem, 6vw, 5rem);
@@ -65,6 +65,7 @@
   /* ---------- khoảng cách, bo góc, chuyển động ---------- */
   --spacing-section: clamp(4.5rem, 9vw, 7.5rem);
   --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
+  --header-h: 72px;               /* chiều cao header dính (SiteHeader min-h-[72px]) */
   --container-site: 84vw;          /* khung nội dung chiếm 80–86% chiều rộng cửa sổ (từ màn ≥1024px) */
   --container-site-min: 80vw;
   --container-site-max: 86vw;

@@ -64,11 +64,11 @@ export default function useCarousel() {
     const to = Math.max(0, Math.min(max, target));
     cancelAnimationFrame(anim.current);
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.scrollLeft = to; measure(); return; }
-    const from = el.scrollLeft, t0 = performance.now(), ms = 520;
+    const from = el.scrollLeft, t0 = performance.now(), ms = 760;
     const ease = (t) => 1 - Math.pow(1 - t, 3);
     el.style.scrollSnapType = 'none';
     const tick = (now) => {
-      const t = Math.min(1, (now - t0) / ms);
+      const t = Math.min(1, Math.max(0, (now - t0) / ms));
       el.scrollLeft = from + (to - from) * ease(t);
       if (t < 1) anim.current = requestAnimationFrame(tick);
       else { el.style.scrollSnapType = ''; measure(); }

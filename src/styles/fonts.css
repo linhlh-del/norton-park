@@ -2,12 +2,14 @@
    FONT THƯƠNG HIỆU — file gốc: public/font/*.ttf, bản nén: public/fonts/*.woff2 (npm run fonts).
    Seasons: tiêu đề · Futura: eyebrow, nút, menu · Gotham: chữ thường.
    Trọng lượng không có file (vd. Gotham 300, Futura 600) trình duyệt tự lấy trọng lượng gần nhất.
-   seasons-400 và gotham-400 được preload trong index.html (dùng ngay ở màn hình đầu).
+   seasons-400, futura-700 và gotham-400 được preload trong index.html (dùng ngay ở màn hình đầu).
+   font-display: optional — font về kịp (nhờ preload) thì dùng ngay; mạng chậm thì giữ font dự phòng cho lần tải đó
+   (không đổi font giữa chừng → không xô lệch bố cục / CLS), các trang sau dùng font đã cache.
    ============================================================ */
-@font-face { font-family: "Norton Seasons"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/seasons-300.woff2") format("woff2"), url("/font/seasons-300.ttf") format("truetype"); }
-@font-face { font-family: "Norton Seasons"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/seasons-400.woff2") format("woff2"), url("/font/seasons-400.ttf") format("truetype"); }
-@font-face { font-family: "Norton Seasons"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/seasons-700.woff2") format("woff2"), url("/font/seasons-700.ttf") format("truetype"); }
-@font-face { font-family: "Norton Futura";  font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/futura-400.woff2") format("woff2"), url("/font/futura-400.ttf") format("truetype"); }
-@font-face { font-family: "Norton Futura";  font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/futura-700.woff2") format("woff2"), url("/font/futura-700.ttf") format("truetype"); }
-@font-face { font-family: "Norton Gotham";  font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/gotham-400.woff2") format("woff2"), url("/font/gotham-400.ttf") format("truetype"); }
-@font-face { font-family: "Norton Gotham";  font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/gotham-700.woff2") format("woff2"), url("/font/gotham-700.ttf") format("truetype"); }
+@font-face { font-family: "Norton Seasons"; font-weight: 300; font-style: normal; font-display: optional; src: url("/fonts/seasons-300.woff2") format("woff2"), url("/font/seasons-300.ttf") format("truetype"); }
+@font-face { font-family: "Norton Seasons"; font-weight: 400; font-style: normal; font-display: optional; src: url("/fonts/seasons-400.woff2") format("woff2"), url("/font/seasons-400.ttf") format("truetype"); }
+@font-face { font-family: "Norton Seasons"; font-weight: 700; font-style: normal; font-display: optional; src: url("/fonts/seasons-700.woff2") format("woff2"), url("/font/seasons-700.ttf") format("truetype"); }
+@font-face { font-family: "Norton Futura";  font-weight: 400; font-style: normal; font-display: optional; src: url("/fonts/futura-400.woff2") format("woff2"), url("/font/futura-400.ttf") format("truetype"); }
+@font-face { font-family: "Norton Futura";  font-weight: 700; font-style: normal; font-display: optional; src: url("/fonts/futura-700.woff2") format("woff2"), url("/font/futura-700.ttf") format("truetype"); }
+@font-face { font-family: "Norton Gotham";  font-weight: 400; font-style: normal; font-display: optional; src: url("/fonts/gotham-400.woff2") format("woff2"), url("/font/gotham-400.ttf") format("truetype"); }
+@font-face { font-family: "Norton Gotham";  font-weight: 700; font-style: normal; font-display: optional; src: url("/fonts/gotham-700.woff2") format("woff2"), url("/font/gotham-700.ttf") format("truetype"); }

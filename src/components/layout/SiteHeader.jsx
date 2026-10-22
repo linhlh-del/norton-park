@@ -37,8 +37,10 @@ export default function SiteHeader() {
   useEffect(() => setOpen(false), [pathname, hash]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line-dark bg-hoadau">
-      <div className="container-site flex min-h-[72px] items-center justify-between gap-3 py-3">
+    <header className="sticky top-0 z-40 bg-hoadau shadow-[inset_0_-1px_0_var(--color-line-dark)]">
+      {/* cao đúng 72px = --header-h (viền dưới vẽ bằng box-shadow, không cộng thêm chiều cao) — lệch 1px làm điểm
+          dừng cuộn theo section thành y=1 và trình duyệt tự cuộn khi tải trang */}
+      <div className="container-site flex h-[72px] items-center justify-between gap-3">
         <Wordmark />
 
         <nav aria-label={t('nav.main')} className="hidden items-center gap-7 lg:flex">

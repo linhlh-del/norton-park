@@ -859,6 +859,37 @@
       }
     ]
   },
+  "/images/thumbnail.jpg": {
+    "width": 2400,
+    "height": 1350,
+    "variants": [
+      {
+        "w": 480,
+        "avif": "/images/_optimized/thumbnail-480.avif",
+        "webp": "/images/_optimized/thumbnail-480.webp"
+      },
+      {
+        "w": 768,
+        "avif": "/images/_optimized/thumbnail-768.avif",
+        "webp": "/images/_optimized/thumbnail-768.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "/images/_optimized/thumbnail-1080.avif",
+        "webp": "/images/_optimized/thumbnail-1080.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "/images/_optimized/thumbnail-1600.avif",
+        "webp": "/images/_optimized/thumbnail-1600.webp"
+      },
+      {
+        "w": 2400,
+        "avif": "/images/_optimized/thumbnail-2400.avif",
+        "webp": "/images/_optimized/thumbnail-2400.webp"
+      }
+    ]
+  },
   "/images/tienich/1-life-wellness.jpg": {
     "width": 2400,
     "height": 1350,
@@ -1000,100 +1031,24 @@
     ]
   },
   "/images/vendor/beltcollins.png": {
-    "width": 299,
-    "height": 269,
-    "variants": [
-      {
-        "w": 299,
-        "avif": "/images/_optimized/vendor/beltcollins-299.avif",
-        "webp": "/images/_optimized/vendor/beltcollins-299.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/dpa.png": {
-    "width": 720,
-    "height": 228,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/dpa-480.avif",
-        "webp": "/images/_optimized/vendor/dpa-480.webp"
-      },
-      {
-        "w": 720,
-        "avif": "/images/_optimized/vendor/dpa-720.avif",
-        "webp": "/images/_optimized/vendor/dpa-720.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/dwp.png": {
-    "width": 720,
-    "height": 297,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/dwp-480.avif",
-        "webp": "/images/_optimized/vendor/dwp-480.webp"
-      },
-      {
-        "w": 720,
-        "avif": "/images/_optimized/vendor/dwp-720.avif",
-        "webp": "/images/_optimized/vendor/dwp-720.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/gamuda.webp": {
-    "width": 700,
-    "height": 73,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/gamuda-480.avif",
-        "webp": "/images/_optimized/vendor/gamuda-480.webp"
-      },
-      {
-        "w": 700,
-        "avif": "/images/_optimized/vendor/gamuda-700.avif",
-        "webp": "/images/_optimized/vendor/gamuda-700.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/imgi_29_substructure-cbm.png": {
-    "width": 424,
-    "height": 195,
-    "variants": [
-      {
-        "w": 424,
-        "avif": "/images/_optimized/vendor/imgi_29_substructure-cbm-424.avif",
-        "webp": "/images/_optimized/vendor/imgi_29_substructure-cbm-424.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/imgi_30_gamuda-land-logo-beige.webp": {
-    "width": 700,
-    "height": 73,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-480.avif",
-        "webp": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-480.webp"
-      },
-      {
-        "w": 700,
-        "avif": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-700.avif",
-        "webp": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-700.webp"
-      }
-    ]
+    "variants": []
   },
   "/images/vendor/structural.png": {
-    "width": 358,
-    "height": 360,
-    "variants": [
-      {
-        "w": 358,
-        "avif": "/images/_optimized/vendor/structural-358.avif",
-        "webp": "/images/_optimized/vendor/structural-358.webp"
-      }
-    ]
+    "variants": []
   }
 }

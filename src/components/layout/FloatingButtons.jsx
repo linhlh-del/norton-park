@@ -102,7 +102,7 @@ export default function FloatingButtons() {
         href={contact.hotlineHref}
         title={t('fb.call', { phone: contact.hotline })}
         aria-label={t('fb.call', { phone: contact.hotline })}
-        className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-[#0068FF] text-white no-underline shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 animate-fb-phone-glow hover:scale-[1.12] hover:text-white hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-14 lg:w-14"
+        className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-[#0068FF] text-white no-underline shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:text-white hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-14 lg:w-14"
       >
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/55 animate-fb-ring-1" />
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/35 animate-fb-ring-2" />
@@ -134,7 +134,7 @@ export default function FloatingButtons() {
         onClick={() => popup.open('floating_price')}
         title={t('fb.price')}
         aria-label={t('fb.price')}
-        className="group relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-0 bg-[#0068FF] p-0 text-white shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 animate-fb-price-glow hover:scale-[1.12] hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-[52px] lg:w-[52px]"
+        className="group relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-0 bg-[#0068FF] p-0 text-white shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-[52px] lg:w-[52px]"
       >
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/50 animate-fb-price-ring-1" />
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/30 animate-fb-price-ring-2" />

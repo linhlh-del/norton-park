@@ -69,7 +69,7 @@ export default function ValueNav() {
     <>
       {/* điện thoại / máy tính bảng: thanh dưới đáy */}
       <nav aria-label={t('values.nav')}
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-hoadau/95 pb-[env(safe-area-inset-bottom)] text-on-dark backdrop-blur lg:hidden">
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-hoadau/95 pb-[env(safe-area-inset-bottom)] text-on-dark lg:hidden">
         <ul className="m-0 grid list-none grid-cols-5 p-0">
           {ITEMS.map((it) => (
             <li key={it.key}>
@@ -99,7 +99,7 @@ export default function ValueNav() {
             <li key={it.key}>
               <Link to={it.to} data-track="value_nav" data-track-label={it.key} aria-label={t(`values.${it.key}`)}
                 aria-current={active === it.id ? 'true' : undefined} tabIndex={pastHero ? 0 : -1}
-                className={`group relative grid size-10 place-items-center rounded-full border no-underline shadow-float backdrop-blur transition-colors ${active === it.id ? 'border-bronze-deep bg-bronze-deep text-ivory' : 'border-line bg-ivory/90 text-hoadau hover:bg-ivory'}`}>
+                className={`group relative grid size-10 place-items-center rounded-full border no-underline shadow-float transition-colors ${active === it.id ? 'border-bronze-deep bg-bronze-deep text-ivory' : 'border-line bg-ivory/90 text-hoadau hover:bg-ivory'}`}>
                 <Icon d={it.icon} />
                 {/* nhãn: chỉ hiện khi rê chuột / focus bàn phím, nổi bên phải, không chiếm chỗ */}
                 <span aria-hidden="true"

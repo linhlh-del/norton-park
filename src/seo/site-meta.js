@@ -22,8 +22,10 @@ export const SITE = {
   lang: 'vi',
   themeColor: '#DCD3C0',
   published: '2026-10-01', // datePublished của trang chủ
-  ogImage: '/images/_optimized/norton-park-og.jpg', // 1200 × 630, sinh bởi npm run images từ ảnh hero
-  ogImageAlt: 'Phối cảnh toà tháp Norton Park lúc hoàng hôn, Đại lộ Bình Dương',
+  ogImage: '/images/thumbnail.jpg',
+  ogImageWidth: 2400,
+  ogImageHeight: 1350,
+  ogImageAlt: 'Phối cảnh các toà tháp Norton Park hai bên trục đường nội khu, giữa công viên cây xanh',
   twitterSite: '', // vd. '@nortonpark' nếu có tài khoản X
 };
 

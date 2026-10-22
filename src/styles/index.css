@@ -101,7 +101,7 @@
   .media-img[data-state="loading"] { opacity: 0; transform: scale(1.04); }
   .media-img[data-state="loaded"] { opacity: 1; transform: none; }
   .media-img[data-priority] { animation: np-settle 3.4s var(--ease-soft) both; }
-  .media[data-loading="true"] { animation: np-shimmer 1.6s ease-in-out infinite; }
+  /* (ô ảnh đang tải: chỉ hiện màu nền — không chạy hiệu ứng lặp vô hạn để đỡ tốn CPU/GPU khi cuộn) */
 
   /* hiện dần khi cuộn tới — xem src/components/motion/useRevealObserver.js */
   .reveal-ready [data-reveal] {
@@ -136,16 +136,16 @@
 
   /* CTA: vệt sáng lướt qua định kỳ + quầng sáng theo con trỏ (--rx/--ry do src/lib/ctaFx.js cập nhật) */
   .btn-solid, .btn-light, .btn-cta, button[type="submit"].btn { position: relative; overflow: hidden; isolation: isolate; }
+  /* Vệt sáng = một lớp phủ rộng bằng nút, chỉ di chuyển bằng transform (card đồ hoạ tự xử lý, không vẽ lại /
+     tính lại layout mỗi khung hình như khi đổi "left") */
   .btn-solid::after, .btn-light::after, .btn-cta::after, button[type="submit"].btn::after {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 44px;
-    left: -70px;
-    background: linear-gradient(105deg, transparent, rgb(255 255 255 / 0.55), transparent);
-    transform: skewX(-18deg);
+    inset: 0;
+    background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.5) 50%, transparent 62%);
+    transform: translate3d(-110%, 0, 0);
     animation: btnShine 3.8s ease-in-out infinite;
+    will-change: transform;
     pointer-events: none;
   }
   .btn-solid::before, .btn-light::before, .btn-cta::before, button[type="submit"].btn::before {
@@ -164,8 +164,8 @@
     .btn-solid::after, .btn-light::after, .btn-cta::after, button[type="submit"].btn::after { animation: none; display: none; }
   }
   @keyframes btnShine {
-    0% { left: -70px; }
-    55%, 100% { left: calc(100% + 70px); }
+    0% { transform: translate3d(-110%, 0, 0); }
+    55%, 100% { transform: translate3d(110%, 0, 0); }
   }
 
   @keyframes np-settle { from { transform: scale(1.08); } }

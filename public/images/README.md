@@ -19,6 +19,6 @@
 | `imgi_1_…-beige.svg` / `imgi_2_…primary.svg` | Logo trên nền tối (header, footer) / nền sáng (popup) |
 | `quacho-symbol-bronze.webp` / `-beige.webp` | Biểu tượng đầu section nền sáng / nền tối · favicon |
 
-Ảnh Open Graph: sinh từ `overview_hero-facade-sunset.jpg`.
+Ảnh chia sẻ (Open Graph / Facebook / Zalo): `thumbnail.jpg` (2400 × 1350) — khai báo ở `SITE.ogImage` trong `src/seo/site-meta.js`.
 Chưa dùng: `imgi_5_hoa-dau-artwork.webp`, `imgi_35_hero-facade-sunset-portrait.jpg`, `imgi_37_….webp`, `backgound-logo.svg`,
 `logo-header.png`, `overview_hero-facade-sunset.jpg` (trùng `imgi_4`), thư mục `vendor/`.

@@ -123,11 +123,12 @@ export default function Calculator() {
                   <p className="eyebrow text-bronze-deep">{type.col}</p>
                   <h3 className="heading-2">{type.name}</h3>
                   <p className="eyebrow tracking-[0.2em] text-ink-soft">{type.rooms}</p>
-                  <dl className="m-0 grid grid-cols-3 gap-4 border-t border-line pt-4">
+                  {/* subgrid: nhãn xuống 2 dòng ở ô nào thì số liệu cả 3 ô vẫn cùng một hàng */}
+                  <dl className="m-0 grid grid-cols-3 gap-x-4 border-t border-line pt-4">
                     {[[t('pc.count'), type.count], [t('pc.gfaFrom'), m2(layouts[0].gfa)], [t('pc.nsaFrom'), m2(Math.min(...layouts.map((l) => l.nsa)))]].map(([k, v]) => (
-                      <div key={k}>
-                        <dt className="eyebrow text-[9px] tracking-[0.14em] text-ink-soft">{k}</dt>
-                        <dd className="m-0 mt-1.5 font-display text-[28px]"><CountUp value={String(v)} duration={1300} /></dd>
+                      <div key={k} className="row-span-2 grid grid-rows-subgrid gap-y-1.5">
+                        <dt className="eyebrow self-start text-[9px] tracking-[0.14em] text-ink-soft">{k}</dt>
+                        <dd className="m-0 self-start font-display text-[28px] leading-tight"><CountUp value={String(v)} duration={1300} /></dd>
                       </div>
                     ))}
                   </dl>

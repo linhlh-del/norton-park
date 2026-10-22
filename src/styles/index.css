@@ -10,6 +10,9 @@
     scroll-padding-top: var(--header-h); /* nhảy tới #anchor không bị header dính che */
     -webkit-text-size-adjust: 100%;
   }
+  /* hiệu ứng trượt vào từ hai bên dịch phần tử ±64px trước khi hiện: cắt phần thừa để trang không tràn ngang
+     (clip không tạo vùng cuộn mới → header dính và cuộn theo section vẫn chạy) */
+  main { overflow-x: clip; }
   body {
     background: var(--color-cream);
     color: var(--color-ink);
@@ -26,9 +29,6 @@
   :focus-visible {
     outline: 2px solid var(--color-bronze-deep);
     outline-offset: 2px;
-  }
-  [id] {
-    scroll-margin-top: 5rem;
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -63,19 +63,22 @@
   .carousel-track::-webkit-scrollbar { display: none; }
   .carousel-track:focus-visible { outline-offset: 6px; }
   /* ---------- trang chủ: cuộn theo từng section ---------- */
-  /* html.snap-y do Home.jsx bật. Mỗi section ≥ 1 màn hình (trừ header), nội dung căn giữa theo chiều dọc;
+  /* html.np-snap do Home.jsx bật. Mỗi section ≥ 1 màn hình (trừ header), nội dung căn giữa theo chiều dọc;
      một lần vuốt / lăn chuột dừng đúng đầu section kế (scroll-snap-stop: always không cho trượt qua nhiều section).
      Section cao hơn màn hình (mặt bằng, form, FAQ trên điện thoại) vẫn cuộn tự do bên trong rồi mới sang section sau. */
-  html.snap-y { scroll-snap-type: y mandatory; }
-  html.snap-y main > section {
-    min-height: calc(100svh - var(--header-h));
+  html.np-snap { scroll-snap-type: y mandatory; }
+  html.np-snap main > section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  html.np-snap main > section:not(#position) {
+    min-height: calc(100svh - var(--header-h));
     display: grid;
     grid-template-columns: minmax(0, 1fr); /* carousel bên trong không được nới rộng cột */
     align-content: center;
   }
-  html.snap-y footer { scroll-snap-align: end; }
+  /* chiều cao bản đồ (#position): xem cuối file — phải nằm ngoài @layer để thắng location-map.css */
+  html.np-snap footer { scroll-snap-align: end; }
 
   /* ---------- hiệu năng ---------- */
   /* Section dưới màn hình đầu: trình duyệt bỏ qua style/layout/paint cho tới khi cuộn gần tới (giảm mạnh thời gian
@@ -83,7 +86,7 @@
      Trừ bản đồ (#position): script bản đồ cần đo khung ngay khi khởi tạo. */
   /* (không áp dụng ở trang chủ cuộn theo section: snap cần vị trí thật của từng section, ước lượng sai làm
      nhảy tới #anchor lệch section) */
-  html:not(.snap-y) main > section:nth-child(n + 3):not(#position) {
+  html:not(.np-snap) main > section:nth-child(n + 3):not(#position) {
     content-visibility: auto;
     contain-intrinsic-size: auto 900px;
   }
@@ -293,4 +296,13 @@
     border-color: var(--color-hoadau);
     color: var(--color-on-dark);
   }
+}
+
+/* ---------- bản đồ vị trí: khít màn hình ----------
+   Ngoài @layer vì location-map.css (không layer) đặt .np-locmap { height: clamp(…) } — CSS không layer luôn thắng CSS
+   trong layer. Bản đồ (giá trị chính) vừa khít phần màn hình giữa header và thanh CTA dưới đáy, để thanh kéo
+   bảng thông tin của bản đồ trên điện thoại không bị che. Khung giữ chỗ (trước khi tải bản đồ) cao bằng. */
+html.np-snap #position { height: calc(100svh - var(--header-h)); }
+@media (max-width: 1023.98px) {
+  html.np-snap #position { height: calc(100svh - var(--header-h) - 4rem - env(safe-area-inset-bottom)); }
 }

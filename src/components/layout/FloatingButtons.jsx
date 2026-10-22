@@ -50,11 +50,31 @@ function useScrolledPast(px) {
   return past;
 }
 
+/* bản đồ đang chiếm giữa màn hình → ẩn cụm nút để không che bản đồ, bảng thông tin và thanh kéo
+   bảng thông tin (thanh CTA dưới đáy vẫn còn nút Tư vấn) */
+function useMapActive() {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const r = document.getElementById('position')?.getBoundingClientRect();
+      setOn(Boolean(r && r.top < innerHeight * 0.35 && r.bottom > innerHeight * 0.65));
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(check); };
+    check();
+    addEventListener('scroll', onScroll, { passive: true });
+    return () => { removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
+  }, []);
+  return on;
+}
+
 export default function FloatingButtons() {
   const t = useT();
   const { contact } = useSite();
   const popup = useContactPopup();
   const showTop = useScrolledPast(700);
+  const mapActive = useMapActive();
 
   const toTop = () => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,7 +83,7 @@ export default function FloatingButtons() {
   };
 
   return (
-    <div className="floating-buttons fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col items-center gap-2.5 sm:right-5 lg:bottom-6 lg:gap-3.5">
+    <div className={`floating-buttons fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col items-center gap-2.5 transition-opacity duration-500 sm:right-5 lg:bottom-6 lg:gap-3.5 ${mapActive ? 'pointer-events-none opacity-0' : ''}`}>
       {/* ── Lên đầu trang ── */}
       <button
         type="button"

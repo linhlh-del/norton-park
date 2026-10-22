@@ -7,6 +7,7 @@ export const images = {
   hero: '/images/hero_design-story-facade.jpg',
   heroPortrait: '/images/imgi_34_hero-facade-plot-portrait.jpg', // điện thoại dọc
   designStory: '/images/imgi_4_hero-facade-sunset.jpg',
+  register: '/images/imgi_4_hero-facade-sunset.jpg', // nền section Đăng ký tư vấn
   landscapeStory: '/images/imgi_6_landscape-story.jpg',
   masterplan: '/images/imgi_12_masterplan-birdview-r16.webp',
   blockB: '/images/block-b.jpg',
@@ -16,8 +17,8 @@ export const images = {
 export const contact = {
   address: 'Số 5 Đại lộ Bình Dương, Phường Thuận Giao, Thành phố Hồ Chí Minh',
   mapUrl: 'https://www.google.com/maps/place/Norton+Park+Gamuda+Land/@10.9311995,106.712967,19z/data=!4m6!3m5!1s0x3174d711342cd6b1:0x1c66dbf89b9b27df!8m2!3d10.9311995!4d106.712967!16s%2Fg%2F11p1_4vk9l',
-  hotline: '093 860 90 23',
-  hotlineHref: 'tel:+84938609023',
+  hotline: '093 448 3138',
+  hotlineHref: 'tel:+84934483138',
   email: 'info@nortonpark.com.vn',
   fanpage: 'Norton Park by Gamuda Land',
   fanpageUrl: 'https://www.facebook.com/NortonParkbyGLVN',
@@ -172,7 +173,7 @@ export const faq = [
   { q: 'Norton Park có những loại hình sản phẩm nào?', a: 'Norton Park gồm hai bộ sưu tập: Bộ sưu tập chuẩn sống toàn cầu gồm Studio (căn tiêu biểu 42,12 m²), 1 phòng ngủ+ (50,65 m²), 2 phòng ngủ (79,24 m²), 2 phòng ngủ+ (87,20 m²), 3 phòng ngủ (113,65 m²); và Bộ sưu tập chuẩn sống đặc tuyển gồm Căn hộ sân vườn (từ 51,08 m²), Duplex (156,07 m²), Duplex sân vườn (139,86 m²), Podium Shop (189,01 m²) cùng Standalone Shop.' },
   { q: 'Chủ đầu tư dự án Norton Park là ai?', a: 'Norton Park được phát triển bởi Gamuda Land (thành lập năm 1995) — bộ phận phát triển bất động sản của Tập đoàn Gamuda Berhad (Malaysia) với hơn 30 năm kinh nghiệm kiến tạo các khu đô thị bền vững tại Malaysia, Singapore, Việt Nam, Anh và Úc. Tại Việt Nam, Gamuda Land ghi dấu ấn với 11 dự án đáp ứng hệ thống kiểm soát chất lượng công trình toàn diện GQUAS.' },
   { q: 'Thời gian dự kiến bàn giao dự án Norton Park là khi nào?', a: 'Dự án Norton Park dự kiến bàn giao vào Quý 3/2029 (thông tin tiến độ và điều kiện bàn giao cụ thể sẽ được quy định chi tiết tại Hợp đồng mua bán và thông báo chính thức của Chủ đầu tư).' },
-  { q: 'Kênh thông tin, bảng tính giá dự kiến và bản đồ 360° chính thức của Norton Park ở đâu?', a: 'Website chính thức duy nhất của dự án Norton Park (Chủ đầu tư Gamuda Land — Pháp nhân: Công ty TNHH Skybridge, MST 3700755234) là https://www.nortonpark.com.vn/. Khách hàng có thể tham khảo công cụ Bảng tính giá dự kiến và tra cứu 63 mặt bằng Phân khu B chính thức tại https://www.nortonpark.com.vn/bang-tinh-gia, khám phá bản đồ 360° tại https://360.nortonpark.com.vn/ hoặc liên hệ Hotline chính thức 093 860 90 23 và email info@nortonpark.com.vn.' },
+  { q: 'Kênh thông tin, bảng tính giá dự kiến và bản đồ 360° chính thức của Norton Park ở đâu?', a: 'Website chính thức duy nhất của dự án Norton Park (Chủ đầu tư Gamuda Land — Pháp nhân: Công ty TNHH Skybridge, MST 3700755234) là https://www.nortonpark.com.vn/. Khách hàng có thể tham khảo công cụ Bảng tính giá dự kiến và tra cứu 63 mặt bằng Phân khu B chính thức tại https://www.nortonpark.com.vn/bang-tinh-gia, khám phá bản đồ 360° tại https://360.nortonpark.com.vn/ hoặc liên hệ Hotline chính thức 093 448 3138 và email info@nortonpark.com.vn.' },
 ];
 
 /* ---------- bảng tính giá ---------- */

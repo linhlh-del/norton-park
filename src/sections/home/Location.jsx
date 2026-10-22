@@ -7,7 +7,7 @@ export default function Location() {
   return (
     <section id="location" className="bg-sand pb-16 pt-section">
       <div className="container-site flex flex-col gap-[clamp(2.5rem,5vw,4rem)]">
-        <div className="grid items-end gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
+        <div className="grid items-start gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
           <div data-reveal="left" className="flex flex-col gap-5">
             <p className="eyebrow text-walnut">{t('location.eyebrow')}</p>
             <h2 className="heading-2">{t('location.title')}</h2>

@@ -38,8 +38,6 @@ const vi = {
   'hero.title1': 'Tinh chọn chuẩn',
   'hero.title2': 'chuyên gia',
   'hero.explore': 'Khám phá Norton Park',
-  'hero.center': 'Norton Park',
-  'hero.centerAria': 'Norton Park — xem bản đồ vị trí và kết nối vùng',
 
   // design / landscape story
   'design.imageAlt': 'Phối cảnh toà tháp Norton Park lúc hoàng hôn, đỉnh mái uốn cong như cánh hoa dầu',
@@ -135,7 +133,7 @@ const vi = {
   'form.privacy': 'Thông tin được bảo mật theo chính sách bảo mật của chủ đầu tư.',
   'form.name': 'Họ và tên',
   'form.phone': 'Số điện thoại',
-  'form.phoneHint': 'Số điện thoại Việt Nam, vd. 093 860 90 23',
+  'form.phoneHint': 'Số điện thoại Việt Nam, vd. 093 448 3138',
   'form.email': 'Email, không bắt buộc',
   'form.consent': 'Đồng ý được liên hệ về Norton Park và đồng ý với',
   'form.policy': 'chính sách bảo mật',
@@ -279,8 +277,6 @@ const en = {
   'hero.title1': 'Curated for',
   'hero.title2': 'professionals',
   'hero.explore': 'Discover Norton Park',
-  'hero.center': 'Norton Park',
-  'hero.centerAria': 'Norton Park — see the location and regional connections map',
 
   'design.imageAlt': 'Norton Park tower at sunset, its curved crown echoing a dipterocarp blossom',
   'design.imageLabel': 'Background: tower at sunset',
@@ -367,7 +363,7 @@ const en = {
   'form.privacy': 'Your information is protected under the developer’s privacy policy.',
   'form.name': 'Full name',
   'form.phone': 'Phone number',
-  'form.phoneHint': 'Vietnamese phone number, e.g. 093 860 90 23',
+  'form.phoneHint': 'Vietnamese phone number, e.g. 093 448 3138',
   'form.email': 'Email (optional)',
   'form.consent': 'I agree to be contacted about Norton Park and accept the',
   'form.policy': 'privacy policy',

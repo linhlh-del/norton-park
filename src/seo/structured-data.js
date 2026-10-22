@@ -46,7 +46,7 @@ const project = {
   url: absUrl('/'),
   tourBookingPage: contact.tour360Url,
   image: absUrl(images.hero),
-  telephone: '+84938609023',
+  telephone: '+84934483138',
   email: contact.email,
   numberOfAvailableAccommodationUnits: 1286,
   address: {

@@ -92,14 +92,20 @@ export default function ValueNav() {
 
       {/* máy tính: cột nhãn dọc mép trái, hiện sau hero */}
       <nav aria-label={t('values.nav')}
-        className={`fixed left-4 top-1/2 z-30 hidden -translate-y-1/2 transition-all duration-700 lg:block ${pastHero ? 'opacity-100' : 'pointer-events-none -translate-x-4 opacity-0'}`}>
-        <ul className="m-0 flex list-none flex-col gap-1.5 p-0">
+        className={`fixed left-4 top-1/2 z-30 hidden -translate-y-1/2 transition-all duration-700 lg:block ${pastHero && active !== 'position' ? 'opacity-100' : 'pointer-events-none -translate-x-4 opacity-0'}`}>
+        {/* items-start: mỗi nút chỉ rộng bằng biểu tượng (không bị kéo giãn theo nút rộng nhất) */}
+        <ul className="m-0 flex list-none flex-col items-start gap-1.5 p-0">
           {ITEMS.map((it) => (
             <li key={it.key}>
-              <Link to={it.to} data-track="value_nav" data-track-label={it.key} aria-current={active === it.id ? 'true' : undefined} tabIndex={pastHero ? 0 : -1}
-                className={`group flex items-center gap-2.5 rounded-full border py-2 pl-2.5 pr-4 font-sub text-[11px] font-semibold uppercase tracking-[0.12em] no-underline shadow-float backdrop-blur transition-colors ${active === it.id ? 'border-bronze-deep bg-bronze-deep text-ivory' : 'border-line bg-ivory/90 text-hoadau hover:bg-ivory'}`}>
+              <Link to={it.to} data-track="value_nav" data-track-label={it.key} aria-label={t(`values.${it.key}`)}
+                aria-current={active === it.id ? 'true' : undefined} tabIndex={pastHero ? 0 : -1}
+                className={`group relative grid size-10 place-items-center rounded-full border no-underline shadow-float backdrop-blur transition-colors ${active === it.id ? 'border-bronze-deep bg-bronze-deep text-ivory' : 'border-line bg-ivory/90 text-hoadau hover:bg-ivory'}`}>
                 <Icon d={it.icon} />
-                {t(`values.${it.key}`)}
+                {/* nhãn: chỉ hiện khi rê chuột / focus bàn phím, nổi bên phải, không chiếm chỗ */}
+                <span aria-hidden="true"
+                  className="pointer-events-none absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full bg-hoadau px-3 py-1.5 font-sub text-[11px] font-semibold uppercase tracking-[0.12em] text-ivory opacity-0 shadow-float transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  {t(`values.${it.key}`)}
+                </span>
               </Link>
             </li>
           ))}

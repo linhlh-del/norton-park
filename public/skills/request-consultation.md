@@ -17,4 +17,4 @@ Hoặc bấm nút "Tư vấn" trên thanh điều hướng để mở biểu m�
 
 ## Lưu ý
 - Chỉ gửi thông tin khi người dùng đã đồng ý cung cấp số điện thoại của họ.
-- Kênh khác: hotline 093 860 90 23 · info@nortonpark.com.vn.
+- Kênh khác: hotline 093 448 3138 · info@nortonpark.com.vn.

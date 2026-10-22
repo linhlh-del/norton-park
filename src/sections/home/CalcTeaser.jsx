@@ -15,8 +15,9 @@ export default function CalcTeaser() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,13.75rem),1fr))] gap-4">
           {priceTypes.map((p, i) => (
             <Link key={p.name} to={`/bang-tinh-gia?loai=${i}`} data-reveal="up" style={{ '--reveal-i': i }}
-              className="flex flex-col gap-2.5 rounded-card border border-line bg-ivory p-6 text-hoadau no-underline transition-colors hover:border-bronze hover:text-hoadau">
-              <span className="font-display text-[28px]">{p.name}</span>
+              /* subgrid 3 dòng (tên · diện tích · số layout): tên căn xuống dòng thì các dòng dưới của cả hàng vẫn thẳng nhau */
+              className="row-span-3 grid grid-rows-subgrid gap-y-2.5 rounded-card border border-line bg-ivory p-6 text-hoadau no-underline transition-colors hover:border-bronze hover:text-hoadau">
+              <span className="self-start font-display text-[28px] leading-tight">{p.name}</span>
               <span className="text-[15px] text-ink-soft">{p.gfa.includes('–') ? t('calc.from') : ''}<CountUp value={`${p.gfa.split('–')[0].trim()} m²`} duration={1800} /></span>
               <span className="eyebrow text-[10px] text-bronze-deep"><CountUp value={t('calc.layouts', { n: p.count })} duration={1300} /></span>
             </Link>

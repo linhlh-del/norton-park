@@ -14,11 +14,13 @@ export default function Facts() {
           <SectionHeading align="center" eyebrow={t('facts.eyebrow')} title={t('facts.title')} />
         </div>
 
+        {/* subgrid: mọi ô trong cùng hàng chia chung 2 dòng lưới → số liệu ngang hàng số liệu, nhãn ngang hàng nhãn,
+            nhãn xuống dòng vẫn chung mép trên (số hiển thị trên, nhãn dưới; DOM giữ thứ tự dt → dd đúng chuẩn) */}
         <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(min(100%,13.75rem),1fr))] border-t border-line">
           {facts.map((f, i) => (
-            <div key={f.label} data-reveal="up" style={{ '--reveal-i': i }} className="flex flex-col-reverse gap-2 border-b border-line px-4 py-8 text-center">
-              <dt className="eyebrow text-[10px] text-ink-soft">{f.label}</dt>
-              <dd className="m-0 font-display text-[clamp(2.4rem,4vw,3.4rem)] leading-none text-hoadau">
+            <div key={f.label} data-reveal="up" style={{ '--reveal-i': i }} className="row-span-2 grid grid-rows-subgrid gap-y-2 border-b border-line px-4 py-8 text-center">
+              <dt className="eyebrow row-start-2 self-start text-[10px] text-ink-soft">{f.label}</dt>
+              <dd className="row-start-1 m-0 self-end font-display text-[clamp(2.4rem,4vw,3.4rem)] leading-none text-hoadau">
                 {f.count === false ? f.value : <CountUp value={f.value} />}
               </dd>
             </div>

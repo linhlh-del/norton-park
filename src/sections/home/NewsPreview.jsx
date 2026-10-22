@@ -40,11 +40,13 @@ export default function NewsPreview() {
               className="carousel-slide group flex basis-full flex-col gap-4 border-t border-on-dark/30 pt-6 text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
               <Media src={n.image} alt={n.alt} label={t('news.image')} className="aspect-[3/2] rounded-lg" style={darkMedia}
                 sizes="(min-width: 1024px) 27vw, (min-width: 768px) 41vw, 100vw" />
-              <div className="flex gap-4">
-                <span className="eyebrow text-on-dark-soft">{n.cat}</span>
-                <span className="eyebrow">{n.src}</span>
+              {/* một dòng (không xuống dòng) để tiêu đề và tóm tắt của các thẻ luôn thẳng hàng */}
+              <div className="flex min-w-0 gap-4 whitespace-nowrap">
+                <span className="eyebrow truncate text-on-dark-soft">{n.cat}</span>
+                <span className="eyebrow shrink-0">{n.src}</span>
               </div>
-              <h3 className="heading-3">{n.title}</h3>
+              {/* tiêu đề luôn chiếm đúng 3 dòng → tóm tắt của các thẻ bắt đầu cùng một mép */}
+              <h3 className="heading-3 line-clamp-3 min-h-[3lh]">{n.title}</h3>
               <p className="m-0 leading-relaxed text-stone">{n.excerpt}</p>
               <span className="mt-auto inline-flex items-center gap-2 font-sub text-xs font-semibold uppercase tracking-button group-hover:underline">
                 {t('news.read')} <Arrow /><span className="sr-only"> {t('news.newTab', { src: n.src })}</span>

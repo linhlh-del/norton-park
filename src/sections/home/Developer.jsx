@@ -8,11 +8,11 @@ export default function Developer() {
   return (
     <section id="developer" className="bg-ivory py-section">
       <div className="container-site flex flex-col gap-16">
-        <div className="grid items-center gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
+        <div className="grid items-start gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
           <div data-reveal="left" className="flex flex-col gap-5">
             <p className="eyebrow text-bronze-deep">{t('dev.eyebrow')}</p>
             <h2 className="heading-2">{t('dev.title')}</h2>
-            <Media src="/images/gamuda-land-logo.png" alt="Gamuda Land" label={t('dev.logo')} fit="contain"
+            <Media src="/images/vendor/gamuda.webp" alt="Gamuda Land" label={t('dev.logo')} fit="contain"
               className="media-static h-20 w-60 rounded-md" style={{ '--media-bg': 'transparent' }} sizes="240px" />
           </div>
           <p data-reveal="right" className="lead">

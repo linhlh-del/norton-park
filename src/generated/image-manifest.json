@@ -999,73 +999,62 @@
       }
     ]
   },
-  "/images/vendor/imgi_24_gamuda-land-logo.webp": {
-    "width": 700,
-    "height": 73,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/imgi_24_gamuda-land-logo-480.avif",
-        "webp": "/images/_optimized/vendor/imgi_24_gamuda-land-logo-480.webp"
-      },
-      {
-        "w": 700,
-        "avif": "/images/_optimized/vendor/imgi_24_gamuda-land-logo-700.avif",
-        "webp": "/images/_optimized/vendor/imgi_24_gamuda-land-logo-700.webp"
-      }
-    ]
-  },
-  "/images/vendor/imgi_25_architecture-dpa.png": {
-    "width": 720,
-    "height": 228,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/imgi_25_architecture-dpa-480.avif",
-        "webp": "/images/_optimized/vendor/imgi_25_architecture-dpa-480.webp"
-      },
-      {
-        "w": 720,
-        "avif": "/images/_optimized/vendor/imgi_25_architecture-dpa-720.avif",
-        "webp": "/images/_optimized/vendor/imgi_25_architecture-dpa-720.webp"
-      }
-    ]
-  },
-  "/images/vendor/imgi_26_interior-dwp.png": {
-    "width": 720,
-    "height": 297,
-    "variants": [
-      {
-        "w": 480,
-        "avif": "/images/_optimized/vendor/imgi_26_interior-dwp-480.avif",
-        "webp": "/images/_optimized/vendor/imgi_26_interior-dwp-480.webp"
-      },
-      {
-        "w": 720,
-        "avif": "/images/_optimized/vendor/imgi_26_interior-dwp-720.avif",
-        "webp": "/images/_optimized/vendor/imgi_26_interior-dwp-720.webp"
-      }
-    ]
-  },
-  "/images/vendor/imgi_27_landscape-beltcollins.png": {
+  "/images/vendor/beltcollins.png": {
     "width": 299,
     "height": 269,
     "variants": [
       {
         "w": 299,
-        "avif": "/images/_optimized/vendor/imgi_27_landscape-beltcollins-299.avif",
-        "webp": "/images/_optimized/vendor/imgi_27_landscape-beltcollins-299.webp"
+        "avif": "/images/_optimized/vendor/beltcollins-299.avif",
+        "webp": "/images/_optimized/vendor/beltcollins-299.webp"
       }
     ]
   },
-  "/images/vendor/imgi_28_structural.png": {
-    "width": 358,
-    "height": 360,
+  "/images/vendor/dpa.png": {
+    "width": 720,
+    "height": 228,
     "variants": [
       {
-        "w": 358,
-        "avif": "/images/_optimized/vendor/imgi_28_structural-358.avif",
-        "webp": "/images/_optimized/vendor/imgi_28_structural-358.webp"
+        "w": 480,
+        "avif": "/images/_optimized/vendor/dpa-480.avif",
+        "webp": "/images/_optimized/vendor/dpa-480.webp"
+      },
+      {
+        "w": 720,
+        "avif": "/images/_optimized/vendor/dpa-720.avif",
+        "webp": "/images/_optimized/vendor/dpa-720.webp"
+      }
+    ]
+  },
+  "/images/vendor/dwp.png": {
+    "width": 720,
+    "height": 297,
+    "variants": [
+      {
+        "w": 480,
+        "avif": "/images/_optimized/vendor/dwp-480.avif",
+        "webp": "/images/_optimized/vendor/dwp-480.webp"
+      },
+      {
+        "w": 720,
+        "avif": "/images/_optimized/vendor/dwp-720.avif",
+        "webp": "/images/_optimized/vendor/dwp-720.webp"
+      }
+    ]
+  },
+  "/images/vendor/gamuda.webp": {
+    "width": 700,
+    "height": 73,
+    "variants": [
+      {
+        "w": 480,
+        "avif": "/images/_optimized/vendor/gamuda-480.avif",
+        "webp": "/images/_optimized/vendor/gamuda-480.webp"
+      },
+      {
+        "w": 700,
+        "avif": "/images/_optimized/vendor/gamuda-700.avif",
+        "webp": "/images/_optimized/vendor/gamuda-700.webp"
       }
     ]
   },
@@ -1093,6 +1082,17 @@
         "w": 700,
         "avif": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-700.avif",
         "webp": "/images/_optimized/vendor/imgi_30_gamuda-land-logo-beige-700.webp"
+      }
+    ]
+  },
+  "/images/vendor/structural.png": {
+    "width": 358,
+    "height": 360,
+    "variants": [
+      {
+        "w": 358,
+        "avif": "/images/_optimized/vendor/structural-358.avif",
+        "webp": "/images/_optimized/vendor/structural-358.webp"
       }
     ]
   }

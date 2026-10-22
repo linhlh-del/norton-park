@@ -65,7 +65,9 @@ export default function News() {
           ) : (
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,21rem),1fr))] gap-x-6 gap-y-8">
               {list.map((p, i) => (
-                <article key={p.title} data-reveal="up" style={{ '--reveal-i': i % 3 }} className="group flex flex-col gap-3.5">
+                /* subgrid 6 dòng (ảnh · chuyên mục · nguồn · tiêu đề · tóm tắt · liên kết): tiêu đề dài ngắn khác nhau
+                   thì tóm tắt và liên kết của các thẻ cùng hàng vẫn thẳng hàng, chung mép trên */
+                <article key={p.title} data-reveal="up" style={{ '--reveal-i': i % 3 }} className="group row-span-6 grid grid-rows-subgrid content-start gap-y-3.5">
                   <Media src={p.image} alt={p.title} label={t('news.image')} className="aspect-[16/10] rounded-card" sizes="(min-width: 1024px) 27vw, 100vw" />
                   <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                     <span className="eyebrow text-[10px] text-bronze-deep">{p.cat}</span>

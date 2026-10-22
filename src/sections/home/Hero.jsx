@@ -9,7 +9,7 @@ const PinIcon = () => (
 
 /* Hero: ảnh nền tải ưu tiên (LCP) và thu nhẹ khi vào trang; chữ trồi lên lần lượt ngay khi tải, không chờ cuộn.
    Tiêu đề H1 không làm mờ để không làm chậm chỉ số LCP.
-   Nút chữ nhật "NORTON PARK" giữa màn hình và nút "Khám phá" → bản đồ vị trí (#position). */
+   Nút "Khám phá Norton Park" → bản đồ vị trí (#position). */
 export default function Hero() {
   const t = useT();
   const { images } = useSite();
@@ -18,12 +18,6 @@ export default function Hero() {
       <Media src={images.hero} mobileSrc={images.heroPortrait} alt={t('hero.imageAlt')} label={t('hero.imageLabel')}
         tone="dark" priority className="media-static !absolute inset-0 -z-20" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/80 via-hoadau-deep/35 to-hoadau-deep/30" />
-
-      <Link to="/#position" aria-label={t('hero.centerAria')} data-track="cta_click" data-track-label="hero_center_norton_park"
-        className="btn-cta hero-in absolute left-1/2 top-[30%] z-10 inline-flex min-h-14 -translate-x-1/2 -translate-y-1/2 items-center whitespace-nowrap border border-on-dark/70 bg-hoadau-deep/35 px-8 font-sub text-sm font-semibold uppercase tracking-[0.42em] text-on-dark no-underline backdrop-blur-sm transition-colors hover:bg-on-dark hover:text-hoadau md:top-[38%] md:min-h-16 md:px-12 md:text-base"
-        style={{ '--reveal-i': 3 }}>
-        {t('hero.center')}
-      </Link>
 
       <div className="container-site flex flex-col gap-7 pb-24 pt-40">
         <p className="eyebrow hero-in text-on-dark-soft">{t('hero.eyebrow')}</p>

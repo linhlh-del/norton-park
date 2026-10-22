@@ -56,7 +56,7 @@ const page = (path, lang = 'vi') => {
   const head = headHtml(path, lang);
   return template
     /* <html lang> theo ngôn ngữ; trang chủ bật sẵn cuộn theo section (khỏi giật khi JS gắn class) */
-    .replace('<html lang="vi">', `<html lang="${lang}"${path === '/' ? ' class="snap-y"' : ''}>`)
+    .replace('<html lang="vi">', `<html lang="${lang}"${path === '/' ? ' class="np-snap"' : ''}>`)
     .replace(/<title>[\s\S]*?<\/title>/, head.title)
     .replace(/\s*<meta name="description"[^>]*>/, '')
     .replace('</head>', `    ${head.tags}\n  </head>`)
@@ -102,7 +102,7 @@ write('llms.txt', `# ${SITE.alternateName}
 
 > ${pages['/'].description}
 
-Chủ đầu tư: ${SITE.developer}. Địa chỉ: Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, TP.HCM. Hotline: 093 860 90 23.
+Chủ đầu tư: ${SITE.developer}. Địa chỉ: Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, TP.HCM. Hotline: 093 448 3138.
 
 ## Trang
 ${routes.map((r) => `- [${pages[r].breadcrumb}](${absUrl(r)}): ${pages[r].description}`).join('\n')}

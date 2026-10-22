@@ -1,0 +1,75 @@
+/* ============================================================
+   DESIGN TOKENS — nguồn biến duy nhất cho màu, font, cỡ chữ, khoảng cách.
+   Tailwind v4 đọc khối @theme và sinh utility tương ứng:
+     --color-pine      → bg-pine, text-pine, border-pine …
+     --font-display    → font-display
+     --text-display-1  → text-display-1 (kèm line-height)
+     --spacing-section → py-section, mt-section …
+   Mọi biến cũng dùng được trực tiếp trong CSS: var(--color-pine).
+   ============================================================ */
+@theme static {
+  /* ---------- màu thương hiệu ---------- */
+  --color-hoadau: #594a42;        /* nâu hoa dầu — chữ chính, nền tối */
+  --color-hoadau-deep: #3e342e;   /* nền footer, hero */
+  --color-hoadau-soft: #4a3d36;   /* ô ảnh trên nền tối */
+  --color-pine: #5d614f;          /* xanh thông — nền tối thứ hai */
+  --color-pine-deep: #4d5142;
+  --color-moss: #545744;
+  --color-sage: #8c8f7d;
+  --color-bronze: #a78061;        /* đồng champagne — nhấn */
+  --color-bronze-deep: #805e45;   /* nhấn đủ tương phản cho chữ nhỏ / nút */
+  --color-walnut: #715f50;
+
+  /* nền sáng */
+  --color-ivory: #fbfaf6;
+  --color-cream: #f2eee4;
+  --color-stone: #e1dbc9;
+  --color-sand: #dcd3c0;
+  --color-sandstone: #bdb5a0;
+  --color-taupe: #a39a84;
+  --color-paper: #fff8f2;         /* giấy nền của bản đồ */
+  --color-map-ink: #243c34;       /* chữ của bản đồ */
+
+  /* chữ */
+  --color-ink: #594a42;
+  --color-ink-soft: #6e6455;
+  --color-on-dark: #f4f0e7;
+  --color-on-dark-soft: #d5ceb8;
+
+  /* đường kẻ */
+  --color-line: rgb(89 74 66 / 0.16);
+  --color-line-strong: rgb(89 74 66 / 0.3);
+  --color-line-dark: rgb(244 240 231 / 0.22);
+
+  /* ---------- font (đổi sang font thương hiệu tại src/styles/fonts.css) ---------- */
+  --font-display: "Norton Seasons", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sub: "Norton Futura", "Montserrat", "Century Gothic", system-ui, sans-serif;
+  --font-body: "Norton Gotham", "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---------- cỡ chữ ---------- */
+  --text-display-1: clamp(2.6rem, 6vw, 5rem);
+  --text-display-1--line-height: 1.04;
+  --text-display-2: clamp(2rem, 4vw, 3.3rem);
+  --text-display-2--line-height: 1.08;
+  --text-display-3: clamp(1.4rem, 2vw, 1.85rem);
+  --text-display-3--line-height: 1.15;
+  --text-lead: clamp(1.02rem, 1.3vw, 1.18rem);
+  --text-lead--line-height: 1.7;
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1.4;
+
+  --tracking-eyebrow: 0.32em;
+  --tracking-button: 0.16em;
+  --tracking-logo: 0.2em;
+
+  /* ---------- khoảng cách, bo góc, chuyển động ---------- */
+  --spacing-section: clamp(4.5rem, 9vw, 7.5rem);
+  --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
+  --container-site: 84vw;          /* khung nội dung chiếm 80–86% chiều rộng cửa sổ (từ màn ≥1024px) */
+  --container-site-min: 80vw;
+  --container-site-max: 86vw;
+  --radius-card: 0.625rem;
+  --radius-panel: 0.75rem;
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --shadow-float: 0 10px 30px rgb(60 52 46 / 0.18);
+}

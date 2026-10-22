@@ -1,0 +1,15 @@
+/* ============================================================
+   FONT THƯƠNG HIỆU
+   Biến font (theme.css) ưu tiên "Norton Seasons" / "Norton Futura" / "Norton Gotham", rồi mới tới font Google
+   tạm thời. Khi có file font bản quyền, chép vào public/fonts/ và bỏ chú thích các khối dưới đây — không cần sửa
+   component nào khác.
+   ============================================================ */
+
+/*
+@font-face { font-family: "Norton Seasons"; font-weight: 300; font-display: swap; src: url("/fonts/SVN-TheSeasons-Light.otf") format("opentype"); }
+@font-face { font-family: "Norton Seasons"; font-weight: 400; font-display: swap; src: url("/fonts/SVN-TheSeasons-Regular.otf") format("opentype"); }
+@font-face { font-family: "Norton Futura";  font-weight: 400; font-display: swap; src: url("/fonts/SFUFuturaBook.ttf") format("truetype"); }
+@font-face { font-family: "Norton Futura";  font-weight: 700; font-display: swap; src: url("/fonts/SFUFuturaHeavy.ttf") format("truetype"); }
+@font-face { font-family: "Norton Gotham";  font-weight: 400; font-display: swap; src: url("/fonts/SVN-Gotham-Book.otf") format("opentype"); }
+@font-face { font-family: "Norton Gotham";  font-weight: 700; font-display: swap; src: url("/fonts/SVN-Gotham-Bold.otf") format("opentype"); }
+*/

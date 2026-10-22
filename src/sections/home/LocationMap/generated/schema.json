@@ -1,0 +1,58 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.nortonpark.com.vn/#organization",
+      "name": "Gamuda Land",
+      "url": "https://gamudaland.com.vn/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.nortonpark.com.vn/assets/map/location-map.html#webpage",
+      "url": "https://www.nortonpark.com.vn/assets/map/location-map.html",
+      "name": "Bản đồ vị trí và kết nối vùng dự án Norton Park",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-14",
+      "author": {
+        "@id": "https://www.nortonpark.com.vn/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.nortonpark.com.vn/#organization"
+      },
+      "contentLocation": {
+        "@type": "Place",
+        "name": "Norton Park Gamuda Land",
+        "address": "Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, TP.HCM",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 10.9311995,
+          "longitude": 106.712967
+        },
+        "hasMap": "https://www.google.com/maps/place/Norton+Park+Gamuda+Land/@10.9311995,106.712967,19z/data=!4m6!3m5!1s0x3174d711342cd6b1:0x1c66dbf89b9b27df!8m2!3d10.9311995!4d106.712967!16s%2Fg%2F11p1_4vk9l"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.nortonpark.com.vn/assets/map/location-map.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vị trí chính xác của dự án Norton Park nằm ở đâu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dự án Norton Park tọa lạc tại Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, Thành phố Hồ Chí Minh, liền kề AEON Mall Thuận Giao, kế cận KCN VSIP 1 và đối diện Sân Golf Sông Bé."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Khả năng kết nối giao thông từ Norton Park tới các khu vực trọng điểm như thế nào?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Từ Norton Park, cư dân dễ dàng di chuyển dọc theo trục Đại lộ Bình Dương (Quốc lộ 13) kết nối nhanh chóng vào trung tâm TP.HCM, đại lộ Phạm Văn Đồng, sân bay Tân Sơn Nhất và tương lai là tuyến Metro số 2 đi qua Thuận Giao."
+          }
+        }
+      ]
+    }
+  ]
+}

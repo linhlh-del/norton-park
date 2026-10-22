@@ -31,7 +31,7 @@ export function headFor(path, lang = 'vi') {
     ['property', 'og:url', url],
     ['property', 'og:image', image],
     ['property', 'og:image:secure_url', image],
-    ['property', 'og:image:type', 'image/jpeg'],
+    ['property', 'og:image:type', 'image/png'],
     ['property', 'og:image:width', String(SITE.ogImageWidth)],
     ['property', 'og:image:height', String(SITE.ogImageHeight)],
     ['property', 'og:image:alt', SITE.ogImageAlt],

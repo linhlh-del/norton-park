@@ -890,6 +890,32 @@
       }
     ]
   },
+  "/images/thumbnail.png": {
+    "width": 1200,
+    "height": 630,
+    "variants": [
+      {
+        "w": 480,
+        "avif": "/images/_optimized/thumbnail-480.avif",
+        "webp": "/images/_optimized/thumbnail-480.webp"
+      },
+      {
+        "w": 768,
+        "avif": "/images/_optimized/thumbnail-768.avif",
+        "webp": "/images/_optimized/thumbnail-768.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "/images/_optimized/thumbnail-1080.avif",
+        "webp": "/images/_optimized/thumbnail-1080.webp"
+      },
+      {
+        "w": 1200,
+        "avif": "/images/_optimized/thumbnail-1200.avif",
+        "webp": "/images/_optimized/thumbnail-1200.webp"
+      }
+    ]
+  },
   "/images/tienich/1-life-wellness.jpg": {
     "width": 2400,
     "height": 1350,

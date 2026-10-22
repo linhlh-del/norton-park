@@ -22,7 +22,7 @@ export const SITE = {
   lang: 'vi',
   themeColor: '#DCD3C0',
   published: '2026-10-01', // datePublished của trang chủ
-  ogImage: '/images/thumbnail.jpg',
+  ogImage: '/images/thumbnail.png',
   ogImageWidth: 2400,
   ogImageHeight: 1350,
   ogImageAlt: 'Phối cảnh các toà tháp Norton Park hai bên trục đường nội khu, giữa công viên cây xanh',

@@ -59,6 +59,7 @@ const page = (path, lang = 'vi') => {
     .replace('<html lang="vi">', `<html lang="${lang}"${path === '/' ? ' class="np-snap"' : ''}>`)
     .replace(/<title>[\s\S]*?<\/title>/, head.title)
     .replace(/\s*<meta name="description"[^>]*>/, '')
+    .replace(/\s*<meta\s+data-seo="[^"]+"[^>]*\/>/g, '')
     .replace('</head>', `    ${head.tags}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root" data-route="${url}">${render(url)}</div>`);
 };

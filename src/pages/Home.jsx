@@ -38,7 +38,7 @@ function useSectionSnap() {
     const originalBehavior = root.style.scrollBehavior;
     root.classList.add('np-snap');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const duration = 800;
+    const duration = 1200;
     let frame = 0;
     let locked = false;
 

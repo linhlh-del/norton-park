@@ -30,12 +30,94 @@ function DeferredMap(props) {
 /* nối analytics (GA4 / GTM…) tại đây */
 const track = (ev, label) => window.dataLayer?.push({ event: 'locmap_' + ev, label });
 
-/* trang chủ: mỗi lần vuốt / lăn chuột chuyển đúng một section (CSS: html.np-snap trong index.css) */
+/* trang chủ: mỗi lần lăn chuột chuyển section với thời gian chuyển động cố định */
 function useSectionSnap() {
   useEffect(() => {
     const root = document.documentElement;
+    const originalSnap = root.style.scrollSnapType;
+    const originalBehavior = root.style.scrollBehavior;
     root.classList.add('np-snap');
-    return () => root.classList.remove('np-snap');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const duration = 800;
+    let frame = 0;
+    let locked = false;
+
+    const onWheel = (event) => {
+      if (reduceMotion.matches || !event.cancelable || Math.abs(event.deltaY) < 1 || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.target instanceof Element && event.target.closest('#lm, input, textarea, select, [contenteditable="true"]')) return;
+      if (locked) {
+        event.preventDefault();
+        return;
+      }
+
+      const sections = [...document.querySelectorAll('main > section')];
+      const footer = document.querySelector('footer');
+      const targets = [
+        ...sections.map((element) => ({
+          element,
+          top: element.getBoundingClientRect().top + window.scrollY,
+        })),
+        ...(footer ? [{
+          element: footer,
+          top: footer.getBoundingClientRect().bottom + window.scrollY - window.innerHeight,
+        }] : []),
+      ];
+      if (!targets.length) return;
+
+      const center = window.innerHeight / 2;
+      let activeIndex = targets.findIndex(({ element }) => {
+        const rect = element.getBoundingClientRect();
+        return rect.top <= center && rect.bottom > center;
+      });
+      if (activeIndex < 0) {
+        activeIndex = targets.reduce((closest, target, index) =>
+          Math.abs(target.top - window.scrollY) < Math.abs(targets[closest].top - window.scrollY) ? index : closest, 0);
+      }
+
+      const current = targets[activeIndex].element.getBoundingClientRect();
+      if ((event.deltaY > 0 && current.bottom > window.innerHeight + 2) ||
+          (event.deltaY < 0 && current.top < -2)) return;
+
+      const nextIndex = activeIndex + (event.deltaY > 0 ? 1 : -1);
+      if (nextIndex < 0 || nextIndex >= targets.length) return;
+      event.preventDefault();
+
+      const from = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const to = Math.max(0, Math.min(targets[nextIndex].top, maxScroll));
+      const start = performance.now();
+      const previousSnap = root.style.scrollSnapType;
+      const previousBehavior = root.style.scrollBehavior;
+      root.style.scrollSnapType = 'none';
+      root.style.scrollBehavior = 'auto';
+      locked = true;
+
+      const animate = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        window.scrollTo(0, from + (to - from) * eased);
+        if (progress < 1) {
+          frame = requestAnimationFrame(animate);
+          return;
+        }
+        root.style.scrollSnapType = previousSnap;
+        root.style.scrollBehavior = previousBehavior;
+        locked = false;
+        frame = 0;
+      };
+      frame = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      if (frame) cancelAnimationFrame(frame);
+      root.classList.remove('np-snap');
+      root.style.scrollSnapType = originalSnap;
+      root.style.scrollBehavior = originalBehavior;
+    };
   }, []);
 }
 

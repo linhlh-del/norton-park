@@ -90,4 +90,4 @@ ghi ra console để test giao diện.
 - Thông tin pháp nhân: `[TÊN PHÁP NHÂN]`, `[ĐỊA CHỈ PHÁP NHÂN]` trong `src/data/site.js`.
 - Form đăng ký trong trang và form báo giá chưa dùng `submitLead`: truyền `onSubmit` vào `<Register>` / sửa `Calculator.jsx`.
 - Ảnh bài báo trang chủ: `public/images/news/*.webp` (tên file trong `homeNews`, `src/data/site.js`).
-- Chuyển ngôn ngữ VI/EN mới là nút trạng thái, chưa có bản dịch.
+

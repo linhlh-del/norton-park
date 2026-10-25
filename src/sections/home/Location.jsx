@@ -1,5 +1,6 @@
 import { Link, useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
+import KeywordHeading from '@/components/ui/KeywordHeading';
 
 export default function Location() {
   const t = useT();
@@ -10,7 +11,7 @@ export default function Location() {
         <div className="grid items-start gap-[clamp(2rem,6vw,6rem)] lg:grid-cols-2">
           <div data-reveal="left" className="flex flex-col gap-5">
             <p className="eyebrow text-walnut">{t('location.eyebrow')}</p>
-            <h2 className="heading-2">{t('location.title')}</h2>
+            <KeywordHeading seo={t('location.seo')} className="heading-2">{t('location.title')}</KeywordHeading>
           </div>
           <div data-reveal="right" style={{ '--reveal-i': 1 }} className="flex flex-col gap-4">
             <p className="lead">{t('location.p1')}</p>

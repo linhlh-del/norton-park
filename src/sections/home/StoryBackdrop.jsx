@@ -1,6 +1,7 @@
 import { Children } from 'react';
 import { Link } from '@/i18n';
 import Media from '@/components/ui/Media';
+import KeywordHeading from '@/components/ui/KeywordHeading';
 
 /**
  * Section câu chuyện với ẢNH NỀN TOÀN SECTION. Chữ nằm trên lớp phủ tối để luôn đủ tương phản.
@@ -8,7 +9,7 @@ import Media from '@/components/ui/Media';
  * align: "left" | "right" — phía đặt khối chữ.
  * cta: { label, to, track } — nút dẫn tới giá trị chính (vd. bản đồ vị trí).
  */
-export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, eyebrow, title, children, align = 'left', cta }) {
+export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, eyebrow, title, seoTitle, children, align = 'left', cta }) {
   const dir = align === 'right' ? 'right' : 'left';
   const n = Children.count(children);
   return (
@@ -18,7 +19,7 @@ export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, ey
       <div className={`container-site flex py-section ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
         <div className="flex max-w-xl flex-col gap-6">
           <p data-reveal={dir} className="eyebrow text-on-dark-soft">{eyebrow}</p>
-          <h2 data-reveal={dir} style={{ '--reveal-i': 1 }} className="heading-2">{title}</h2>
+          <KeywordHeading seo={seoTitle} data-reveal={dir} style={{ '--reveal-i': 1 }} className="heading-2">{title}</KeywordHeading>
           <div className="flex flex-col gap-5 text-stone">
             {Children.map(children, (child, i) => (
               <div data-reveal={dir} style={{ '--reveal-i': i + 2 }}>{child}</div>

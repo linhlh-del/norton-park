@@ -14,6 +14,7 @@ export default function ProjectSpirit() {
           tone="dark"
           eyebrow={t('spirit.eyebrow')}
           title={t('spirit.title')}
+          seo={t('spirit.seo')}
           intro={t('spirit.intro')}
         />
         <div className="grid gap-6 md:grid-cols-3">

@@ -10,7 +10,7 @@ export default function Blocks() {
   return (
     <section id="blocks" className="overflow-hidden bg-ivory py-section">
       <div className="container-site flex flex-col gap-14">
-        <SectionHeading align="center" eyebrow={t('blocks.eyebrow')} title={t('blocks.title')} />
+        <SectionHeading align="center" eyebrow={t('blocks.eyebrow')} title={t('blocks.title')} seo={t('blocks.seo')} />
         <div className="grid gap-8 lg:grid-cols-2">
           <article data-reveal="left" className="flex flex-col gap-6">
             <Media src={images.blockB} alt={t('blocks.bAlt')} label={t('blocks.bAlt')} className="aspect-[4/3] rounded-card"

@@ -9,7 +9,8 @@
     "images": "node scripts/optimize-images.mjs",
     "assets": "npm run fonts && npm run images",
     "predev": "npm run assets",
-    "prebuild": "npm run assets",
+    "prebuild": "node scripts/fetch-cms.mjs && npm run assets",
+    "cms:fetch": "node scripts/fetch-cms.mjs",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node scripts/prerender-seo.mjs",
     "preview": "vite preview",
     "extract:map": "node scripts/extract-location-map.mjs"

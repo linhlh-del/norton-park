@@ -11,7 +11,7 @@ export default function Facts() {
       <div className="container-site flex flex-col gap-16">
         <div className="flex flex-col items-center gap-4">
           <QuachoMark tone="light" data-reveal="zoom" />
-          <SectionHeading align="center" eyebrow={t('facts.eyebrow')} title={t('facts.title')} />
+          <SectionHeading align="center" eyebrow={t('facts.eyebrow')} title={t('facts.title')} seo={t('facts.seo')} />
         </div>
 
         {/* subgrid: mọi ô trong cùng hàng chia chung 2 dòng lưới → số liệu ngang hàng số liệu, nhãn ngang hàng nhãn,

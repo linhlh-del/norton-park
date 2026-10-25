@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Link, useT } from '@/i18n';
+import { Link, useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
 /**
  * CTA cố định tới các giá trị chính của landing page:
- *  - điện thoại / máy tính bảng (< 1024px): thanh 5 nút dưới đáy màn hình, luôn trong tầm ngón cái
+ *  - điện thoại / máy tính bảng (< 1024px): thanh sticky 3 nút dưới đáy — Gọi hotline | Chat Zalo | Nhận bảng giá
+ *    (Layout chừa khoảng trống cùng chiều cao để thanh không che nội dung cuối trang)
  *  - máy tính: cột nhãn dọc mép trái, hiện sau khi qua hero, tô đậm section đang xem
  * Thứ tự ưu tiên: Vị trí (bản đồ) → Tiện ích → Mặt bằng → Bảng giá → Tư vấn (form).
  */
@@ -56,35 +57,44 @@ function usePastHero() {
   return past;
 }
 
+const PHONE = 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2';
+const barItem = 'flex min-h-16 flex-col items-center justify-center gap-1 font-sub text-[10px] font-semibold uppercase tracking-[0.08em] no-underline';
+
 const IDS = ITEMS.map((i) => i.id).filter(Boolean);
 
 export default function ValueNav() {
   const t = useT();
   const { pathname } = useLocation();
   const popup = useContactPopup();
+  const { contact } = useSite();
   const active = useActiveSection(IDS, pathname);
   const pastHero = usePastHero();
 
   return (
     <>
-      {/* điện thoại / máy tính bảng: thanh dưới đáy */}
-      <nav aria-label={t('values.nav')}
+      {/* điện thoại / máy tính bảng: thanh sticky Gọi | Zalo | Nhận bảng giá */}
+      <nav aria-label={t('values.quick')}
         className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-hoadau/95 pb-[env(safe-area-inset-bottom)] text-on-dark lg:hidden">
-        <ul className="m-0 grid list-none grid-cols-5 p-0">
-          {ITEMS.map((it) => (
-            <li key={it.key}>
-              <Link to={it.to} data-track="value_nav" data-track-label={it.key} aria-current={active === it.id ? 'true' : undefined}
-                className={`flex min-h-16 flex-col items-center justify-center gap-1 font-sub text-[10px] font-semibold uppercase tracking-[0.08em] no-underline ${active === it.id ? 'text-sand' : 'text-on-dark'}`}>
-                <Icon d={it.icon} />
-                {t(`values.${it.key}`)}
-              </Link>
-            </li>
-          ))}
+        <ul className="m-0 grid list-none grid-cols-3 p-0">
           <li>
-            <button type="button" onClick={() => popup.open('value_nav')} data-track="value_nav" data-track-label="consult"
-              className="btn-cta flex h-full min-h-16 w-full cursor-pointer flex-col items-center justify-center gap-1 border-0 bg-bronze-deep font-sub text-[10px] font-semibold uppercase tracking-[0.08em] text-ivory">
-              <Icon d="M4 5h16v11H8l-4 4zM8 10h8M8 13h5" />
-              {t('values.consult')}
+            <a href={contact.hotlineHref} data-track="sticky_bar" data-track-label="call" aria-label={t('fb.call', { phone: contact.hotline })}
+              className={`${barItem} text-on-dark`}>
+              <Icon d={PHONE} />
+              {t('values.call')}
+            </a>
+          </li>
+          <li>
+            <a href={contact.zaloUrl} target="_blank" rel="noopener" data-track="sticky_bar" data-track-label="zalo" aria-label={t('fb.zalo')}
+              className={`${barItem} border-x border-line-dark text-on-dark`}>
+              <img src="/images/logo-zalo.webp" alt="" width="20" height="20" className="size-5 object-contain" />
+              {t('values.zalo')}
+            </a>
+          </li>
+          <li>
+            <button type="button" onClick={() => popup.open('sticky_price')} data-track="sticky_bar" data-track-label="price"
+              className={`btn-cta ${barItem} h-full w-full cursor-pointer border-0 bg-bronze-deep text-ivory`}>
+              <Icon d={ITEMS.find((i) => i.key === 'price').icon} />
+              {t('form.getPrice')}
             </button>
           </li>
         </ul>

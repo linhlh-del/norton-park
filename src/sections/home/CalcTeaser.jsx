@@ -9,7 +9,7 @@ export default function CalcTeaser() {
     <section id="calc" className="bg-cream py-section">
       <div className="container-site flex flex-col gap-12">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow={t('calc.eyebrow')} title={t('calc.title')} intro={t('calc.intro')} />
+          <SectionHeading eyebrow={t('calc.eyebrow')} title={t('calc.title')} seo={t('calc.seo')} intro={t('calc.intro')} />
           <Link to="/bang-tinh-gia" data-reveal="fade" className="btn btn-solid" data-track="cta_click" data-track-label="calc_open">{t('calc.open')}</Link>
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,13.75rem),1fr))] gap-4">

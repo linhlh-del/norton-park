@@ -8,3 +8,7 @@ public/images/_optimized
 # biến môi trường (chứa endpoint / ID thật)
 .env*
 !.env.example
+
+# nội dung CMS tải lúc build (scripts/fetch-cms.mjs)
+src/generated/cms-content.json
+public/images/cms/

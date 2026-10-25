@@ -29,6 +29,9 @@ const vi = {
   'values.residences': 'Mặt bằng',
   'values.price': 'Bảng giá',
   'values.consult': 'Tư vấn',
+  'values.quick': 'Liên hệ nhanh',
+  'values.call': 'Gọi hotline',
+  'values.zalo': 'Chat Zalo',
 
   // hero
   'hero.aria': 'Giới thiệu Norton Park',
@@ -137,6 +140,8 @@ const vi = {
   'form.email': 'Email, không bắt buộc',
   'form.consent': 'Đồng ý được liên hệ về Norton Park và đồng ý với',
   'form.policy': 'chính sách bảo mật',
+  'form.getPrice': 'Nhận bảng giá',
+  'form.consentNote': 'Bằng việc gửi thông tin, bạn đồng ý được liên hệ về Norton Park và đồng ý với',
   'form.err.name': 'Vui lòng nhập họ và tên.',
   'form.err.phone': 'Số điện thoại chưa đúng (10 số, bắt đầu bằng 0).',
   'form.err.consent': 'Vui lòng đồng ý để chúng tôi liên hệ.',
@@ -239,6 +244,20 @@ const vi = {
   'nf.title': 'Không tìm thấy trang',
   'nf.body': 'Trang bạn tìm không tồn tại hoặc đã được chuyển. Hãy quay về trang chủ hoặc xem bảng tính giá.',
   'nf.price': 'Bảng tính giá',
+
+  // tiêu đề chứa từ khoá cho thẻ h1/h2 (slogan *.title vẫn hiển thị) — xem KeywordHeading
+  'hero.h1': 'Căn hộ Norton Park Gamuda Land – Đại lộ Bình Dương, Phường Thuận Giao, TP.HCM',
+  'design.seo': 'Kiến trúc căn hộ Norton Park lấy cảm hứng từ hoa dầu',
+  'landscape.seo': 'Cảnh quan rừng Miyawaki 2,5 ha tại Norton Park',
+  'spirit.seo': 'Ba trạm sạc tiện ích của căn hộ Norton Park',
+  'facts.seo': 'Thông tin tổng quan dự án Norton Park Gamuda Land',
+  'location.seo': 'Vị trí Norton Park trên Đại lộ Bình Dương, Phường Thuận Giao, TP.HCM',
+  'lifestyle.seo': 'Hệ thống tiện ích nội khu Norton Park',
+  'blocks.seo': 'Phân khu căn hộ B và C dự án Norton Park',
+  'res.seo': 'Mặt bằng căn hộ Norton Park: Studio đến 3PN, Duplex',
+  'news.seo': 'Tin tức dự án Norton Park',
+  'dev.seo': 'Chủ đầu tư Norton Park – Gamuda Land',
+  'calc.seo': 'Bảng tính giá dự kiến căn hộ Norton Park',
 };
 
 const en = {
@@ -269,6 +288,9 @@ const en = {
   'values.residences': 'Floor plans',
   'values.price': 'Prices',
   'values.consult': 'Enquire',
+  'values.quick': 'Quick contact',
+  'values.call': 'Call hotline',
+  'values.zalo': 'Chat Zalo',
 
   'hero.aria': 'Introducing Norton Park',
   'hero.imageAlt': 'Rendering of the Norton Park towers on Binh Duong Boulevard',
@@ -367,6 +389,8 @@ const en = {
   'form.email': 'Email (optional)',
   'form.consent': 'I agree to be contacted about Norton Park and accept the',
   'form.policy': 'privacy policy',
+  'form.getPrice': 'Get the price list',
+  'form.consentNote': 'By submitting, you agree to be contacted about Norton Park and accept the',
   'form.err.name': 'Please enter your full name.',
   'form.err.phone': 'Please enter a valid phone number (10 digits, starting with 0).',
   'form.err.consent': 'Please agree so that we can contact you.',
@@ -462,6 +486,20 @@ const en = {
   'nf.title': 'Page not found',
   'nf.body': 'The page you are looking for does not exist or has moved. Return to the home page or see the price calculator.',
   'nf.price': 'Price calculator',
+
+  // keyword headings for h1/h2 (visible *.title slogans unchanged) — see KeywordHeading
+  'hero.h1': 'Norton Park apartments by Gamuda Land – Binh Duong Boulevard, Thuan Giao Ward, HCMC',
+  'design.seo': 'Norton Park architecture inspired by dipterocarp blossoms',
+  'landscape.seo': 'Norton Park 2.5-hectare Miyawaki forest landscape',
+  'spirit.seo': 'Three amenity stations at Norton Park',
+  'facts.seo': 'Norton Park by Gamuda Land: project overview',
+  'location.seo': 'Norton Park location on Binh Duong Boulevard, Thuan Giao Ward, HCMC',
+  'lifestyle.seo': 'Norton Park on-site amenities',
+  'blocks.seo': 'Norton Park residential zones B and C',
+  'res.seo': 'Norton Park floor plans: Studio to 3BR and Duplex',
+  'news.seo': 'Norton Park news',
+  'dev.seo': 'Norton Park developer – Gamuda Land',
+  'calc.seo': 'Norton Park estimated price calculator',
 };
 
 export default { vi, en };

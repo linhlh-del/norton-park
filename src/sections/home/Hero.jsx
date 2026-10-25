@@ -10,21 +10,23 @@ const PinIcon = () => (
 /* Hero: ảnh nền tải ưu tiên (LCP) và thu nhẹ khi vào trang; chữ trồi lên lần lượt ngay khi tải, không chờ cuộn.
    Tiêu đề H1 không làm mờ để không làm chậm chỉ số LCP.
    Nút "Khám phá Norton Park" → bản đồ vị trí (#position). */
-export default function Hero() {
+/* variant (CMS): 'center' (mặc định, chữ giữa màn hình) | 'bottom' (chữ sát đáy ảnh) */
+export default function Hero({ variant = 'center' }) {
   const t = useT();
   const { images } = useSite();
   return (
-    <section id="hero" aria-label={t('hero.aria')} className="relative isolate flex min-h-[clamp(640px,92svh,880px)] items-end overflow-hidden bg-hoadau-deep text-on-dark">
+    <section id="hero" aria-label={t('hero.aria')} className={`relative isolate flex min-h-[clamp(640px,92svh,880px)] overflow-hidden bg-hoadau-deep text-on-dark ${variant === 'bottom' ? 'items-end' : 'items-center'}`}>
       <Media src={images.hero} mobileSrc={images.heroPortrait} alt={t('hero.imageAlt')} label={t('hero.imageLabel')}
         tone="dark" priority className="media-static !absolute inset-0 -z-20" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/80 via-hoadau-deep/35 to-hoadau-deep/30" />
 
-      <div className="container-site flex flex-col gap-7 pb-24 pt-40">
+      <div className={`container-site flex flex-col gap-7 ${variant === 'bottom' ? 'pb-24 pt-40' : 'py-24'}`}>
         <p className="eyebrow hero-in text-on-dark-soft">{t('hero.eyebrow')}</p>
-        <h1 className="heading-1 max-w-4xl italic">
-          <span className="sr-only">Norton Park — A Gamuda Land Community: </span>
+        {/* H1 = từ khoá chính + địa danh hành chính; slogan hiển thị nằm trong <p> */}
+        <h1 className="sr-only">{t('hero.h1')}</h1>
+        <p aria-hidden="true" className="heading-1 max-w-4xl italic">
           {t('hero.title1')} <br />{t('hero.title2')}
-        </h1>
+        </p>
         <div className="hero-in flex flex-wrap gap-3.5" style={{ '--reveal-i': 2 }}>
           <Link to="/#register" className="btn btn-solid" data-track="cta_click" data-track-label="hero_register">{t('cta.register')}</Link>
           <Link to="/#position" className="btn btn-ghost-light" data-track="cta_click" data-track-label="hero_explore">

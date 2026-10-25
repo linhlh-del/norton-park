@@ -16,7 +16,7 @@ export default function Lifestyle() {
     <section id="lifestyle" className="bg-cream py-section" aria-roledescription="carousel" aria-label={t('lifestyle.title')}>
       <div className="container-site flex flex-col gap-12">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow={t('lifestyle.eyebrow')} title={t('lifestyle.title')} />
+          <SectionHeading eyebrow={t('lifestyle.eyebrow')} title={t('lifestyle.title')} seo={t('lifestyle.seo')} />
           <CarouselNav {...c} labels={[t('lifestyle.prev'), t('lifestyle.next')]} />
         </div>
 

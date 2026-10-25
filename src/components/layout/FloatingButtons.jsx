@@ -3,7 +3,7 @@ import { useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
 /* Nút nổi góc phải (chỉ biểu tượng, nhãn nằm ở aria-label/title): ↑ Lên đầu trang · Gọi · Zalo · Bảng giá.
-   Trên điện thoại / máy tính bảng cụm nút nằm trên thanh CTA dưới đáy (ValueNav).
+   Trên điện thoại / máy tính bảng chỉ còn nút ↑ — Gọi · Zalo · Bảng giá nằm ở thanh sticky dưới đáy (ValueNav).
    Chuyển động: src/styles/floating-buttons.css */
 
 /* ── Icon (Tabler icons, inline SVG để co giãn theo nút) ── */
@@ -102,7 +102,7 @@ export default function FloatingButtons() {
         href={contact.hotlineHref}
         title={t('fb.call', { phone: contact.hotline })}
         aria-label={t('fb.call', { phone: contact.hotline })}
-        className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-[#0068FF] text-white no-underline shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:text-white hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-14 lg:w-14"
+        className="group relative flex h-12 w-12 items-center max-lg:hidden justify-center rounded-full bg-[#0068FF] text-white no-underline shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:text-white hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-14 lg:w-14"
       >
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/55 animate-fb-ring-1" />
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/35 animate-fb-ring-2" />
@@ -118,7 +118,7 @@ export default function FloatingButtons() {
         rel="noopener"
         title="Zalo"
         aria-label={t('fb.zalo')}
-        className="group relative flex h-11 w-11 items-center justify-center rounded-full transition-transform duration-200 [filter:drop-shadow(0_3px_10px_rgba(0,104,255,0.4))] hover:scale-[1.08] hover:[filter:drop-shadow(0_5px_16px_rgba(0,104,255,0.65))] lg:h-[50px] lg:w-[50px]"
+        className="group relative flex h-11 w-11 items-center justify-center rounded-full max-lg:hidden transition-transform duration-200 [filter:drop-shadow(0_3px_10px_rgba(0,104,255,0.4))] hover:scale-[1.08] hover:[filter:drop-shadow(0_5px_16px_rgba(0,104,255,0.65))] lg:h-[50px] lg:w-[50px]"
       >
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#0068FF]/25 animate-fb-zalo-ring-1 group-hover:[animation-play-state:paused]" />
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#0068FF]/15 animate-fb-zalo-ring-2 group-hover:[animation-play-state:paused]" />
@@ -134,7 +134,7 @@ export default function FloatingButtons() {
         onClick={() => popup.open('floating_price')}
         title={t('fb.price')}
         aria-label={t('fb.price')}
-        className="group relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-0 bg-[#0068FF] p-0 text-white shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-[52px] lg:w-[52px]"
+        className="group relative flex h-11 w-11 max-lg:hidden cursor-pointer items-center justify-center rounded-full border-0 bg-[#0068FF] p-0 text-white shadow-[0_4px_20px_rgba(0,104,255,0.5)] transition-transform duration-200 hover:scale-[1.12] hover:[animation-play-state:paused] hover:shadow-[0_6px_28px_rgba(0,104,255,0.65)] lg:h-[52px] lg:w-[52px]"
       >
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/50 animate-fb-price-ring-1" />
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 rounded-full border-2 border-[#0068FF]/30 animate-fb-price-ring-2" />

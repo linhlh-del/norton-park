@@ -1,11 +1,13 @@
-import { Link, useSite, useT } from '@/i18n';
+import { Link, useLang, useSite, useT } from '@/i18n';
 import Wordmark from '@/components/ui/Wordmark';
+import { pageMeta, pages, topicPaths } from '@/seo/site-meta';
 
 const linkCls = 'font-sub text-xs font-medium uppercase tracking-[0.14em] text-on-dark no-underline hover:text-on-dark-soft';
 
 export default function SiteFooter() {
   const t = useT();
   const { contact, legalLinks, mainNav } = useSite();
+  const lang = useLang();
   return (
     <footer id="legal" className="bg-hoadau-deep pb-10 pt-20 text-stone">
       <div className="container-site flex flex-col gap-12">
@@ -13,6 +15,8 @@ export default function SiteFooter() {
           <Wordmark size="lg" />
           <nav aria-label={t('nav.footer')} className="flex flex-col gap-3.5">
             {mainNav.map((item) => <Link key={item.to} to={item.to} className={linkCls}>{item.label}</Link>)}
+            {/* trang con theo chủ đề — liên kết nội bộ cho SEO */}
+            {topicPaths.map((p) => <Link key={p} to={p} className={linkCls}>{pageMeta(pages[p], lang).breadcrumb} Norton Park</Link>)}
           </nav>
           <div className="flex flex-col gap-2.5 text-sm leading-relaxed">
             <p className="eyebrow text-[10px] text-on-dark-soft">{t('footer.contact')}</p>

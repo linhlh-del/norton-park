@@ -16,7 +16,9 @@ export function headFor(path, lang = 'vi') {
   const p = pageMeta(page || hiddenPages[path] || notFound, lang);
   const url = langUrl(path, lang);
   const other = lang === 'en' ? 'vi' : 'en';
-  const image = absUrl(SITE.ogImage);
+  /* ảnh chia sẻ riêng của trang (chọn trong CMS) hoặc ảnh mặc định 1200×630 */
+  const custom = page?.ogImage;
+  const image = absUrl(custom || SITE.ogImage);
 
   const meta = [
     ['name', 'description', p.description],
@@ -31,9 +33,9 @@ export function headFor(path, lang = 'vi') {
     ['property', 'og:url', url],
     ['property', 'og:image', image],
     ['property', 'og:image:secure_url', image],
-    ['property', 'og:image:type', 'image/png'],
-    ['property', 'og:image:width', String(SITE.ogImageWidth)],
-    ['property', 'og:image:height', String(SITE.ogImageHeight)],
+    !custom && ['property', 'og:image:type', SITE.ogImageType],
+    !custom && ['property', 'og:image:width', String(SITE.ogImageWidth)],
+    !custom && ['property', 'og:image:height', String(SITE.ogImageHeight)],
     ['property', 'og:image:alt', SITE.ogImageAlt],
     ['name', 'twitter:card', 'summary_large_image'],
     ['name', 'twitter:title', p.ogTitle || p.title],

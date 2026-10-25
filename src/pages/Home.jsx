@@ -14,12 +14,14 @@ import Register from '@/sections/home/Register';
 import Developer from '@/sections/home/Developer';
 import CalcTeaser from '@/sections/home/CalcTeaser';
 import Faq from '@/sections/home/Faq';
+import { cmsLayout } from '@/cms/content';
+import { HOME_SECTIONS } from '@/cms/schema';
 
 /* artwork bản đồ ~650 KB: tách thành chunk riêng, tải sau phần đầu trang */
 const LocationMap = lazy(() => import('@/sections/home/LocationMap/LocationMap'));
 
 /* chỉ tải chunk bản đồ khi người dùng cuộn tới gần (sớm ~1 màn hình) — giảm JS lúc tải trang, hiệu ứng vẽ path chạy khi thấy */
-function DeferredMap(props) {
+export function DeferredMap(props) {
   const ref = useRef(null);
   const near = useInView(ref, { rootMargin: '100% 0px', threshold: 0 });
   const fallback = <section ref={ref} id="position" className="bg-paper [height:clamp(640px,100svh,980px)]" aria-busy="true" />;
@@ -28,7 +30,7 @@ function DeferredMap(props) {
 }
 
 /* nối analytics (GA4 / GTM…) tại đây */
-const track = (ev, label) => window.dataLayer?.push({ event: 'locmap_' + ev, label });
+export const track = (ev, label) => window.dataLayer?.push({ event: 'locmap_' + ev, label });
 
 /* trang chủ: mỗi lần lăn chuột chuyển section với thời gian chuyển động cố định */
 function useSectionSnap() {
@@ -121,25 +123,44 @@ function useSectionSnap() {
   }, []);
 }
 
+/* id section (khớp HOME_SECTIONS trong src/cms/schema.js) → component */
+const COMPONENTS = {
+  hero: Hero,
+  'design-story': DesignStory,
+  'landscape-story': LandscapeStory,
+  story: ProjectSpirit,
+  facts: Facts,
+  location: Location,
+  position: () => <DeferredMap onTrack={track} />,
+  lifestyle: Lifestyle,
+  blocks: Blocks,
+  residences: Residences,
+  news: NewsPreview,
+  register: Register,
+  developer: Developer,
+  calc: CalcTeaser,
+  faq: Faq,
+};
+
+/** Thứ tự section: theo CMS (section cố định giữ nguyên vị trí mặc định), bỏ section bị ẩn */
+function homeOrder() {
+  const ids = HOME_SECTIONS.map((s) => s.id);
+  const locked = new Set(HOME_SECTIONS.filter((s) => s.locked).map((s) => s.id));
+  const movable = [...cmsLayout.order.filter((id) => ids.includes(id) && !locked.has(id)), ...ids.filter((id) => !locked.has(id) && !cmsLayout.order.includes(id))];
+  /* chèn lại section cố định vào đúng vị trí mặc định */
+  const out = [];
+  ids.forEach((id) => out.push(locked.has(id) ? id : movable.shift()));
+  return out.filter((id) => locked.has(id) || !cmsLayout.hidden.has(id));
+}
+
 export default function Home() {
   useSectionSnap();
   return (
     <>
-      <Hero />
-      <DesignStory />
-      <LandscapeStory />
-      <ProjectSpirit />
-      <Facts />
-      <Location />
-      <DeferredMap onTrack={track} />
-      <Lifestyle />
-      <Blocks />
-      <Residences />
-      <NewsPreview />
-      <Register />
-      <Developer />
-      <CalcTeaser />
-      <Faq />
+      {homeOrder().map((id) => {
+        const Section = COMPONENTS[id];
+        return Section ? <Section key={id} variant={cmsLayout.variants[id]} /> : null;
+      })}
     </>
   );
 }

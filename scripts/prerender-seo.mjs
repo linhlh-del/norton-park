@@ -41,6 +41,11 @@ const loader = `import ${JSON.stringify(entry[1])};`;
 const loaderHash = `'sha256-${createHash('sha256').update(loader).digest('base64')}'`;
 template = template.replace(entry[0], `<script type="module" nonce="__CSP_NONCE__">${loader}</script>`);
 
+/* Script inline do CMS chèn (GA4, Pixel, TikTok, mã tuỳ chỉnh) → thêm hash vào CSP để không bị chặn */
+const cmsHashes = [...template.matchAll(/<script(?![^>]*\ssrc=)(?![^>]*type="(?:module|application\/ld\+json)")[^>]*>([\s\S]*?)<\/script>/g)]
+  .map((m) => m[1]).filter((code) => code.trim())
+  .map((code) => `'sha256-${createHash('sha256').update(code).digest('base64')}'`);
+
 /* CSS chính (~10 KB gzip) nhúng thẳng vào HTML: bỏ một vòng request chặn hiển thị trên mạng di động,
    font được phát hiện sớm hơn. CSS của bản đồ vẫn tải riêng (lazy). */
 const cssLink = template.match(/<link rel="stylesheet" crossorigin href="([^"]+?\.css)">/);
@@ -159,7 +164,7 @@ write('.well-known/ard.json', JSON.stringify([
 /* ---------- 3. Header cho Netlify / Cloudflare Pages ---------- */
 const report = env.CSP_REPORT_URI ? `; report-uri ${env.CSP_REPORT_URI}` : '';
 const csp = [
-  `script-src ${loaderHash} 'strict-dynamic' 'unsafe-inline' https:`,
+  `script-src ${[loaderHash, ...cmsHashes].join(' ')} 'strict-dynamic' 'unsafe-inline' https:`,
   "object-src 'none'",
   "base-uri 'none'",
   "frame-ancestors 'self'",
@@ -188,7 +193,10 @@ write('_headers', `# Sinh tự động bởi scripts/prerender-seo.mjs — hash 
 /
   Cache-Control: public, max-age=0, must-revalidate
 `);
-write('csp-hash.txt', loaderHash + '\n');
+write('csp-hash.txt', [loaderHash, ...cmsHashes].join('\n') + '\n');
+
+/* ---------- 4. Schema cho CMS (norton-park-cms đọc file này) ---------- */
+write('cms-schema.json', JSON.stringify(ssr.buildCmsSchema(), null, 2));
 
 rmSync(join(root, '.ssr'), { recursive: true, force: true });
 console.log(`Xong — SITE_URL = ${SITE_URL}`);

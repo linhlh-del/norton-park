@@ -71,7 +71,7 @@ const inputCls = 'min-h-12 w-full rounded-lg border border-line-strong bg-ivory 
 
 function ContactPopup({ position, onClose }) {
   const t = useT();
-  const { contact, registerTypes } = useSite();
+  const { contact } = useSite();
   const panel = useRef(null);
   const firstInput = useRef(null);
   const [errors, setErrors] = useState({});
@@ -104,14 +104,13 @@ function ContactPopup({ position, onClose }) {
     const next = {};
     if (!String(fd.fullname || '').trim()) next.fullname = t('form.err.name');
     if (!isVnPhone(fd.phone || '')) next.phone = t('form.err.phone');
-    if (!fd.consent) next.consent = t('form.err.consent');
     setErrors(next);
     if (Object.keys(next).length) {
       e.currentTarget.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
     /* thành công → đóng popup, chuyển sang /cam-on (honeypot "website" được Worker xử lý) */
-    const ok = await send({ name: fd.fullname, phone: fd.phone, email: fd.email, unitType: fd.unit_interest, website: fd.website });
+    const ok = await send({ name: fd.fullname, phone: fd.phone, website: fd.website });
     if (ok) onClose();
   };
 
@@ -145,23 +144,6 @@ function ContactPopup({ position, onClose }) {
                   <span id="err-p-phone" className={errCls} aria-live="polite">{errors.phone}</span>
                 </div>
               </div>
-              <label htmlFor="pEmail" className="sr-only">Email</label>
-              <input id="pEmail" name="email" type="email" autoComplete="email" placeholder="Email" className={inputCls} />
-              <label htmlFor="pUnit" className="sr-only">{t('form.unitType')}</label>
-              <select id="pUnit" name="unit_interest" defaultValue="" className={`${inputCls} mt-3`}>
-                <option value="">{t('form.unitType')}</option>
-                {registerTypes.map((g) => (
-                  <optgroup key={g.title} label={g.title}>
-                    {g.items.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </optgroup>
-                ))}
-              </select>
-
-              <label className="mt-3 flex items-start gap-3 text-sm leading-relaxed">
-                <input type="checkbox" name="consent" className="mt-0.5 size-5 shrink-0 accent-bronze-deep" {...field('consent')} />
-                <span>{t('form.consent')} <a href="#legal" onClick={onClose}>{t('form.policy')}</a>.</span>
-              </label>
-              <span id="err-p-consent" className={errCls} aria-live="polite">{errors.consent}</span>
 
               {/* chống spam: ô ẩn với người dùng */}
               <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
@@ -172,9 +154,12 @@ function ContactPopup({ position, onClose }) {
 
               {status === 'failed' && <p role="alert" className="m-0 text-sm text-[#b3412e]">{error || t('form.err.send')} {t('form.err.orCall', { phone: contact.hotline })}</p>}
               <button type="submit" className="btn btn-solid mt-1 w-full" disabled={status === 'sending'}>
-                {status === 'sending' ? t('sending') : t('popup.submit')}
+                {status === 'sending' ? t('sending') : t('form.getPrice')}
                 <span aria-hidden="true">→</span>
               </button>
+              <p className="m-0 text-[13px] leading-relaxed text-ink-soft">
+                {t('form.consentNote')} <a href="#legal" onClick={onClose}>{t('form.policy')}</a>.
+              </p>
             </form>
         </div>
 

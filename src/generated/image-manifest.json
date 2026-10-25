@@ -806,6 +806,32 @@
       }
     ]
   },
+  "/images/og-image.jpg": {
+    "width": 1200,
+    "height": 630,
+    "variants": [
+      {
+        "w": 480,
+        "avif": "/images/_optimized/og-image-480.avif",
+        "webp": "/images/_optimized/og-image-480.webp"
+      },
+      {
+        "w": 768,
+        "avif": "/images/_optimized/og-image-768.avif",
+        "webp": "/images/_optimized/og-image-768.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "/images/_optimized/og-image-1080.avif",
+        "webp": "/images/_optimized/og-image-1080.webp"
+      },
+      {
+        "w": 1200,
+        "avif": "/images/_optimized/og-image-1200.avif",
+        "webp": "/images/_optimized/og-image-1200.webp"
+      }
+    ]
+  },
   "/images/overview_hero-facade-sunset.jpg": {
     "width": 2400,
     "height": 1339,

@@ -11,6 +11,7 @@ import { Link as RRLink, NavLink as RRNavLink, useLocation, useNavigate } from '
 import * as vi from '@/data/site';
 import en from '@/data/site.en';
 import ui from './ui';
+import { applySiteOverrides, cmsText } from '@/cms/content';
 
 export const LANGS = ['vi', 'en'];
 export const LOCALE = { vi: 'vi-VN', en: 'en-US' };
@@ -43,7 +44,7 @@ function merge(base, over) {
 
 const cache = {};
 export function getSite(lang = 'vi') {
-  if (lang !== 'en') return vi;
+  if (lang !== 'en') return (cache.vi ||= applySiteOverrides({ ...vi }, 'vi'));
   if (cache.en) return cache.en;
   const s = { ...vi };
   for (const k of Object.keys(en)) s[k] = merge(vi[k], en[k]);
@@ -59,7 +60,7 @@ export function getSite(lang = 'vi') {
     if (type.max) out.push({ code: p.largest, gfa: type.max[0], nsa: type.max[1], view: p.view, units: p.units });
     return out;
   };
-  return (cache.en = s);
+  return (cache.en = applySiteOverrides(s, 'en'));
 }
 
 /* ---------- định dạng số theo ngôn ngữ ---------- */
@@ -83,7 +84,8 @@ export function useSite() {
 
 /** t('key') hoặc t('key', { n: 3 }) — thay {n} trong chuỗi */
 export function translate(lang, key, vars) {
-  let s = ui[lang]?.[key] ?? ui.vi[key] ?? key;
+  /* CMS (bản đã đăng) → từ điển theo ngôn ngữ → tiếng Việt */
+  let s = cmsText(key, lang) ?? ui[lang]?.[key] ?? ui.vi[key] ?? key;
   if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, v);
   return s;
 }

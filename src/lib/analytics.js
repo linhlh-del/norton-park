@@ -7,7 +7,12 @@
    Danh sách sự kiện và cách dựng tag/trigger: docs/ANALYTICS.md
    ============================================================ */
 
+import { cmsPageView, cmsTrack, initCmsTracker } from './cmsTracker';
+
 const GTM_ID = import.meta.env?.VITE_GTM_ID || '';
+
+/* sự kiện dataLayer → dashboard CMS (chỉ nhãn, không dữ liệu cá nhân) */
+const CMS_EVENTS = { generate_lead: 'lead', cta_click: 'cta_click', value_nav: 'cta_click', sticky_bar: 'cta_click', click_call: 'cta_click', click_outbound: 'cta_click', popup_open: 'cta_click' };
 const FIRST_KEY = 'np_first_touch';
 const LAST_KEY = 'np_last_touch';
 const TTL = 90 * 24 * 3600 * 1000; // first-touch giữ 90 ngày (bằng cửa sổ chuyển đổi mặc định của GA4)
@@ -30,6 +35,8 @@ export const dataLayer = () => (window.dataLayer = window.dataLayer || []);
 export function track(event, params = {}) {
   if (typeof window === 'undefined') return;
   dataLayer().push({ event, ...params });
+  const type = CMS_EVENTS[event];
+  if (type) cmsTrack(type, event === 'generate_lead' ? params.form_id : `${event}:${params.label || params.form_position || params.link_domain || params.phone || ''}`);
 }
 
 const store = {
@@ -114,6 +121,7 @@ export function pageView(path, title) {
   if (path === lastPath) return;
   lastPath = path;
   track('virtual_page_view', { page_path: path, page_location: location.href, page_title: title });
+  cmsPageView(path);
 }
 
 /* tự ghi nhận bấm gọi / email / link ngoài / phần tử có data-track — không cần sửa từng component */
@@ -149,6 +157,7 @@ function loadGtm() {
 export function initAnalytics() {
   if (typeof window === 'undefined') return;
   captureAttribution();
+  initCmsTracker();
   track('attribution_ready', attribution());
   document.addEventListener('click', onClick, { capture: true, passive: true });
 

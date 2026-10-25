@@ -1,4 +1,3 @@
-import { contact, images, lifestyle, priceTypes } from '@/data/site';
 import { getSite } from '@/i18n';
 import { LANG_META, SITE, SITE_URL, absUrl, langUrl, pageMeta, pages, sectionsOf } from './site-meta';
 import { MODIFIED } from './build-date';
@@ -9,6 +8,9 @@ import { MODIFIED } from './build-date';
    Kiểm tra: https://validator.schema.org và https://search.google.com/test/rich-results
    Chỉ khai báo điều có thật trên trang; mục còn chờ thông tin ("[ … ]") bị lọc bỏ.
    ============================================================ */
+
+/* nội dung tiếng Việt đã áp CMS (hotline, địa chỉ, ảnh… chỉnh trong CMS) */
+const { contact, images, lifestyle, priceTypes } = getSite('vi');
 
 const id = (frag) => `${SITE_URL}/#${frag}`;
 const known = (v) => (typeof v === 'string' && v.trim().startsWith('[') ? undefined : v);
@@ -178,6 +180,9 @@ const perPage = {
     ];
   },
   '/bang-tinh-gia': (lang) => [webPage('/bang-tinh-gia', lang)],
+  '/vi-tri': (lang) => [webPage('/vi-tri', lang)],
+  '/tien-ich': (lang) => [webPage('/tien-ich', lang)],
+  '/mat-bang': (lang) => [webPage('/mat-bang', lang)],
   '/tin-tuc': (lang) => [
     {
       ...webPage('/tin-tuc', lang, 'CollectionPage'),

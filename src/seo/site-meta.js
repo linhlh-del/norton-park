@@ -9,6 +9,7 @@
    - subtitle (menu / section) ≤ 70 ký tự; summary (section) ≤ 160 ký tự — dùng cho JSON-LD WebPageElement,
      thuộc tính title của liên kết menu và llms.txt.
    ============================================================ */
+import { cmsSeo } from '@/cms/content';
 
 /* Tên miền chính thức — PHẢI trùng tên miền thật khi deploy (canonical, sitemap, og:url đều dựa vào đây).
    Đặt VITE_SITE_URL trong .env.production nếu khác. Không có dấu / ở cuối. */
@@ -22,9 +23,11 @@ export const SITE = {
   lang: 'vi',
   themeColor: '#DCD3C0',
   published: '2026-10-01', // datePublished của trang chủ
-  ogImage: '/images/thumbnail.png',
-  ogImageWidth: 2400,
-  ogImageHeight: 1350,
+  /* ảnh chia sẻ Facebook / Zalo: 1200×630 JPG (tạo từ thumbnail.png) */
+  ogImage: '/images/og-image.jpg',
+  ogImageType: 'image/jpeg',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
   ogImageAlt: 'Phối cảnh các toà tháp Norton Park hai bên trục đường nội khu, giữa công viên cây xanh',
   twitterSite: '', // vd. '@nortonpark' nếu có tài khoản X
 };
@@ -63,6 +66,82 @@ export const pages = {
       breadcrumb: 'Home',
     },
   },
+  /* Trang con theo nhóm từ khoá ngách — h1 / intro hiển thị ở src/pages/Topic.jsx */
+  '/vi-tri': {
+    title: 'Vị trí Norton Park — Đại lộ Bình Dương, Phường Thuận Giao',
+    description:
+      'Vị trí Norton Park số 5 Đại lộ Bình Dương, Phường Thuận Giao, TP.HCM: liền kề AEON Mall Thuận Giao, gần KCN VSIP 1. Xem bản đồ kết nối và đăng ký tư vấn.',
+    breadcrumb: 'Vị trí',
+    h1: 'Vị trí căn hộ Norton Park — Đại lộ Bình Dương, Phường Thuận Giao, TP.HCM',
+    intro: [
+      'Norton Park toạ lạc tại Số 5 Đại lộ Bình Dương (Quốc lộ 13), Phường Thuận Giao, Thành phố Hồ Chí Minh (trước đây thuộc TP. Thuận An, tỉnh Bình Dương).',
+      'Dự án liền kề AEON Mall Thuận Giao, gần Khu công nghiệp VSIP 1 và kết nối nhanh về trung tâm TP.HCM qua trục Đại lộ Bình Dương.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.8,
+    image: '/images/imgi_12_masterplan-birdview-r16.webp',
+    en: {
+      title: 'Norton Park location — Binh Duong Boulevard, Thuan Giao Ward',
+      description:
+        'Norton Park at 5 Binh Duong Boulevard, Thuan Giao Ward, HCMC: next to AEON Mall Thuan Giao and near VSIP 1. See the connectivity map and register for advice.',
+      breadcrumb: 'Location',
+      h1: 'Norton Park location — Binh Duong Boulevard, Thuan Giao Ward, Ho Chi Minh City',
+      intro: [
+        'Norton Park is located at 5 Binh Duong Boulevard (National Road 13), Thuan Giao Ward, Ho Chi Minh City (formerly Thuan An City, Binh Duong Province).',
+        'The project sits next to AEON Mall Thuan Giao, near VSIP 1 Industrial Park, with quick access to central Ho Chi Minh City along Binh Duong Boulevard.',
+      ],
+    },
+  },
+  '/tien-ich': {
+    title: 'Tiện ích Norton Park — Rừng Miyawaki, hồ bơi, Work Hub',
+    description:
+      'Tiện ích nội khu Norton Park: 2,5 ha cảnh quan rừng Miyawaki, hồ bơi trung tâm, Work Hub, quảng trường BBQ và Podium Shop. Đăng ký tham quan nhà mẫu ngay.',
+    breadcrumb: 'Tiện ích',
+    h1: 'Hệ thống tiện ích nội khu Norton Park',
+    intro: [
+      'Với mật độ xây dựng chỉ 20%, Norton Park dành 2,5 ha cho cảnh quan, trong đó có các tầng cây trồng theo phương pháp rừng Miyawaki của Nhật Bản.',
+      'Tiện ích được tổ chức thành ba “trạm sạc” — năng lượng, hiệu suất, hứng khởi — gồm hồ bơi trung tâm, lối dạo cây xanh, Work Hub, quảng trường BBQ và dãy Podium Shop.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.8,
+    image: '/images/tienich/1-life-wellness.jpg',
+    en: {
+      title: 'Norton Park amenities — Miyawaki forest, pool, Work Hub',
+      description:
+        'Norton Park amenities: 2.5 ha of Miyawaki forest landscape, a central pool, Work Hub, BBQ plaza and Podium Shops. Register now to visit the show apartment.',
+      breadcrumb: 'Amenities',
+      h1: 'Norton Park on-site amenities',
+      intro: [
+        'With just 20% building density, Norton Park dedicates 2.5 hectares to landscape, including layers of trees planted using Japan’s Miyawaki forest method.',
+        'Amenities are organised into three “stations” — energy, performance and inspiration — with a central pool, green promenades, a Work Hub, a BBQ plaza and Podium Shops.',
+      ],
+    },
+  },
+  '/mat-bang': {
+    title: 'Mặt bằng Norton Park — Căn hộ Studio đến 3PN, Duplex',
+    description:
+      'Mặt bằng căn hộ Norton Park Phân khu B: Studio, 1PN, 2PN, 2PN+, 3PN, Duplex, căn sân vườn và Shophouse với diện tích GFA, NSA từng căn. Nhận mặt bằng ngay.',
+    breadcrumb: 'Mặt bằng',
+    h1: 'Mặt bằng chi tiết căn hộ Norton Park — Phân khu B',
+    intro: [
+      'Phân khu B của Norton Park gồm các toà B1, B2, B3 với các loại hình Studio, 1PN, 2PN, 2PN+, 3PN, Duplex, căn hộ sân vườn và Shophouse.',
+      'Xem mặt bằng minh hoạ, diện tích tim tường (GFA) và thông thuỷ (NSA) của từng căn tiêu biểu; tra cứu đủ 63 layout và giá dự kiến tại Bảng tính giá.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.8,
+    image: '/images/block-b.jpg',
+    en: {
+      title: 'Norton Park floor plans — Studio to 3BR and Duplex homes',
+      description:
+        'Norton Park Zone B floor plans: Studio, 1BR, 2BR, 2BR+, 3BR, Duplex, garden homes and Shophouses with GFA and NSA areas for each unit. Get the floor plans now.',
+      breadcrumb: 'Floor plans',
+      h1: 'Norton Park floor plans — Zone B',
+      intro: [
+        'Zone B of Norton Park comprises towers B1, B2 and B3 with Studio, 1BR, 2BR, 2BR+, 3BR, Duplex, garden homes and Shophouses.',
+        'See illustrative floor plans with gross (GFA) and net (NSA) areas for each typical unit; look up all 63 layouts and estimated prices in the price calculator.',
+      ],
+    },
+  },
   '/bang-tinh-gia': {
     title: 'Bảng tính giá Norton Park — 63 layout, giá dự kiến từng căn',
     description:
@@ -73,7 +152,7 @@ export const pages = {
     en: {
       title: 'Norton Park price calculator — 63 layouts, estimated prices',
       description:
-        'Look up estimated Norton Park prices by home type and layout: GFA/NSA areas, illustrative floor plans, from VND 66 million/m². Get an official quote.',
+        'Look up estimated Norton Park prices by home type and layout: GFA/NSA areas, illustrative floor plans, from VND 66 million/m². Get an official quote today.',
       breadcrumb: 'Price calculator',
     },
   },
@@ -87,11 +166,28 @@ export const pages = {
     en: {
       title: 'Norton Park news — Progress, legal and market updates',
       description:
-        'The latest on Norton Park: events, construction progress, legal updates, Thuan Giao – Binh Duong infrastructure and apartment market insights.',
+        'The latest on Norton Park: events, construction progress, legal updates, Thuan Giao – Binh Duong infrastructure and apartment market insights, updated often.',
       breadcrumb: 'News',
     },
   },
 };
+
+/* bản gốc trước khi áp CMS — CMS hiển thị làm giá trị mặc định */
+export const pageDefaults = JSON.parse(JSON.stringify(pages));
+
+/* SEO chỉnh trong CMS (bản đã đăng) đè lên mặc định ở trên */
+for (const [path, page] of Object.entries(pages)) {
+  const v = cmsSeo(path, 'vi');
+  const e = cmsSeo(path, 'en');
+  /* title/description từ CMS dùng luôn cho Open Graph (bỏ og riêng) */
+  if (v.title) { page.title = v.title; delete page.ogTitle; }
+  if (v.description) { page.description = v.description; delete page.ogDescription; }
+  if (v.ogImage) page.ogImage = v.ogImage;
+  if (page.en) {
+    if (e.title) { page.en.title = e.title; delete page.en.ogTitle; }
+    if (e.description) { page.en.description = e.description; delete page.en.ogDescription; }
+  }
+}
 
 /* Trang không lập chỉ mục (noindex, không vào sitemap) nhưng vẫn prerender */
 export const hiddenPages = {
@@ -164,6 +260,9 @@ export const sections = [
 export const sectionsOf = (lang = 'vi') => sections.map((s) => (lang === 'en' && s.en ? { ...s, ...s.en } : s));
 
 /* Snippet cho các mục menu trỏ sang trang khác */
+/* Trang con theo chủ đề (hiện ở chân trang để liên kết nội bộ) */
+export const topicPaths = ['/vi-tri', '/tien-ich', '/mat-bang'];
+
 export const menuPages = {
   '/bang-tinh-gia': { subtitle: 'Giá dự kiến 63 layout', en: { subtitle: 'Estimated prices for 63 layouts' } },
   '/tin-tuc': { subtitle: 'Tiến độ, pháp lý, thị trường', en: { subtitle: 'Progress, legal and market updates' } },

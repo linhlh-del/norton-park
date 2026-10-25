@@ -24,7 +24,7 @@ export default function Residences() {
   return (
     <section id="residences" className="bg-cream py-section">
       <div className="container-site flex flex-col gap-10">
-        <SectionHeading eyebrow={t('res.eyebrow')} title={t('res.title')} />
+        <SectionHeading eyebrow={t('res.eyebrow')} title={t('res.title')} seo={t('res.seo')} />
 
         <div data-reveal="up" role="tablist" aria-label={t('res.collections')} className="flex flex-wrap gap-x-6">
           {collections.map((c, i) => (

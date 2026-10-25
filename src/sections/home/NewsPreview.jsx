@@ -2,6 +2,7 @@ import { Link, useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
 import QuachoMark from '@/components/ui/QuachoMark';
 import { CarouselDots, CarouselNav } from '@/components/ui/CarouselControls';
+import KeywordHeading from '@/components/ui/KeywordHeading';
 import useCarousel from '@/hooks/useCarousel';
 
 const Arrow = () => (
@@ -22,7 +23,7 @@ export default function NewsPreview() {
           <div className="flex max-w-3xl flex-col gap-4">
             <QuachoMark tone="dark" data-reveal="zoom" />
             <p data-reveal="up" style={{ '--reveal-i': 1 }} className="eyebrow text-on-dark-soft">{t('news.eyebrow')}</p>
-            <h2 data-reveal="up" style={{ '--reveal-i': 2 }} className="heading-2">{t('news.title')}</h2>
+            <KeywordHeading seo={t('news.seo')} data-reveal="up" style={{ '--reveal-i': 2 }} className="heading-2">{t('news.title')}</KeywordHeading>
           </div>
           <div data-reveal="fade" className="flex flex-wrap items-center gap-4">
             <Link to="/tin-tuc" className="inline-flex min-h-11 items-center gap-2 font-sub text-xs font-semibold uppercase tracking-button text-on-dark no-underline hover:text-on-dark-soft">

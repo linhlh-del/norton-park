@@ -5,6 +5,8 @@ import Calculator from '@/pages/Calculator';
 import News from '@/pages/News';
 import NotFound from '@/pages/NotFound';
 import ThankYou from '@/pages/ThankYou';
+import Topic from '@/pages/Topic';
+import { topicPaths } from '@/seo/site-meta';
 
 /* bật sớm hành vi React Router v7 (tắt cảnh báo console, nâng cấp sau không đổi gì) */
 export const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: true };
@@ -13,6 +15,7 @@ export const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: tr
 const pages = (
   <>
     <Route index element={<Home />} />
+    {topicPaths.map((p) => <Route key={p} path={p.slice(1)} element={<Topic path={p} />} />)}
     <Route path="bang-tinh-gia" element={<Calculator />} />
     <Route path="tin-tuc" element={<News />} />
     <Route path="cam-on" element={<ThankYou />} />

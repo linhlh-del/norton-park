@@ -306,3 +306,13 @@ html.np-snap #position { height: calc(100svh - var(--header-h)); }
 @media (max-width: 1023.98px) {
   html.np-snap #position { height: calc(100svh - var(--header-h) - 4rem - env(safe-area-inset-bottom)); }
 }
+
+/* Trên desktop, ba section mở đầu phủ trọn vùng nhìn thấy dưới header.
+   Quy tắc ngoài @layer để thắng min-height clamp trong utility Tailwind của từng section. */
+@media (min-width: 64rem) {
+  html.np-snap main > #hero,
+  html.np-snap main > #design-story,
+  html.np-snap main > #landscape-story {
+    min-height: 100svh;
+  }
+}

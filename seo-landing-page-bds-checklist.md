@@ -19,7 +19,7 @@ description: Checklist và quy tắc khi tạo/kiểm tra landing page bất đ�
 - [x] **Open Graph đầy đủ**: `og:type`, `og:title`, `og:description`, `og:image` (ảnh tuyệt đối, khoảng 1200x630), `og:url` (để chia sẻ đẹp trên Zalo/Facebook)
   > Đổi og:image sang `/images/og-image.jpg` 1200×630 (tạo từ thumbnail.png).
 - [x] `<link rel="canonical" href="https://tenmien.com/...">` (URL thật của trang)
-  > Có cho mọi trang (vi + /en). Domain lấy từ `VITE_SITE_URL`, mặc định `norton-park-rho.vercel.app`.
+  > Có cho mọi trang (vi + /en). Domain lấy từ `VITE_SITE_URL`, mặc định `norton-park-ten.vercel.app`.
 - [x] Đếm ký tự title/description bằng công cụ trước khi chốt (không đoán)
 
 **Mẫu head:**
@@ -135,4 +135,4 @@ description: Checklist và quy tắc khi tạo/kiểm tra landing page bất đ�
 - [ ] Test sticky bar, form, nút gọi/Zalo trên điện thoại thật
   > Đã test trên trình duyệt giả lập 375px; chưa test máy thật.
 - [ ] Canonical, sitemap, robots đã đúng domain thật
-  > Đang dùng `norton-park-rho.vercel.app`; đặt `VITE_SITE_URL` khi có domain thật.
+  > Đang dùng `norton-park-ten.vercel.app`; đặt `VITE_SITE_URL` khi có domain chính thức khác.

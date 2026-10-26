@@ -13,7 +13,7 @@ import { cmsSeo } from '@/cms/content';
 
 /* Tên miền chính thức — PHẢI trùng tên miền thật khi deploy (canonical, sitemap, og:url đều dựa vào đây).
    Đặt VITE_SITE_URL trong .env.production nếu khác. Không có dấu / ở cuối. */
-export const SITE_URL = (import.meta.env?.VITE_SITE_URL || 'https://norton-park-rho.vercel.app').replace(/\/+$/, '');
+export const SITE_URL = (import.meta.env?.VITE_SITE_URL || 'https://norton-park-ten.vercel.app').replace(/\/+$/, '');
 
 export const SITE = {
   name: 'Norton Park',

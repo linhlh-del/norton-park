@@ -6,6 +6,19 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/cms-status.json",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/cms-schema.json",
       "headers": [
         {

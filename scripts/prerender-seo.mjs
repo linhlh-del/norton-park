@@ -198,5 +198,14 @@ write('csp-hash.txt', [loaderHash, ...cmsHashes].join('\n') + '\n');
 /* ---------- 4. Schema cho CMS (norton-park-cms đọc file này) ---------- */
 write('cms-schema.json', JSON.stringify(ssr.buildCmsSchema(), null, 2));
 
+/* ---------- 5. Kết quả prerender → cms-status.json (CMS hiển thị trạng thái website) ---------- */
+{
+  const file = join(dist, 'cms-status.json');
+  let status = {};
+  try { status = JSON.parse(readFileSync(file, 'utf8')); } catch { /* build không qua fetch-cms */ }
+  const total = ['vi', 'en'].length * routes.length;
+  write('cms-status.json', JSON.stringify({ ...status, prerender: { ok: true, pages: total, total, engine: 'react-ssr' } }, null, 2));
+}
+
 rmSync(join(root, '.ssr'), { recursive: true, force: true });
 console.log(`Xong — SITE_URL = ${SITE_URL}`);

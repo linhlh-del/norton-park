@@ -12,3 +12,4 @@ public/images/_optimized
 # nội dung CMS tải lúc build (scripts/fetch-cms.mjs)
 src/generated/cms-content.json
 public/images/cms/
+public/cms-status.json

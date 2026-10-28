@@ -10,8 +10,11 @@ const ZoomIcon = () => (
   </svg>
 );
 
-/* tab / chip: một dòng, trượt ngang trên điện thoại (không rớt "3PN" xuống dòng riêng, không sát mép phải) */
-const scrollRow = 'flex min-w-0 flex-nowrap overflow-x-auto [scrollbar-width:none] max-md:-mx-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter)]';
+/* tên bộ sưu tập rút gọn cho điện thoại: "Bộ sưu tập chuẩn sống toàn cầu" → "Chuẩn sống toàn cầu" */
+const shortTitle = (s) => {
+  const v = s.replace(/^bộ sưu tập\s+/i, '').replace(/\s+collection$/i, '');
+  return v.charAt(0).toUpperCase() + v.slice(1);
+};
 
 export default function Residences() {
   const t = useT();
@@ -39,19 +42,22 @@ export default function Residences() {
 
         {/* máy tính: tab bộ sưu tập (trái) và chip loại căn (phải) chung 1 hàng — tiết kiệm 1 hàng cho khung hình */}
         <div className="flex flex-col gap-[clamp(0.75rem,2.6svh,2rem)] lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-        <div data-reveal="up" role="tablist" aria-label={t('res.collections')} className={`${scrollRow} gap-x-6`}>
+        {/* điện thoại: 2 tab chia đôi bề ngang — thấy đủ cả hai, không phải kéo ngang */}
+        <div data-reveal="up" role="tablist" aria-label={t('res.collections')} className="grid grid-cols-2 gap-x-3 md:flex md:gap-x-6">
           {collections.map((c, i) => (
             <button key={c.key} type="button" role="tab" aria-selected={i === col}
               onClick={() => { setCol(i); setUnitIdx(0); }}
-              className={`min-h-11 shrink-0 cursor-pointer whitespace-nowrap border-b-2 px-1 font-sub text-xs font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] ${i === col ? 'border-bronze-deep text-hoadau' : 'border-transparent text-ink-soft'}`}>
-              {c.title}
+              className={`min-h-11 cursor-pointer border-b-2 px-1 py-2 text-left font-sub text-xs font-semibold uppercase leading-snug tracking-[0.1em] md:whitespace-nowrap md:tracking-[0.14em] xl:tracking-[0.18em] ${i === col ? 'border-bronze-deep text-hoadau' : 'border-transparent text-ink-soft'}`}>
+              <span className="md:hidden">{shortTitle(c.title)}</span>
+              <span className="max-md:hidden">{c.title}</span>
             </button>
           ))}
         </div>
 
-        <div data-reveal="up" style={{ '--reveal-i': 1 }} className={`${scrollRow} gap-2`}>
+        {/* chip loại căn xuống dòng khi hết chỗ (không ẩn sau mép phải); điện thoại: chip gọn hơn */}
+        <div data-reveal="up" style={{ '--reveal-i': 1 }} className="flex flex-wrap gap-2 lg:justify-end">
           {current.units.map((u, i) => (
-            <button key={u.name} type="button" className="chip shrink-0 whitespace-nowrap" aria-pressed={i === unitIdx} onClick={() => setUnitIdx(i)}>{u.name}</button>
+            <button key={u.name} type="button" className="chip whitespace-nowrap max-sm:min-h-10 max-sm:px-3.5 max-sm:text-[0.8125rem]" aria-pressed={i === unitIdx} onClick={() => setUnitIdx(i)}>{u.name}</button>
           ))}
         </div>
         </div>

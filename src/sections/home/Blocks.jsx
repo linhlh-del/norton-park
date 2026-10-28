@@ -3,7 +3,8 @@ import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
-const blockMedia = 'h-[clamp(130px,20svh,240px)] rounded-card md:h-[clamp(160px,22svh,300px)] lg:h-[clamp(110px,20svh,320px)]';
+/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
+const blockMedia = 'h-[clamp(50cqw,26svh,66.7cqw)] rounded-card'; /* 2:1 … 3:2 */
 
 /* Hai phân khu trượt vào từ hai bên rồi gặp nhau ở giữa: B từ trái, C từ phải. */
 export default function Blocks() {
@@ -17,7 +18,7 @@ export default function Blocks() {
         <SectionHeading align="center" eyebrow={t('blocks.eyebrow')} title={t('blocks.title')} seo={t('blocks.seo')} />
         {/* điện thoại: 2 phân khu trượt ngang · từ 768px: 2 cột cạnh nhau */}
         <div className="m-rail grid gap-8 md:grid-cols-2">
-          <article data-reveal="left" className="flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
+          <article data-reveal="left" className="@container flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
             <Media src={images.blockB} alt={t('blocks.bAlt')} label={t('blocks.bAlt')} className={blockMedia}
               style={{ '--media-bg': 'var(--color-taupe)', '--media-ink': '#3c3c3c' }} sizes="(min-width: 1024px) 42vw, 100vw" />
             <h3 className="heading-3 !text-[clamp(1.6rem,2.6vw,2.4rem)]">{t('blocks.b')}</h3>
@@ -31,7 +32,7 @@ export default function Blocks() {
               ))}
             </ul>
           </article>
-          <article data-reveal="right" className="flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
+          <article data-reveal="right" className="@container flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
             <div className="relative">
               <Media src={images.blockC} alt={t('blocks.cAlt')} label={t('blocks.cAlt')} className={blockMedia}
                 style={{ '--media-bg': 'var(--color-sage)', '--media-ink': 'var(--color-ivory)' }} sizes="(min-width: 1024px) 42vw, 100vw" />
@@ -42,7 +43,7 @@ export default function Blocks() {
             {/* "Sắp ra mắt" đi kèm lối đăng ký riêng — lấp khoảng trống và giữ lead quan tâm sớm */}
             <div className="flex flex-col items-start gap-4 rounded-card border border-line bg-cream/60 p-[clamp(1rem,2.6svh,1.5rem)] xl:flex-row xl:items-center">
               <p className="m-0 leading-relaxed text-hoadau">{t('blocks.cTeaser')}</p>
-              <button type="button" className="btn btn-solid" onClick={() => popup.open('block_c')}
+              <button type="button" className="btn btn-solid shrink-0" onClick={() => popup.open('block_c')}
                 data-track="cta_click" data-track-label="block_c_register">
                 {t('blocks.cCta')}
               </button>

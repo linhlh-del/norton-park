@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link, useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
@@ -58,6 +58,7 @@ function usePastHero() {
 }
 
 const PHONE = 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2';
+const GRID = 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z';
 /* cao đúng --np-bar-h (trừ viền 1px) để khung hình --np-screen tính chính xác; máy ngang thấp: icon + chữ nằm ngang */
 const barItem = 'flex h-[calc(var(--np-bar-h)-1px)] flex-col items-center justify-center gap-1 font-sub text-xs font-semibold uppercase tracking-[0.06em] no-underline [@media(max-height:31.25rem)]:flex-row [@media(max-height:31.25rem)]:gap-2';
 
@@ -70,13 +71,49 @@ export default function ValueNav() {
   const { contact } = useSite();
   const active = useActiveSection(IDS, pathname);
   const pastHero = usePastHero();
+  /* điện thoại / máy tính bảng: nút "Khám phá" mở danh mục lối tắt tới các section chính (thay cho cột icon
+     bên trái của máy tính). Đóng khi chọn mục, bấm ra ngoài, nhấn Esc hoặc đổi trang. */
+  const [explore, setExplore] = useState(false);
+  const barRef = useRef(null);
+  useEffect(() => setExplore(false), [pathname]);
+  useEffect(() => {
+    if (!explore) return undefined;
+    const onDown = (e) => { if (!barRef.current?.contains(e.target)) setExplore(false); };
+    const onKey = (e) => { if (e.key === 'Escape') setExplore(false); };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('pointerdown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [explore]);
 
   return (
     <>
       {/* điện thoại / máy tính bảng: thanh sticky Gọi | Zalo | Nhận bảng giá */}
-      <nav aria-label={t('values.quick')}
+      <nav ref={barRef} aria-label={t('values.quick')}
         className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-hoadau/95 pb-[env(safe-area-inset-bottom)] text-on-dark lg:hidden">
-        <ul className="m-0 grid list-none grid-cols-3 p-0">
+        {/* danh mục lối tắt — trượt lên phía trên thanh */}
+        <div id="explore-sheet" hidden={!explore}
+          className="absolute inset-x-0 bottom-full border-t border-line-dark bg-hoadau px-[var(--spacing-gutter)] pb-4 pt-3 shadow-[0_-12px_30px_rgb(30_24_20/0.25)]">
+          <ul className="m-0 grid list-none grid-cols-2 gap-2 p-0 sm:grid-cols-4">
+            {ITEMS.map((it) => (
+              <li key={it.key}>
+                <Link to={it.to} onClick={() => setExplore(false)} data-track="value_nav" data-track-label={`m_${it.key}`}
+                  aria-current={active === it.id ? 'true' : undefined}
+                  className={`flex min-h-12 items-center gap-3 rounded-card border px-4 font-sub text-xs font-semibold uppercase tracking-[0.1em] no-underline ${active === it.id ? 'border-bronze bg-bronze-deep text-ivory' : 'border-line-dark text-on-dark hover:bg-on-dark/10'}`}>
+                  <Icon d={it.icon} />{t(`values.${it.key}`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <ul className="m-0 grid list-none grid-cols-4 p-0">
+          <li>
+            <button type="button" onClick={() => setExplore((v) => !v)} aria-expanded={explore} aria-controls="explore-sheet"
+              aria-label={explore ? t('values.close') : t('values.explore')} data-track="sticky_bar" data-track-label="explore"
+              className={`${barItem} w-full cursor-pointer border-0 border-r border-line-dark ${explore ? 'bg-on-dark/10' : 'bg-transparent'} text-on-dark`}>
+              <Icon d={GRID} />
+              {t('values.explore')}
+            </button>
+          </li>
           <li>
             <a href={contact.hotlineHref} data-track="sticky_bar" data-track-label="call" aria-label={t('fb.call', { phone: contact.hotline })}
               className={`${barItem} text-on-dark`}>
@@ -95,7 +132,7 @@ export default function ValueNav() {
             <button type="button" onClick={() => popup.open('sticky_price')} data-track="sticky_bar" data-track-label="price"
               className={`btn-cta ${barItem} h-full w-full cursor-pointer border-0 bg-bronze-deep text-ivory`}>
               <Icon d={ITEMS.find((i) => i.key === 'price').icon} />
-              {t('form.getPrice')}
+              {t('values.price')}
             </button>
           </li>
         </ul>

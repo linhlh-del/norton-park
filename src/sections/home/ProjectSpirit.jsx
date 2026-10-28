@@ -2,6 +2,7 @@ import { useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 
+/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
 const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(244 240 231 / 0.72)' };
 
 export default function ProjectSpirit() {
@@ -21,8 +22,8 @@ export default function ProjectSpirit() {
         <div className="m-rail grid gap-6 md:grid-cols-3">
           {stations.map((s, i) => (
             <article key={s.title} data-reveal="up" style={{ '--reveal-i': i }}
-              className="flex flex-col overflow-hidden rounded-card border border-line-dark bg-on-dark/5">
-              <Media src={s.image} alt={s.imageLabel.replace(': ', ' ')} label={s.imageLabel} className="h-[clamp(130px,19svh,220px)] md:h-[clamp(120px,21svh,240px)]" style={darkMedia}
+              className="@container flex flex-col overflow-hidden rounded-card border border-line-dark bg-on-dark/5">
+              <Media src={s.image} alt={s.imageLabel.replace(': ', ' ')} label={s.imageLabel} className="h-[clamp(50cqw,22svh,75cqw)]" style={darkMedia}
                 sizes="(min-width: 768px) 28vw, 100vw" />
               <div className="flex flex-col gap-2.5 px-5 pb-6 pt-4 lg:px-6">
                 <p className="eyebrow text-on-dark-soft">{t('spirit.station')}</p>

@@ -32,6 +32,8 @@ const vi = {
   'values.quick': 'Liên hệ nhanh',
   'values.call': 'Gọi hotline',
   'values.zalo': 'Chat Zalo',
+  'values.explore': 'Khám phá',
+  'values.close': 'Đóng danh mục',
 
   // hero
   'hero.aria': 'Giới thiệu Norton Park',
@@ -100,7 +102,7 @@ const vi = {
   'blocks.cBody': 'Thông tin phân khu sẽ được công bố trong thời gian tới.',
   'blocks.soon': 'SẮP RA MẮT',
   'blocks.cTeaser': 'Nhận mặt bằng, bảng giá và lịch mở bán Phân khu C ngay khi chủ đầu tư công bố.',
-  'blocks.cCta': 'Đăng ký nhận thông tin Phân khu C',
+  'blocks.cCta': 'Nhận tin Phân khu C',
 
   // residences
   'res.eyebrow': 'Mặt bằng căn hộ',
@@ -298,6 +300,8 @@ const en = {
   'values.quick': 'Quick contact',
   'values.call': 'Call hotline',
   'values.zalo': 'Chat Zalo',
+  'values.explore': 'Explore',
+  'values.close': 'Close menu',
 
   'hero.aria': 'Introducing Norton Park',
   'hero.imageAlt': 'Rendering of the Norton Park towers on Binh Duong Boulevard',
@@ -359,7 +363,7 @@ const en = {
   'blocks.cBody': 'Details of this zone will be announced soon.',
   'blocks.soon': 'COMING SOON',
   'blocks.cTeaser': 'Receive Zone C floor plans, prices and launch schedule as soon as the developer announces them.',
-  'blocks.cCta': 'Get Zone C updates',
+  'blocks.cCta': 'Zone C updates',
 
   'res.eyebrow': 'Floor plans',
   'res.title': 'Homes for a modern rhythm of life',

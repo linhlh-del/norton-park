@@ -22,7 +22,7 @@ export const contact = {
   email: 'info@nortonpark.com.vn',
   fanpage: 'Norton Park by Gamuda Land',
   fanpageUrl: 'https://www.facebook.com/NortonParkbyGLVN',
-  zaloUrl: 'https://zalo.me/2522093664370221137',
+  zaloUrl: 'https://zalo.me/1717736678695240623',
   tour360Url: 'https://360.nortonpark.com.vn/',
   legalName: '[TÊN PHÁP NHÂN]',
   legalAddress: '[ĐỊA CHỈ PHÁP NHÂN]',

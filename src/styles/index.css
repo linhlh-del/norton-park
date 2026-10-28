@@ -244,8 +244,14 @@
     letter-spacing: var(--tracking-button);
     text-transform: uppercase;
     text-decoration: none;
+    text-align: center;
+    white-space: nowrap; /* chữ trên nút luôn 1 dòng (nút co theo chữ) */
     cursor: pointer;
     transition: background-color 0.2s var(--ease-soft), color 0.2s, border-color 0.2s;
+  }
+  /* điện thoại hẹp: nút nằm trong lưới 2 cột có thể không đủ chỗ → cho xuống dòng nhưng chia đều 2 dòng */
+  @media (max-width: 39.99rem) {
+    .btn { white-space: normal; text-wrap: balance; line-height: 1.35; }
   }
   .btn-solid { background: var(--color-bronze-deep); color: var(--color-ivory); }
   .btn-solid:hover { background: var(--color-hoadau); color: var(--color-ivory); }

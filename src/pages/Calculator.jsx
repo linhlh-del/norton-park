@@ -150,9 +150,10 @@ export default function Calculator() {
               </fieldset>
             </div>
 
-            <aside data-reveal="right" className="flex min-w-0 flex-[1_1_340px] flex-col gap-4.5 rounded-panel bg-hoadau p-[clamp(1.5rem,3vw,2.25rem)] text-on-dark" aria-live="polite">
+            <aside data-reveal="right" className="@container flex min-w-0 flex-[1_1_340px] flex-col gap-4.5 rounded-panel bg-hoadau p-[clamp(1.5rem,3vw,2.25rem)] text-on-dark" aria-live="polite">
               <p className="eyebrow text-on-dark-soft">{t('pc.estimate')}</p>
-              <div className="font-display text-[clamp(2.2rem,3.4vw,3rem)] leading-tight"><CountUp value={price} duration={1300} /></div>
+              {/* giá luôn 1 dòng: cỡ chữ theo bề rộng panel (cqw), tối đa 3rem */}
+              <div className="whitespace-nowrap font-display text-[clamp(1.5rem,10.5cqw,3rem)] leading-tight"><CountUp value={price} duration={1300} /></div>
               <p className="m-0 text-on-dark-soft">{type.name} · {layout.code}</p>
               <dl className="m-0 flex flex-col">
                 {[[t('res.gfa'), m2(layout.gfa)], [t('res.nsa'), m2(layout.nsa)], [t('res.view'), layout.view], [t('pc.units'), layout.units]].map(([k, v]) => (
@@ -180,7 +181,7 @@ export default function Calculator() {
             <p className="m-0 leading-relaxed">{t('pc.q.intro')}</p>
             <div className="flex items-center justify-between gap-3 rounded-lg bg-cream p-4">
               <div>
-                <p className="eyebrow text-[9px] text-ink-soft">{t('pc.q.selected')}</p>
+                <p className="eyebrow text-ink-soft">{t('pc.q.selected')}</p>
                 <p className="m-0 mt-1.5 font-medium">{type.name} · {layout.code}</p>
               </div>
               <a href="#tool" className="inline-flex min-h-11 items-center font-sub text-xs font-semibold tracking-[0.16em]">{t('pc.q.change')}</a>

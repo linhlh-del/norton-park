@@ -1,6 +1,5 @@
 import { Link, useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
-import QuachoMark from '@/components/ui/QuachoMark';
 import { CarouselDots, CarouselNav } from '@/components/ui/CarouselControls';
 import KeywordHeading from '@/components/ui/KeywordHeading';
 import useCarousel from '@/hooks/useCarousel';
@@ -9,6 +8,7 @@ const Arrow = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 );
 
+/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
 const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(244 240 231 / 0.72)' };
 
 /* Tin tức trang chủ: carousel thẻ bài báo (1 thẻ trên điện thoại, 2 trên máy tính bảng, 3 trên máy tính) */
@@ -21,9 +21,8 @@ export default function NewsPreview() {
       <div className="container-site flex flex-col gap-[clamp(1.25rem,4svh,3rem)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="flex max-w-3xl flex-col gap-4">
-            <QuachoMark tone="dark" data-reveal="zoom" className="[@media(max-height:56rem)]:hidden" />
-            <p data-reveal="up" style={{ '--reveal-i': 1 }} className="eyebrow text-on-dark-soft">{t('news.eyebrow')}</p>
-            <KeywordHeading seo={t('news.seo')} data-reveal="up" style={{ '--reveal-i': 2 }} className="heading-2">{t('news.title')}</KeywordHeading>
+            <p data-reveal="up" className="eyebrow text-on-dark-soft">{t('news.eyebrow')}</p>
+            <KeywordHeading seo={t('news.seo')} data-reveal="up" style={{ '--reveal-i': 1 }} className="heading-2">{t('news.title')}</KeywordHeading>
           </div>
           <div data-reveal="fade" className="flex flex-wrap items-center gap-4">
             <Link to="/tin-tuc" className="inline-flex min-h-11 items-center gap-2 font-sub text-xs font-semibold uppercase tracking-button text-on-dark no-underline hover:text-on-dark-soft">
@@ -38,8 +37,8 @@ export default function NewsPreview() {
             <a key={n.id} href={n.url} target="_blank" rel="noopener" data-news={n.id}
               aria-roledescription="slide" aria-label={`${i + 1} / ${homeNews.length}: ${n.title}`}
               data-reveal="up" style={{ '--reveal-i': i }}
-              className="carousel-slide group flex basis-[88%] flex-col gap-3 border-t border-on-dark/30 pt-5 sm:basis-full text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
-              <Media src={n.image} alt={n.alt} label={t('news.image')} className="h-[clamp(130px,19svh,220px)] rounded-lg" style={darkMedia}
+              className="carousel-slide @container group flex basis-[88%] flex-col gap-3 border-t border-on-dark/30 pt-5 sm:basis-full text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
+              <Media src={n.image} alt={n.alt} label={t('news.image')} className="h-[clamp(56.25cqw,38svh,75cqw)] rounded-lg" style={darkMedia}
                 sizes="(min-width: 1024px) 27vw, (min-width: 768px) 41vw, 100vw" />
               {/* một dòng (không xuống dòng) để tiêu đề và tóm tắt của các thẻ luôn thẳng hàng */}
               <div className="flex min-w-0 gap-4 whitespace-nowrap">

@@ -71,8 +71,8 @@
   color:var(--muted);transition:background .2s,color .2s}
 #lm .icon-btn:hover{background:rgba(164,124,93,.12);color:var(--ink)}
 #lm .icon-btn svg{width:16px;height:16px}
-#lm .bd-tabs{flex:none;display:flex;gap:3px;margin:10px 16px 0;padding:3px;border-radius:99px;background:rgba(36,60,52,.05)}
-#lm .bd-tabs button{flex:1;padding:8px 4px;border-radius:99px;font:700 9.5px/1 var(--f-sub);letter-spacing:.12em;text-transform:uppercase;
+#lm .bd-tabs{flex:none;display:flex;gap:3px;margin:10px 20px 0 16px;padding:3px;border-radius:99px;background:rgba(36,60,52,.05)}
+#lm .bd-tabs button{flex:1;padding:8px 4px;border-radius:99px;font:700 11px/1.15 var(--f-sub);letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink);opacity:.6;transition:.25s}
 #lm .bd-tabs button:hover{opacity:.9}
 #lm .bd-tabs button.on{opacity:1;background:var(--card);box-shadow:0 2px 8px rgba(36,60,52,.14)}

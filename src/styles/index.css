@@ -108,6 +108,38 @@
   /* chiều cao bản đồ (#position): xem cuối file — phải nằm ngoài @layer để thắng location-map.css */
   html.np-snap footer { scroll-snap-align: end; }
 
+  /* ---------- chiều cao ảnh trong section (trang chủ) ----------
+     Một chỗ duy nhất quyết định chiều cao ảnh của Story · Phân khu · Tin tức · Tiện ích. Ảnh đặt trong khung có
+     container query (@container) → cqw = % bề rộng khung.
+     - Màn đủ cao (≥ 920px, vd. MacBook 1512×982, 1920×1080): ưu tiên tỉ lệ ảnh đẹp — MIN theo cqw (ảnh không bị
+       cắt thành dải), cao theo svh trong khoảng đó.
+     - Màn thấp (laptop 1270–1366 × 657–900, điện thoại): ưu tiên vừa 1 khung hình — MIN là px cố định để ảnh co theo
+       chiều cao màn hình, nhưng có sàn tỉ lệ 3:1 (33cqw) để không thành dải mỏng.
+     Nguyên tắc: MIN của clamp() không được để cqw lớn hơn phần svh trên màn thấp (gốc lỗi tràn ở audit v2). */
+  .np-img-story     { height: clamp(50cqw, 22svh, 75cqw); }
+  .np-img-block     { height: clamp(50cqw, 26svh, 66.7cqw); }
+  .np-img-news      { height: clamp(56.25cqw, 38svh, 75cqw); }
+  .np-img-lifestyle { height: clamp(56.25cqw, 56svh, 62.5cqw); }
+  @media (max-height: 57.49rem) {
+    .np-img-story     { height: clamp(max(100px, 33cqw), 19svh, 75cqw); }
+    .np-img-block     { height: clamp(max(120px, 33cqw), 20svh, 66.7cqw); }
+    .np-img-news      { height: clamp(max(110px, 33cqw), 20svh, 75cqw); }
+    .np-img-lifestyle { height: clamp(220px, 50svh, 62.5cqw); }
+  }
+  /* điện thoại: thẻ hẹp → ảnh thấp hơn; Tiện ích là ảnh dọc (4:5 … 1:1) */
+  @media (max-width: 39.99rem) {
+    .np-img-lifestyle { height: clamp(220px, 46svh, 125cqw); }
+  }
+  @media (max-width: 47.99rem) {
+    .np-img-story { height: clamp(100px, 16svh, 75cqw); }
+    .np-img-block { height: clamp(120px, 17svh, 66.7cqw); }
+  }
+  /* điện thoại thấp (≤ 700px: iPhone SE, 360×640…) — ảnh 14–16svh */
+  @media (max-width: 47.99rem) and (max-height: 43.75rem) {
+    .np-img-story, .np-img-block, .np-img-news { height: clamp(96px, 15svh, 75cqw); }
+    .np-img-lifestyle { height: clamp(200px, 42svh, 125cqw); }
+  }
+
   /* ---------- hiệu năng ---------- */
   /* Section dưới màn hình đầu: trình duyệt bỏ qua style/layout/paint cho tới khi cuộn gần tới (giảm mạnh thời gian
      main thread trên điện thoại). "auto 900px" = kích thước ước lượng trước lần vẽ đầu, sau đó nhớ kích thước thật.
@@ -363,3 +395,19 @@ html.np-snap #position { height: var(--np-screen); }
   main .heading-2 { font-size: clamp(1.9rem, 6.2svh, 3.3rem); line-height: 1.08; }
   main .lead { font-size: 0.9375rem; line-height: 1.6; }
 }
+
+/* Điện thoại màn thấp (≤ 700px: iPhone SE 375×667, 360×640…): tiêu đề / đoạn dẫn gọn lại, mô tả dài kẹp dòng —
+   giữ mỗi section gần 1 khung hình. Ngoài @layer để thắng .heading-2 / .lead. */
+@media (max-width: 47.99rem) and (max-height: 43.75rem) {
+  html.np-snap { --spacing-section: 1rem; }
+  main .eyebrow { letter-spacing: 0.16em; }
+  #faq details { padding-block: 0; }
+  main .heading-2 { font-size: clamp(1.55rem, 7vw, 1.9rem); line-height: 1.12; }
+  main .heading-3 { font-size: 1.3rem; }
+  main .lead { font-size: 0.9375rem; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* bottom-sheet (dialog) trượt lên từ đáy */
+dialog.np-sheet[open] { animation: np-sheet-up 0.32s var(--ease-soft); }
+@keyframes np-sheet-up { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) { dialog.np-sheet[open] { animation: none; } }

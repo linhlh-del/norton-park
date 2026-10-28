@@ -5,8 +5,8 @@ import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
-/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
-const blockMedia = 'h-[clamp(50cqw,26svh,66.7cqw)] rounded-card'; /* 2:1 … 3:2 */
+/* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
+const blockMedia = 'np-img-block rounded-card'; /* chiều cao: index.css (.np-img-*) */
 
 /* Hai phân khu trượt vào từ hai bên rồi gặp nhau ở giữa: B từ trái, C từ phải. */
 export default function Blocks() {
@@ -32,7 +32,7 @@ export default function Blocks() {
             <p className="m-0 leading-relaxed max-md:line-clamp-3">{t('blocks.bBody')}</p>
             <ul className="m-0 flex list-none flex-col p-0">
               {zoneB.map((x) => (
-                <li key={x} className="flex items-center gap-3 border-t border-line py-[clamp(0.4rem,1.3svh,0.875rem)] last:border-b">
+                <li key={x} className="flex items-center gap-3 border-t border-line py-2 last:border-b md:py-[clamp(0.4rem,1.3svh,0.875rem)]">
                   <span aria-hidden="true" className="size-1.5 rounded-full bg-bronze-deep" />
                   {x}
                 </li>

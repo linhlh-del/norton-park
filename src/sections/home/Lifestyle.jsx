@@ -4,7 +4,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import { CarouselDots, CarouselNav } from '@/components/ui/CarouselControls';
 import useCarousel from '@/hooks/useCarousel';
 
-/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
+/* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const mediaTone = { '--media-bg': 'var(--color-sandstone)', '--media-ink': '#3c3c3c' };
 
 /* Đời sống & tiện ích: carousel, mỗi slide là một ảnh, chú thích nằm TRÊN ảnh (lớp phủ tối dần phía dưới để chữ
@@ -26,7 +26,7 @@ export default function Lifestyle() {
             <article key={l.image} className="carousel-slide @container group relative isolate basis-full overflow-hidden rounded-card md:basis-[78%] lg:basis-[68%]"
               aria-roledescription="slide" aria-label={`${i + 1} / ${lifestyle.length}`}>
               <Media src={l.image} label={l.imageLabel} alt={l.imageLabel}
-                className="-z-20 h-[clamp(100cqw,50svh,125cqw)] sm:h-[clamp(56.25cqw,56svh,62.5cqw)]"
+                className="np-img-lifestyle -z-20"
                 style={mediaTone} sizes="(min-width: 1024px) 57vw, (min-width: 768px) 66vw, 100vw" />
               <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/90 via-hoadau-deep/35 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 grid gap-x-10 gap-y-3 p-[clamp(1.25rem,3vw,2.5rem)] text-on-dark md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-end">

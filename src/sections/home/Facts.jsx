@@ -25,7 +25,7 @@ export default function Facts() {
         {/* 7 chỉ số: 1 hàng trên máy tính · 4 cột trên máy tính bảng · dải trượt ngang (3 ô/màn) trên điện thoại */}
         <dl className="m-rail m-0 grid grid-cols-4 border-t border-line [--rail-item:31%] lg:grid-cols-7">
           {facts.map((f, i) => (
-            <div key={f.label} data-reveal="up" style={{ '--reveal-i': i }} className="row-span-2 grid grid-rows-subgrid gap-y-2 border-b border-line px-3 py-[clamp(0.6rem,2.2svh,1.75rem)] text-center">
+            <div key={f.label} data-reveal="up" style={{ '--reveal-i': i }} className="row-span-2 grid grid-rows-subgrid gap-y-2 border-b border-line px-3 py-[clamp(0.5rem,1.7svh,1.75rem)] text-center">
               <dt className="eyebrow row-start-2 self-start text-ink-soft max-lg:tracking-[0.14em]">{f.label}</dt>
               <dd className="row-start-1 m-0 self-end whitespace-nowrap font-display text-[clamp(1.75rem,2.6vw,3rem)] leading-none text-hoadau [@media(max-height:47.5rem)]:text-[clamp(1.6rem,5svh,2.4rem)]">
                 {f.count === false ? f.value : <CountUp value={f.value} />}
@@ -44,7 +44,7 @@ export default function Facts() {
             <div key={c.key} id={`${tabsId}-${ci}`} role="tabpanel" className={`flex flex-col ${panelClass(ci, col)}`}>
               <p className="eyebrow border-b border-line-strong pb-3 text-bronze-deep max-md:sr-only">{c.title}</p>
               {c.units.map((u) => (
-                <Link key={u.name} to="/#residences" className="flex items-baseline justify-between gap-4 border-b border-line py-[clamp(0.35rem,1.15svh,0.875rem)] text-hoadau no-underline hover:text-bronze-deep">
+                <Link key={u.name} to="/#residences" className="flex items-baseline justify-between gap-4 border-b border-line py-[clamp(0.35rem,1svh,0.875rem)] text-hoadau no-underline hover:text-bronze-deep">
                   <span className="font-display text-[clamp(1.15rem,1.7vw,1.5rem)] [@media(max-height:47.5rem)]:text-[1.2rem]">{u.label}</span>
                   {/* diện tích hiển thị tĩnh: số đang đếm (42,11 → 42,12) dễ bị đọc / chụp màn hình sai */}
                   <span className="whitespace-nowrap font-sub text-sm tracking-[0.04em] text-ink-soft">{u.gfa}</span>

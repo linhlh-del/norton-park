@@ -4,7 +4,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import { useRef } from 'react';
 import RailHint from '@/components/ui/RailHint';
 
-/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
+/* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(244 240 231 / 0.72)' };
 
 export default function ProjectSpirit() {
@@ -26,7 +26,7 @@ export default function ProjectSpirit() {
           {stations.map((s, i) => (
             <article key={s.title} data-reveal="up" style={{ '--reveal-i': i }}
               className="@container flex flex-col overflow-hidden rounded-card border border-line-dark bg-on-dark/5">
-              <Media src={s.image} alt={s.imageLabel.replace(': ', ' ')} label={s.imageLabel} className="h-[clamp(50cqw,22svh,75cqw)]" style={darkMedia}
+              <Media src={s.image} alt={s.imageLabel.replace(': ', ' ')} label={s.imageLabel} className="np-img-story" style={darkMedia}
                 sizes="(min-width: 768px) 28vw, 100vw" />
               <div className="flex flex-col gap-2.5 px-5 pb-6 pt-4 lg:px-6">
                 <p className="eyebrow text-on-dark-soft">{t('spirit.station')}</p>

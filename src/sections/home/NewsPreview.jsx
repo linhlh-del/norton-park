@@ -8,7 +8,7 @@ const Arrow = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 );
 
-/* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
+/* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(244 240 231 / 0.72)' };
 
 /* Tin tức trang chủ: carousel thẻ bài báo (1 thẻ trên điện thoại, 2 trên máy tính bảng, 3 trên máy tính) */
@@ -38,7 +38,7 @@ export default function NewsPreview() {
               aria-roledescription="slide" aria-label={`${i + 1} / ${homeNews.length}: ${n.title}`}
               data-reveal="up" style={{ '--reveal-i': i }}
               className="carousel-slide @container group flex basis-[88%] flex-col gap-3 border-t border-on-dark/30 pt-5 sm:basis-full text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
-              <Media src={n.image} alt={n.alt} label={t('news.image')} className="h-[clamp(56.25cqw,38svh,75cqw)] rounded-lg" style={darkMedia}
+              <Media src={n.image} alt={n.alt} label={t('news.image')} className="np-img-news rounded-lg" style={darkMedia}
                 sizes="(min-width: 1024px) 27vw, (min-width: 768px) 41vw, 100vw" />
               {/* một dòng (không xuống dòng) để tiêu đề và tóm tắt của các thẻ luôn thẳng hàng */}
               <div className="flex min-w-0 gap-4 whitespace-nowrap">

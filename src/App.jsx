@@ -7,6 +7,7 @@ import NotFound from '@/pages/NotFound';
 import ThankYou from '@/pages/ThankYou';
 import Topic from '@/pages/Topic';
 import { topicPaths } from '@/seo/site-meta';
+import { SECTION_PATHS } from '@/lib/sections';
 
 /* bật sớm hành vi React Router v7 (tắt cảnh báo console, nâng cấp sau không đổi gì) */
 export const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: true };
@@ -15,6 +16,8 @@ export const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: tr
 const pages = (
   <>
     <Route index element={<Home />} />
+    {/* /cau-chuyen, /ban-do, /dang-ky: trang chủ, Layout cuộn tới section (src/lib/sections.js) */}
+    {Object.keys(SECTION_PATHS).map((p) => <Route key={p} path={p.slice(1)} element={<Home />} />)}
     {topicPaths.map((p) => <Route key={p} path={p.slice(1)} element={<Topic path={p} />} />)}
     <Route path="bang-tinh-gia" element={<Calculator />} />
     <Route path="tin-tuc" element={<News />} />

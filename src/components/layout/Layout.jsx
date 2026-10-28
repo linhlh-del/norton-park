@@ -1,28 +1,51 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import FloatingButtons from './FloatingButtons';
 import ValueNav from './ValueNav';
-import { useT } from '@/i18n';
+import { langFromPath, localizePath, stripLang, useT } from '@/i18n';
+import { sectionForPath, urlForSection } from '@/lib/sections';
 import { ContactPopupProvider } from '@/components/popup/ContactPopup';
 import useRevealObserver from '@/components/motion/useRevealObserver';
 import Seo from '@/components/seo/Seo';
 
-/* cuộn tới #anchor khi đổi trang hoặc bấm liên kết dạng "/#register" — theo dõi cả location.key để bấm lại
-   cùng một CTA (URL không đổi) vẫn cuộn tới section */
-function useScrollToHash() {
+/* Cuộn tới section khi vào đường dẫn section (/dang-ky, /en/ban-do…) hoặc bấm lại cùng một CTA (location.key đổi);
+   trang khác → về đầu trang. Liên kết cũ dạng "/#register" (đã chia sẻ / quảng cáo) → chuyển sang URL mới.
+   Mở thẳng link: trong ~2,5s đầu bố cục còn đổi (bản đồ, ảnh, font) → căn lại section dưới header mỗi lần đổi,
+   dừng ngay khi người dùng tự cuộn / chạm / gõ phím. */
+function useScrollToSection() {
   const { pathname, hash, key } = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
-    if (!hash) { window.scrollTo(0, 0); return; }
-    const id = decodeURIComponent(hash.slice(1));
-    const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }), 0);
-    return () => clearTimeout(t);
-  }, [pathname, hash, key]);
+    const lang = langFromPath(pathname);
+    const base = stripLang(pathname.replace(/\/+$/, '') || '/');
+    const fromHash = hash ? decodeURIComponent(hash.slice(1)) : '';
+    if (fromHash && base === '/') {
+      const url = urlForSection(fromHash);
+      if (url) { navigate(localizePath(url, lang), { replace: true }); return undefined; }
+    }
+    const id = sectionForPath(base) || fromHash;
+    if (!id) { window.scrollTo(0, 0); return undefined; }
+    const el = () => document.getElementById(id);
+    const t = setTimeout(() => el()?.scrollIntoView({ block: 'start' }), 0);
+    let stop = false;
+    const header = () => document.querySelector('header')?.getBoundingClientRect().height || 0;
+    const ro = new ResizeObserver(() => requestAnimationFrame(() => {
+      const target = el();
+      if (!stop && target && Math.abs(target.getBoundingClientRect().top - header()) > 2) target.scrollIntoView({ block: 'start' });
+    }));
+    ro.observe(document.getElementById('main') || document.body);
+    const quit = () => { stop = true; ro.disconnect(); };
+    const timer = setTimeout(quit, 2500);
+    const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    evs.forEach((ev) => window.addEventListener(ev, quit, { passive: true, once: true }));
+    return () => { clearTimeout(t); clearTimeout(timer); quit(); evs.forEach((ev) => window.removeEventListener(ev, quit)); };
+  }, [pathname, hash, key, navigate]);
 }
 
 export default function Layout() {
-  useScrollToHash();
+  useScrollToSection();
   useRevealObserver();
   const t = useT();
   return (

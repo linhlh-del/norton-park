@@ -12,6 +12,7 @@ import * as vi from '@/data/site';
 import en from '@/data/site.en';
 import ui from './ui';
 import { applySiteOverrides, cmsText } from '@/cms/content';
+import { resolveSectionLink } from '@/lib/sections';
 
 export const LANGS = ['vi', 'en'];
 export const LOCALE = { vi: 'vi-VN', en: 'en-US' };
@@ -21,8 +22,10 @@ export const langFromPath = (pathname = '/') => (pathname === '/en' || pathname.
 /** Bỏ tiền tố /en: "/en/tin-tuc" → "/tin-tuc", "/en" → "/" */
 export const stripLang = (path = '/') => (langFromPath(path) === 'en' ? path.slice(3) || '/' : path);
 
-/** Đường dẫn tiếng Việt → đường dẫn theo ngôn ngữ: ("/#position","en") → "/en#position" */
-export function localizePath(path, lang) {
+/** Đường dẫn tiếng Việt → đường dẫn theo ngôn ngữ. Liên kết section "/#…" được đổi sang URL thật trước
+    (src/lib/sections.js): ("/#register","vi") → "/dang-ky" · ("/#register","en") → "/en/dang-ky" */
+export function localizePath(rawPath, lang) {
+  const path = resolveSectionLink(rawPath);
   if (lang !== 'en' || typeof path !== 'string' || !path.startsWith('/') || langFromPath(path) === 'en') return path;
   if (path === '/') return '/en';
   if (path.startsWith('/#') || path.startsWith('/?')) return '/en' + path.slice(1);

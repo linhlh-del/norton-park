@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useSite, useT } from '@/i18n';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { sectionForPath } from '@/lib/sections';
+import { langFromPath, localizePath, stripLang, useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
 /* Nút nổi góc phải (chỉ biểu tượng, nhãn nằm ở aria-label/title): ↑ Lên đầu trang · Gọi · Zalo · Bảng giá.
@@ -87,7 +89,11 @@ export default function FloatingButtons() {
   const showTop = useScrolledPast(typeof window === 'undefined' ? 1400 : window.innerHeight * 1.8);
   const hidden = useAvoidOverlap();
 
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const toTop = () => {
+    /* đang ở đường dẫn section (/dang-ky…) → URL về trang chủ "/" (hoặc "/en") */
+    if (sectionForPath(stripLang(pathname))) navigate(localizePath('/', langFromPath(pathname)), { replace: true });
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     document.getElementById('main')?.focus({ preventScroll: true });

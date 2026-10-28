@@ -4,6 +4,16 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/(cau-chuyen|ban-do|dang-ky)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en/(cau-chuyen|ban-do|dang-ky)",
+      "destination": "/en/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/cms-status.json",

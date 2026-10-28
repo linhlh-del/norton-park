@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { headFor } from '@/seo/head';
 import { langFromPath, stripLang } from '@/i18n';
 import { pageView } from '@/lib/analytics';
+import { sectionForPath } from '@/lib/sections';
 
 /**
  * Đồng bộ <head> (title, description, canonical, Open Graph, JSON-LD) khi chuyển trang phía trình duyệt.
@@ -15,7 +16,8 @@ export default function Seo() {
     const clean = pathname.replace(/\/+$/, '') || '/';
     const lang = langFromPath(clean);
     const path = stripLang(clean);
-    const h = headFor(path, lang);
+    /* /dang-ky, /ban-do… là trang chủ cuộn tới section → SEO + canonical của trang chủ (không trùng lặp, không 404) */
+    const h = headFor(sectionForPath(path) ? '/' : path, lang);
     document.title = h.title;
     document.documentElement.lang = lang;
     const head = document.head;

@@ -33,6 +33,8 @@ const vi = {
   'values.call': 'Gọi hotline',
   'values.zalo': 'Chat Zalo',
   'values.explore': 'Khám phá',
+  'rail.hint': 'Vuốt ngang để xem thêm',
+  'facts.collections': 'Bộ sưu tập căn hộ',
   'values.close': 'Đóng danh mục',
 
   // hero
@@ -301,6 +303,8 @@ const en = {
   'values.call': 'Call hotline',
   'values.zalo': 'Chat Zalo',
   'values.explore': 'Explore',
+  'rail.hint': 'Swipe for more',
+  'facts.collections': 'Residence collections',
   'values.close': 'Close menu',
 
   'hero.aria': 'Introducing Norton Park',

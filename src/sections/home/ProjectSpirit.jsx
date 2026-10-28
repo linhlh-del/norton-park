@@ -1,6 +1,8 @@
 import { useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { useRef } from 'react';
+import RailHint from '@/components/ui/RailHint';
 
 /* Ảnh: chiều cao theo màn hình (svh) nhưng tỉ lệ luôn nằm trong khoảng đẹp (cqw = % bề rộng khung chứa) → không bị cắt thành dải mỏng trên màn rộng-thấp, không cao quá trên màn hẹp */
 const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(244 240 231 / 0.72)' };
@@ -8,6 +10,7 @@ const darkMedia = { '--media-bg': 'var(--color-pine-deep)', '--media-ink': 'rgb(
 export default function ProjectSpirit() {
   const t = useT();
   const { stations } = useSite();
+  const railRef = useRef(null);
   return (
     <section id="story" className="bg-pine py-section text-on-dark">
       <div className="container-site flex flex-col gap-[clamp(1.5rem,5svh,3.5rem)]">
@@ -19,7 +22,7 @@ export default function ProjectSpirit() {
           intro={t('spirit.intro')}
         />
         {/* điện thoại: dải trượt ngang (thẻ kế ló ra mép phải) thay cho 3 thẻ xếp dọc dài 2,5 màn hình */}
-        <div className="m-rail grid gap-6 md:grid-cols-3">
+        <div ref={railRef} className="m-rail grid gap-6 md:grid-cols-3">
           {stations.map((s, i) => (
             <article key={s.title} data-reveal="up" style={{ '--reveal-i': i }}
               className="@container flex flex-col overflow-hidden rounded-card border border-line-dark bg-on-dark/5">
@@ -33,6 +36,7 @@ export default function ProjectSpirit() {
             </article>
           ))}
         </div>
+        <RailHint railRef={railRef} tone="dark" />
       </div>
     </section>
   );

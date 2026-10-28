@@ -3,6 +3,7 @@ import { Link, useSite, useT } from '@/i18n';
 import FloorPlans from '@/components/ui/FloorPlans';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { isFilled } from '@/lib/filled';
+import { shortTitle } from '@/lib/text';
 
 const ZoomIcon = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -10,11 +11,6 @@ const ZoomIcon = () => (
   </svg>
 );
 
-/* tên bộ sưu tập rút gọn cho điện thoại: "Bộ sưu tập chuẩn sống toàn cầu" → "Chuẩn sống toàn cầu" */
-const shortTitle = (s) => {
-  const v = s.replace(/^bộ sưu tập\s+/i, '').replace(/\s+collection$/i, '');
-  return v.charAt(0).toUpperCase() + v.slice(1);
-};
 
 export default function Residences() {
   const t = useT();
@@ -27,21 +23,22 @@ export default function Residences() {
   /* nút "Xem giá dự kiến" mở bảng tính giá đúng loại căn đang xem */
   const typeIdx = Math.max(0, priceTypes.findIndex((p) => p.name === unit.name));
 
-  /* diện tích hiển thị tĩnh (không đếm số); dòng chưa có dữ liệu ("[Đang cập nhật]") được ẩn */
+  /* 4 dòng thông số luôn cố định (thiếu dữ liệu → "—" mờ) để panel không đổi chiều cao khi đổi loại căn;
+     diện tích hiển thị tĩnh (không đếm số) */
   const rows = [
     [t('res.rooms'), unit.rooms],
     [t('res.gfa'), unit.gfa],
     [t('res.nsa'), unit.nsa],
     [t('res.view'), unit.view],
-  ].filter(([, v]) => isFilled(v) && v !== '—');
+  ].map(([k, v]) => [k, isFilled(v) && v !== '—' ? v : null]);
 
   return (
     <section id="residences" className="bg-cream py-section">
       <div className="container-site flex flex-col gap-[clamp(0.75rem,2.6svh,2rem)]">
         <SectionHeading eyebrow={t('res.eyebrow')} title={t('res.title')} seo={t('res.seo')} />
 
-        {/* máy tính: tab bộ sưu tập (trái) và chip loại căn (phải) chung 1 hàng — tiết kiệm 1 hàng cho khung hình */}
-        <div className="flex flex-col gap-[clamp(0.75rem,2.6svh,2rem)] lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+        {/* ≥ 1280px: tab bộ sưu tập (trái) và chip loại căn (phải) chung 1 hàng — tiết kiệm 1 hàng cho khung hình */}
+        <div className="flex flex-col gap-[clamp(0.75rem,2.6svh,2rem)] xl:flex-row xl:items-center xl:justify-between xl:gap-6">
         {/* điện thoại: 2 tab chia đôi bề ngang — thấy đủ cả hai, không phải kéo ngang */}
         <div data-reveal="up" role="tablist" aria-label={t('res.collections')} className="grid grid-cols-2 gap-x-3 md:flex md:gap-x-6">
           {collections.map((c, i) => (
@@ -54,8 +51,9 @@ export default function Residences() {
           ))}
         </div>
 
-        {/* chip loại căn xuống dòng khi hết chỗ (không ẩn sau mép phải); điện thoại: chip gọn hơn */}
-        <div data-reveal="up" style={{ '--reveal-i': 1 }} className="flex flex-wrap gap-2 lg:justify-end">
+        {/* chip loại căn xuống dòng khi hết chỗ (không ẩn sau mép phải); điện thoại: chip gọn hơn và hàng chip luôn
+            giữ chỗ 2 dòng → đổi bộ sưu tập (5 chip ↔ 4 chip dài) không đẩy panel bên dưới */}
+        <div data-reveal="up" style={{ '--reveal-i': 1 }} className="flex flex-wrap content-start gap-2 max-md:min-h-[5.5rem] xl:justify-end">
           {current.units.map((u, i) => (
             <button key={u.name} type="button" className="chip whitespace-nowrap max-sm:min-h-10 max-sm:px-3.5 max-sm:text-[0.8125rem]" aria-pressed={i === unitIdx} onClick={() => setUnitIdx(i)}>{u.name}</button>
           ))}
@@ -64,6 +62,8 @@ export default function Residences() {
 
         <div role="tabpanel" data-reveal="zoom"
           className="grid items-center gap-[clamp(1rem,3svh,2.5rem)] rounded-panel bg-white p-[clamp(1rem,3svh,2.5rem)] md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+          {/* khung ảnh mặt bằng CỐ ĐỊNH kích thước cho mọi loại căn (ảnh fit=contain bên trong) → bấm đổi layout
+              không làm nhảy giao diện */}
           <div className="relative">
             <FloorPlans key={unit.name} plans={unit.plans} name={unit.label}
               mediaClass="h-[clamp(160px,23svh,300px)] md:h-[clamp(220px,34svh,380px)] lg:h-[clamp(200px,42svh,480px)]" />
@@ -74,15 +74,17 @@ export default function Residences() {
           </div>
           <div className="flex flex-col gap-[clamp(0.5rem,1.6svh,1.25rem)]">
             {/* tên bộ sưu tập đã nằm ở tab phía trên → chỉ ghi mã căn tiêu biểu (nếu đã có) */}
-            {isFilled(unit.code) && <p className="eyebrow text-bronze-deep">{t('res.typical', { code: unit.code })}</p>}
+            {/* luôn giữ chỗ 1 dòng (kể cả khi chưa có mã căn) để các dòng phía dưới không xê dịch */}
+            <p className="eyebrow min-h-[1.45em] text-bronze-deep">{isFilled(unit.code) ? t('res.typical', { code: unit.code }) : ''}</p>
             {/* điện thoại: tên căn đã hiện ở chip đang chọn → chỉ giữ cho trình đọc màn hình, nhường chỗ cho thông số */}
-            <h3 className="heading-3 !text-[clamp(1.6rem,2.8vw,2.6rem)] max-md:sr-only">{unit.name}</h3>
+            <h3 className="heading-3 !text-[clamp(1.6rem,2.8vw,2.6rem)] max-md:sr-only md:truncate">{unit.name}</h3>
             {/* điện thoại: lưới 2×2 (nhãn trên, giá trị dưới) — gọn nửa chiều cao so với 4 dòng ngang */}
             <dl className="m-0 grid grid-cols-2 gap-x-4 md:flex md:flex-col">
               {rows.map(([k, v]) => (
                 <div key={k} className="flex flex-col gap-0.5 border-t border-line py-2 md:flex-row md:justify-between md:gap-4 md:py-[clamp(0.4rem,1.15svh,0.875rem)] md:last:border-b">
-                  <dt className="text-sm text-ink-soft md:text-base">{k}</dt>
-                  <dd className="m-0 font-medium text-hoadau md:text-right">{v}</dd>
+                  <dt className="shrink-0 text-sm text-ink-soft md:whitespace-nowrap md:text-base">{k}</dt>
+                  {/* điện thoại: giá trị luôn chiếm đúng 2 dòng (dài thì kẹp, ngắn thì giữ chỗ) */}
+                  <dd className={`m-0 min-w-0 font-medium max-md:line-clamp-2 max-md:min-h-[2lh] md:truncate md:text-right ${v ? 'text-hoadau' : 'text-ink-soft/60'}`} title={v || undefined}>{v || '—'}</dd>
                 </div>
               ))}
             </dl>

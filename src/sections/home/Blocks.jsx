@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useSite, useT } from '@/i18n';
+import MobileTabs, { panelClass, useTabsId } from '@/components/ui/MobileTabs';
 import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useContactPopup } from '@/components/popup/ContactPopup';
@@ -11,14 +13,18 @@ export default function Blocks() {
   const t = useT();
   const { images } = useSite();
   const popup = useContactPopup();
+  const [zone, setZone] = useState(0);
+  const tabsId = useTabsId();
   const zoneB = [t('blocks.b1'), t('blocks.b2'), t('blocks.b3')];
   return (
     <section id="blocks" className="overflow-hidden bg-ivory py-section">
       <div className="container-site flex flex-col gap-[clamp(1.5rem,4.5svh,3.5rem)]">
         <SectionHeading align="center" eyebrow={t('blocks.eyebrow')} title={t('blocks.title')} seo={t('blocks.seo')} />
-        {/* điện thoại: 2 phân khu trượt ngang · từ 768px: 2 cột cạnh nhau */}
-        <div className="m-rail grid gap-8 md:grid-cols-2">
-          <article data-reveal="left" className="@container flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
+        {/* điện thoại: tab Phân khu B / C (không còn thẻ bị che ở mép phải) · từ 768px: 2 cột cạnh nhau */}
+        <div className="flex flex-col gap-4">
+        <MobileTabs label={t('blocks.eyebrow')} tabs={[t('blocks.b'), t('blocks.c')]} active={zone} onChange={setZone} idPrefix={tabsId} />
+        <div className="grid gap-8 md:grid-cols-2">
+          <article id={`${tabsId}-0`} role="tabpanel" data-reveal="left" className={`@container flex flex-col ${panelClass(0, zone)} gap-[clamp(0.75rem,2.2svh,1.5rem)]`}>
             <Media src={images.blockB} alt={t('blocks.bAlt')} label={t('blocks.bAlt')} className={blockMedia}
               style={{ '--media-bg': 'var(--color-taupe)', '--media-ink': '#3c3c3c' }} sizes="(min-width: 1024px) 42vw, 100vw" />
             <h3 className="heading-3 !text-[clamp(1.6rem,2.6vw,2.4rem)]">{t('blocks.b')}</h3>
@@ -32,7 +38,7 @@ export default function Blocks() {
               ))}
             </ul>
           </article>
-          <article data-reveal="right" className="@container flex flex-col gap-[clamp(0.75rem,2.2svh,1.5rem)]">
+          <article id={`${tabsId}-1`} role="tabpanel" data-reveal="right" className={`@container flex flex-col ${panelClass(1, zone)} gap-[clamp(0.75rem,2.2svh,1.5rem)]`}>
             <div className="relative">
               <Media src={images.blockC} alt={t('blocks.cAlt')} label={t('blocks.cAlt')} className={blockMedia}
                 style={{ '--media-bg': 'var(--color-sage)', '--media-ink': 'var(--color-ivory)' }} sizes="(min-width: 1024px) 42vw, 100vw" />
@@ -49,6 +55,7 @@ export default function Blocks() {
               </button>
             </div>
           </article>
+        </div>
         </div>
       </div>
     </section>

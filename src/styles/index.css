@@ -101,6 +101,8 @@
       scroll-padding-inline: var(--spacing-gutter);
     }
     .m-rail::-webkit-scrollbar { display: none; }
+    /* mép phải mờ dần = còn nội dung phía sau (RailHint gỡ khi đã tới cuối dải) */
+    .m-rail:not([data-at-end]) { mask-image: linear-gradient(to right, #000 calc(100% - 3.5rem), transparent); }
     .m-rail > * { flex: 0 0 var(--rail-item, 84%); min-width: 0; scroll-snap-align: start; }
   }
   /* chiều cao bản đồ (#position): xem cuối file — phải nằm ngoài @layer để thắng location-map.css */
@@ -194,6 +196,7 @@
     55%, 100% { transform: translate3d(110%, 0, 0); }
   }
 
+  @keyframes np-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
   @keyframes np-settle { from { transform: scale(1.08); } }
   @keyframes np-rise { from { opacity: 0; transform: translate3d(0, 20px, 0); } }
   @keyframes np-shimmer { 50% { filter: brightness(1.06); } }

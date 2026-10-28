@@ -3,10 +3,13 @@ import Media from '@/components/ui/Media';
 import KeywordHeading from '@/components/ui/KeywordHeading';
 import CountUp from '@/components/motion/CountUp';
 import { isFilled } from '@/lib/filled';
+import { useRef } from 'react';
+import RailHint from '@/components/ui/RailHint';
 
 export default function Developer() {
   const t = useT();
   const { team } = useSite();
+  const railRef = useRef(null);
   return (
     <section id="developer" className="bg-ivory py-section">
       <div className="container-site flex flex-col gap-[clamp(1.5rem,5svh,4rem)]">
@@ -24,7 +27,7 @@ export default function Developer() {
         <div className="flex flex-col gap-[clamp(0.75rem,2.5svh,1.5rem)]">
           <p data-reveal="up" className="eyebrow text-bronze-deep">{t('dev.team')}</p>
           {/* đơn vị chưa công bố ("[Đang cập nhật]") không hiện; điện thoại: trượt ngang 2 thẻ / màn */}
-          <ul className="m-rail m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,12.5rem),1fr))] gap-4 p-0 [--rail-item:46%]">
+          <ul ref={railRef} className="m-rail m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,12.5rem),1fr))] gap-4 p-0 [--rail-item:46%]">
             {team.filter((m) => isFilled(m.name)).map((m, i) => (
               <li key={m.role} data-reveal="up" style={{ '--reveal-i': i }} className="flex min-h-[clamp(7rem,16svh,10rem)] flex-col justify-between gap-3 rounded-card border border-line p-[clamp(1rem,2.6svh,1.5rem)]">
                 <p className="eyebrow text-xs leading-relaxed text-ink-soft">{m.role}</p>
@@ -32,6 +35,7 @@ export default function Developer() {
               </li>
             ))}
           </ul>
+        <RailHint railRef={railRef} />
         </div>
       </div>
     </section>

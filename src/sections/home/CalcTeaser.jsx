@@ -1,9 +1,12 @@
 import { Link, useSite, useT } from '@/i18n';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { useRef } from 'react';
+import RailHint from '@/components/ui/RailHint';
 
 export default function CalcTeaser() {
   const t = useT();
   const { priceTypes } = useSite();
+  const railRef = useRef(null);
   return (
     <section id="calc" className="bg-cream py-section">
       <div className="container-site flex flex-col gap-[clamp(1.25rem,4svh,3rem)]">
@@ -12,7 +15,7 @@ export default function CalcTeaser() {
           <Link to="/bang-tinh-gia" data-reveal="fade" className="btn btn-solid" data-track="cta_click" data-track-label="calc_open">{t('calc.open')}</Link>
         </div>
         {/* 9 loại căn: 5 + 4 trên máy tính (không còn 1 thẻ lẻ hàng cuối) · 3 cột máy tính bảng · trượt ngang điện thoại */}
-        <div className="m-rail grid grid-cols-3 gap-3 [--rail-item:44%] lg:grid-cols-5 lg:gap-4">
+        <div ref={railRef} className="m-rail grid grid-cols-3 gap-3 [--rail-item:44%] lg:grid-cols-5 lg:gap-4">
           {priceTypes.map((p, i) => (
             <Link key={p.name} to={`/bang-tinh-gia?loai=${i}`} data-reveal="up" style={{ '--reveal-i': i }}
               /* subgrid 3 dòng (tên · diện tích · số layout): tên căn xuống dòng thì các dòng dưới của cả hàng vẫn thẳng nhau */
@@ -24,6 +27,7 @@ export default function CalcTeaser() {
             </Link>
           ))}
         </div>
+        <RailHint railRef={railRef} />
       </div>
     </section>
   );

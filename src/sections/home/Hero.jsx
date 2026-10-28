@@ -15,13 +15,15 @@ export default function Hero({ variant = 'center' }) {
   const t = useT();
   const { images } = useSite();
   return (
-    <section id="hero" aria-label={t('hero.aria')} className={`relative isolate flex min-h-[max(var(--np-screen),30rem)] items-end overflow-hidden bg-hoadau-deep text-on-dark ${variant === 'bottom' ? '' : 'md:items-center'}`}>
+    <section id="hero" aria-label={t('hero.aria')} className={`relative isolate flex min-h-[max(var(--np-screen),30rem)] overflow-hidden bg-hoadau-deep text-on-dark ${variant === 'bottom' ? 'items-end' : 'items-center'}`}>
       <Media src={images.hero} mobileSrc={images.heroPortrait} alt={t('hero.imageAlt')} label={t('hero.imageLabel')}
         tone="dark" priority className="media-static !absolute inset-0 -z-20" />
-      {/* điện thoại: chữ nằm 1/3 dưới, gradient tối đậm ở đáy để chữ không đè lên chi tiết toà nhà */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/90 via-hoadau-deep/45 via-45% to-hoadau-deep/10 md:from-hoadau-deep/80 md:via-hoadau-deep/35 md:via-50% md:to-hoadau-deep/30" />
+      {/* chữ căn giữa màn hình (như 2 section kể chuyện kế tiếp): lớp phủ tối đều + đậm hơn ở giữa/đáy để chữ luôn
+          đủ tương phản trên ảnh toà nhà */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hoadau-deep/35" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/70 via-hoadau-deep/30 to-transparent" />
 
-      <div className={`container-site flex flex-col gap-5 pb-[clamp(2rem,7svh,5rem)] pt-10 md:gap-7 ${variant === 'bottom' ? '' : 'md:py-16'}`}>
+      <div className={`container-site flex flex-col gap-5 md:gap-7 ${variant === 'bottom' ? 'pb-[clamp(2rem,7svh,5rem)] pt-10' : 'py-[clamp(2rem,6svh,4rem)]'}`}>
         <p className="eyebrow hero-in text-balance text-on-dark-soft max-md:tracking-[0.16em]">{t('hero.eyebrow')}</p>
         {/* H1 = từ khoá chính + địa danh hành chính; slogan hiển thị nằm trong <p> */}
         <h1 className="sr-only">{t('hero.h1')}</h1>

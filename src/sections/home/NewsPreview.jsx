@@ -18,10 +18,10 @@ export default function NewsPreview() {
   const c = useCarousel();
   return (
     <section id="news" className="bg-pine py-section text-on-dark" aria-roledescription="carousel" aria-label={t('news.aria')}>
-      <div className="container-site flex flex-col gap-12">
+      <div className="container-site flex flex-col gap-[clamp(1.25rem,4svh,3rem)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="flex max-w-3xl flex-col gap-4">
-            <QuachoMark tone="dark" data-reveal="zoom" />
+            <QuachoMark tone="dark" data-reveal="zoom" className="[@media(max-height:56rem)]:hidden" />
             <p data-reveal="up" style={{ '--reveal-i': 1 }} className="eyebrow text-on-dark-soft">{t('news.eyebrow')}</p>
             <KeywordHeading seo={t('news.seo')} data-reveal="up" style={{ '--reveal-i': 2 }} className="heading-2">{t('news.title')}</KeywordHeading>
           </div>
@@ -38,17 +38,17 @@ export default function NewsPreview() {
             <a key={n.id} href={n.url} target="_blank" rel="noopener" data-news={n.id}
               aria-roledescription="slide" aria-label={`${i + 1} / ${homeNews.length}: ${n.title}`}
               data-reveal="up" style={{ '--reveal-i': i }}
-              className="carousel-slide group flex basis-full flex-col gap-4 border-t border-on-dark/30 pt-6 text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
-              <Media src={n.image} alt={n.alt} label={t('news.image')} className="aspect-[3/2] rounded-lg" style={darkMedia}
+              className="carousel-slide group flex basis-[88%] flex-col gap-3 border-t border-on-dark/30 pt-5 sm:basis-full text-on-dark no-underline hover:text-on-dark md:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
+              <Media src={n.image} alt={n.alt} label={t('news.image')} className="h-[clamp(130px,19svh,220px)] rounded-lg" style={darkMedia}
                 sizes="(min-width: 1024px) 27vw, (min-width: 768px) 41vw, 100vw" />
               {/* một dòng (không xuống dòng) để tiêu đề và tóm tắt của các thẻ luôn thẳng hàng */}
               <div className="flex min-w-0 gap-4 whitespace-nowrap">
                 <span className="eyebrow truncate text-on-dark-soft">{n.cat}</span>
                 <span className="eyebrow shrink-0">{n.src}</span>
               </div>
-              {/* tiêu đề luôn chiếm đúng 3 dòng → tóm tắt của các thẻ bắt đầu cùng một mép */}
-              <h3 className="heading-3 line-clamp-3 min-h-[3lh]">{n.title}</h3>
-              <p className="m-0 leading-relaxed text-stone">{n.excerpt}</p>
+              {/* tiêu đề luôn chiếm đúng 2 dòng, tóm tắt kẹp 2 dòng → các thẻ thẳng hàng, gọn trong 1 khung hình */}
+              <h3 className="heading-3 line-clamp-2 min-h-[2lh]">{n.title}</h3>
+              <p className="m-0 line-clamp-2 leading-relaxed text-stone">{n.excerpt}</p>
               <span className="mt-auto inline-flex items-center gap-2 font-sub text-xs font-semibold uppercase tracking-button group-hover:underline">
                 {t('news.read')} <Arrow /><span className="sr-only"> {t('news.newTab', { src: n.src })}</span>
               </span>

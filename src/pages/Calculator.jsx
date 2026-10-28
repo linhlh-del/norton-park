@@ -11,7 +11,7 @@ import useLeadSubmit from '@/hooks/useLeadSubmit';
 const Stat =({ value, label, i }) => (
   <div data-reveal="up" style={{ '--reveal-i': i }}>
     <div className="font-display text-[52px] leading-none"><CountUp value={value} /></div>
-    <p className="eyebrow mt-2 text-[10px] text-on-dark-soft">{label}</p>
+    <p className="eyebrow mt-2 text-xs text-on-dark-soft">{label}</p>
   </div>
 );
 
@@ -66,7 +66,7 @@ export default function Calculator() {
           <div data-reveal="up" style={{ '--reveal-i': 1 }} className="overflow-x-auto rounded-card border border-line">
             <table className="w-full min-w-[900px] border-collapse text-left text-sm">
               <thead>
-                <tr className="font-sub text-[10px] uppercase tracking-[0.18em] text-ink-soft">
+                <tr className="font-sub text-xs uppercase tracking-[0.18em] text-ink-soft">
                   {[t('pc.th.type'), t('pc.th.col'), 'GFA (m²)', 'NSA (m²)', t('pc.th.price')].map((h) => (
                     <th key={h} scope="col" className="border-b border-line px-4 py-3.5 font-semibold">{h}</th>
                   ))}
@@ -183,7 +183,7 @@ export default function Calculator() {
                 <p className="eyebrow text-[9px] text-ink-soft">{t('pc.q.selected')}</p>
                 <p className="m-0 mt-1.5 font-medium">{type.name} · {layout.code}</p>
               </div>
-              <a href="#tool" className="inline-flex min-h-11 items-center font-sub text-[11px] font-semibold tracking-[0.16em]">{t('pc.q.change')}</a>
+              <a href="#tool" className="inline-flex min-h-11 items-center font-sub text-xs font-semibold tracking-[0.16em]">{t('pc.q.change')}</a>
             </div>
             {/* gửi thành công → trang cảm ơn /cam-on */}
             <form className="relative flex flex-col gap-4.5" onSubmit={(e) => {

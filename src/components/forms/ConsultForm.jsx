@@ -33,11 +33,11 @@ export default function ConsultForm({ formId = 'register' }) {
   const field = (name) => ({ 'aria-invalid': errors[name] ? 'true' : undefined, 'aria-describedby': `err-r-${name}` });
 
   return (
-    <div className="flex flex-col gap-6 rounded-panel bg-ivory p-6 sm:p-12">
+    <div className="flex flex-col gap-[clamp(0.75rem,2.4svh,1.5rem)] rounded-panel bg-ivory p-[clamp(1.25rem,4svh,3rem)]">
       <h2 className="heading-2">{t('form.title')}</h2>
       <p className="m-0 leading-relaxed">{t('form.intro')}</p>
 
-      <form noValidate className="relative flex flex-col gap-3" onSubmit={submit}>
+      <form noValidate className="relative flex flex-col gap-2" onSubmit={submit}>
         <label className="field">{t('form.name')}
           <input type="text" name="name" autoComplete="name" maxLength={100} {...field('name')} />
         </label>

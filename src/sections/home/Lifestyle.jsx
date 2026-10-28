@@ -14,7 +14,7 @@ export default function Lifestyle() {
   const c = useCarousel();
   return (
     <section id="lifestyle" className="bg-cream py-section" aria-roledescription="carousel" aria-label={t('lifestyle.title')}>
-      <div className="container-site flex flex-col gap-12">
+      <div className="container-site flex flex-col gap-[clamp(1.25rem,4svh,3rem)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading eyebrow={t('lifestyle.eyebrow')} title={t('lifestyle.title')} seo={t('lifestyle.seo')} />
           <CarouselNav {...c} labels={[t('lifestyle.prev'), t('lifestyle.next')]} />
@@ -25,7 +25,7 @@ export default function Lifestyle() {
             <article key={l.image} className="carousel-slide group relative isolate basis-full overflow-hidden rounded-card md:basis-[78%] lg:basis-[68%]"
               aria-roledescription="slide" aria-label={`${i + 1} / ${lifestyle.length}`}>
               <Media src={l.image} label={l.imageLabel} alt={l.imageLabel}
-                className="aspect-[4/5] -z-20 sm:aspect-[16/10]"
+                className="-z-20 h-[clamp(280px,46svh,480px)] sm:h-[clamp(280px,54svh,560px)]"
                 style={mediaTone} sizes="(min-width: 1024px) 57vw, (min-width: 768px) 66vw, 100vw" />
               <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/90 via-hoadau-deep/35 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 grid gap-x-10 gap-y-3 p-[clamp(1.25rem,3vw,2.5rem)] text-on-dark md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-end">

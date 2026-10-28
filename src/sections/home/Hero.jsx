@@ -15,16 +15,17 @@ export default function Hero({ variant = 'center' }) {
   const t = useT();
   const { images } = useSite();
   return (
-    <section id="hero" aria-label={t('hero.aria')} className={`relative isolate flex min-h-[clamp(640px,92svh,880px)] overflow-hidden bg-hoadau-deep text-on-dark ${variant === 'bottom' ? 'items-end' : 'items-center'}`}>
+    <section id="hero" aria-label={t('hero.aria')} className={`relative isolate flex min-h-[max(var(--np-screen),30rem)] items-end overflow-hidden bg-hoadau-deep text-on-dark ${variant === 'bottom' ? '' : 'md:items-center'}`}>
       <Media src={images.hero} mobileSrc={images.heroPortrait} alt={t('hero.imageAlt')} label={t('hero.imageLabel')}
         tone="dark" priority className="media-static !absolute inset-0 -z-20" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/80 via-hoadau-deep/35 to-hoadau-deep/30" />
+      {/* điện thoại: chữ nằm 1/3 dưới, gradient tối đậm ở đáy để chữ không đè lên chi tiết toà nhà */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-hoadau-deep/90 via-hoadau-deep/45 via-45% to-hoadau-deep/10 md:from-hoadau-deep/80 md:via-hoadau-deep/35 md:via-50% md:to-hoadau-deep/30" />
 
-      <div className={`container-site flex flex-col gap-7 ${variant === 'bottom' ? 'pb-24 pt-40' : 'py-24'}`}>
-        <p className="eyebrow hero-in text-on-dark-soft">{t('hero.eyebrow')}</p>
+      <div className={`container-site flex flex-col gap-5 pb-[clamp(2rem,7svh,5rem)] pt-10 md:gap-7 ${variant === 'bottom' ? '' : 'md:py-16'}`}>
+        <p className="eyebrow hero-in text-balance text-on-dark-soft max-md:tracking-[0.16em]">{t('hero.eyebrow')}</p>
         {/* H1 = từ khoá chính + địa danh hành chính; slogan hiển thị nằm trong <p> */}
         <h1 className="sr-only">{t('hero.h1')}</h1>
-        <p aria-hidden="true" className="heading-1 max-w-4xl italic">
+        <p aria-hidden="true" className="heading-1 max-w-4xl italic [text-shadow:0_2px_24px_rgb(30_24_20/0.35)]">
           {t('hero.title1')} <br />{t('hero.title2')}
         </p>
         <div className="hero-in flex flex-wrap gap-3.5" style={{ '--reveal-i': 2 }}>

@@ -15,7 +15,7 @@ export function CarouselNav({ prev, next, atStart, atEnd, tone = 'light', labels
   const cls = tone === 'dark'
     ? 'border-on-dark/40 text-on-dark hover:bg-on-dark/10'
     : 'border-line-strong text-hoadau hover:bg-hoadau/5';
-  const btn = `grid size-12 cursor-pointer place-items-center rounded-full border bg-transparent transition-colors disabled:cursor-default disabled:opacity-35 ${cls}`;
+  const btn = `grid size-12 cursor-pointer place-items-center rounded-full border bg-transparent transition-[opacity,background-color] disabled:pointer-events-none disabled:opacity-0 ${cls}`;
   return (
     <div className="flex gap-2">
       <button type="button" className={btn} onClick={prev} disabled={atStart} aria-label={lPrev}><Arrow dir={-1} /></button>

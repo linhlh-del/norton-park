@@ -6,7 +6,8 @@ import Media from './Media';
  * hai cột, mỗi ảnh kèm nhãn tầng; căn một tầng chiếm trọn khung.
  * plans: [{ src, label? }] — khai báo trong collections (src/data/site.js).
  */
-export default function FloorPlans({ plans = [], name, sizes = '(min-width: 1024px) 38vw, 100vw' }) {
+/* mediaClass: kích thước khung ảnh (vd. chiều cao theo svh để vừa 1 khung hình); mặc định theo tỉ lệ */
+export default function FloorPlans({ plans = [], name, sizes = '(min-width: 1024px) 38vw, 100vw', mediaClass }) {
   const t = useT();
   const list = plans.length ? plans : [{}];
   const two = list.length > 1;
@@ -17,9 +18,9 @@ export default function FloorPlans({ plans = [], name, sizes = '(min-width: 1024
           <Media src={p.src} fit="contain" style={{ '--media-bg': '#fff' }}
             alt={t('plan.alt', { name: `${name}${p.label ? ` — ${p.label.toLowerCase()}` : ''}` })}
             label={t('plan.label', { name: `${name}${p.label ? ` · ${p.label}` : ''}` })}
-            className={`${two ? 'aspect-[3/4]' : 'aspect-square'} rounded-lg`}
+            className={`${mediaClass || (two ? 'aspect-[3/4]' : 'aspect-square')} rounded-lg`}
             sizes={two ? sizes.replace(/(\d+)vw/g, (_, n) => `${Math.round(n / 2)}vw`) : sizes} />
-          {p.label && <figcaption className="eyebrow text-center text-[10px] text-ink-soft">{p.label}</figcaption>}
+          {p.label && <figcaption className="eyebrow text-center text-xs text-ink-soft">{p.label}</figcaption>}
         </figure>
       ))}
     </div>

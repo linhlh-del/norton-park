@@ -99,6 +99,8 @@ const vi = {
   'blocks.cAlt': 'Mặt bằng phân khu C Norton Park',
   'blocks.cBody': 'Thông tin phân khu sẽ được công bố trong thời gian tới.',
   'blocks.soon': 'SẮP RA MẮT',
+  'blocks.cTeaser': 'Nhận mặt bằng, bảng giá và lịch mở bán Phân khu C ngay khi chủ đầu tư công bố.',
+  'blocks.cCta': 'Đăng ký nhận thông tin Phân khu C',
 
   // residences
   'res.eyebrow': 'Mặt bằng căn hộ',
@@ -110,6 +112,8 @@ const vi = {
   'res.nsa': 'Diện tích sử dụng',
   'res.view': 'Cảnh quan',
   'res.price': 'Xem giá dự kiến',
+  'res.zoom': 'Phóng to mặt bằng',
+  'res.close': 'Đóng',
   'plan.alt': 'Mặt bằng minh hoạ {name} Norton Park',
   'plan.label': 'Mặt bằng minh hoạ: {name}',
 
@@ -136,7 +140,7 @@ const vi = {
   'form.privacy': 'Thông tin được bảo mật theo chính sách bảo mật của chủ đầu tư.',
   'form.name': 'Họ và tên',
   'form.phone': 'Số điện thoại',
-  'form.phoneHint': 'Số điện thoại Việt Nam, vd. 093 448 3138',
+  'form.phoneHint': 'VD: 09xx xxx xxx',
   'form.email': 'Email, không bắt buộc',
   'form.consent': 'Đồng ý được liên hệ về Norton Park và đồng ý với',
   'form.policy': 'chính sách bảo mật',
@@ -172,6 +176,9 @@ const vi = {
   // faq
   'faq.eyebrow': 'Câu hỏi thường gặp',
   'faq.title': 'Về dự án Norton Park — A Gamuda Land Community',
+  'faq.more': 'Chưa thấy câu trả lời bạn cần?',
+  'faq.moreBody': 'Chuyên viên Norton Park sẵn sàng giải đáp về pháp lý, tiến độ, chính sách thanh toán và lịch tham quan nhà mẫu.',
+  'faq.call': 'Gọi {phone}',
 
   // carousel
   'carousel.prev': 'Trước',
@@ -351,6 +358,8 @@ const en = {
   'blocks.cAlt': 'Site plan of Norton Park Zone C',
   'blocks.cBody': 'Details of this zone will be announced soon.',
   'blocks.soon': 'COMING SOON',
+  'blocks.cTeaser': 'Receive Zone C floor plans, prices and launch schedule as soon as the developer announces them.',
+  'blocks.cCta': 'Get Zone C updates',
 
   'res.eyebrow': 'Floor plans',
   'res.title': 'Homes for a modern rhythm of life',
@@ -361,6 +370,8 @@ const en = {
   'res.nsa': 'Net saleable area',
   'res.view': 'View',
   'res.price': 'See estimated price',
+  'res.zoom': 'Enlarge floor plan',
+  'res.close': 'Close',
   'plan.alt': 'Illustrative floor plan of {name} at Norton Park',
   'plan.label': 'Illustrative floor plan: {name}',
 
@@ -385,7 +396,7 @@ const en = {
   'form.privacy': 'Your information is protected under the developer’s privacy policy.',
   'form.name': 'Full name',
   'form.phone': 'Phone number',
-  'form.phoneHint': 'Vietnamese phone number, e.g. 093 448 3138',
+  'form.phoneHint': 'e.g. 09xx xxx xxx',
   'form.email': 'Email (optional)',
   'form.consent': 'I agree to be contacted about Norton Park and accept the',
   'form.policy': 'privacy policy',
@@ -418,6 +429,9 @@ const en = {
 
   'faq.eyebrow': 'Frequently asked questions',
   'faq.title': 'About Norton Park — A Gamuda Land Community',
+  'faq.more': "Didn't find your answer?",
+  'faq.moreBody': 'Our advisors can help with legal status, construction progress, payment plans and show-unit visits.',
+  'faq.call': 'Call {phone}',
 
   'carousel.prev': 'Previous',
   'carousel.next': 'Next',

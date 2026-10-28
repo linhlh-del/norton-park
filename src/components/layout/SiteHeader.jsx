@@ -38,9 +38,9 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 bg-hoadau shadow-[inset_0_-1px_0_var(--color-line-dark)]">
-      {/* cao đúng 72px = --header-h (viền dưới vẽ bằng box-shadow, không cộng thêm chiều cao) — lệch 1px làm điểm
-          dừng cuộn theo section thành y=1 và trình duyệt tự cuộn khi tải trang */}
-      <div className="container-site flex h-[72px] items-center justify-between gap-3">
+      {/* cao đúng --header-h (72px máy tính · 60px điện thoại/máy tính bảng · 52px máy ngang thấp); viền dưới vẽ bằng
+          box-shadow, không cộng thêm chiều cao — lệch 1px làm điểm dừng cuộn theo section thành y=1 */}
+      <div className="container-site flex h-[var(--header-h)] items-center justify-between gap-3">
         <Wordmark />
 
         <nav aria-label={t('nav.main')} className="hidden items-center gap-7 lg:flex">
@@ -70,7 +70,7 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-        <nav id="mobile-nav" aria-label={t('nav.mobile')} className="max-h-[calc(100svh-72px)] overflow-y-auto border-t border-line-dark bg-hoadau lg:hidden">
+        <nav id="mobile-nav" aria-label={t('nav.mobile')} className="max-h-[calc(100svh-var(--header-h)-var(--np-bar))] overflow-y-auto border-t border-line-dark bg-hoadau lg:hidden">
           <ul className="container-site flex flex-col py-4">
             {mainNav.map((item) => (
               <li key={item.to}>

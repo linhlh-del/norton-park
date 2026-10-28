@@ -16,7 +16,7 @@ export default function News() {
     <>
       <section className="bg-cream pb-12 pt-16">
         <div className="container-site flex flex-col gap-6">
-          <nav aria-label="Breadcrumb" className="flex gap-2.5 font-sub text-[11px] font-semibold tracking-[0.2em]">
+          <nav aria-label="Breadcrumb" className="flex gap-2.5 font-sub text-xs font-semibold tracking-[0.2em]">
             <Link to="/" className="no-underline">{t('np.home')}</Link><span aria-hidden="true">/</span><span aria-current="page">{t('np.crumb')}</span>
           </nav>
           <p className="eyebrow hero-in text-bronze-deep">{t('np.eyebrow')}</p>
@@ -34,8 +34,8 @@ export default function News() {
               <div className="flex flex-col justify-center gap-4.5 p-[clamp(1.5rem,4vw,3.5rem)]">
                 <p className="eyebrow text-on-dark-soft">{t('np.featured')}</p>
                 <div className="flex flex-wrap gap-x-5 gap-y-2">
-                  <span className="eyebrow text-[10px] text-on-dark-soft">{featured.cat}</span>
-                  <span className="eyebrow text-[10px]">{featured.date} · {featured.src}</span>
+                  <span className="eyebrow text-xs text-on-dark-soft">{featured.cat}</span>
+                  <span className="eyebrow text-xs">{featured.date} · {featured.src}</span>
                 </div>
                 <h2 className="heading-3 !text-[clamp(1.8rem,3vw,2.6rem)]">{featured.title}</h2>
                 <p className="m-0 leading-relaxed text-stone">{featured.body}</p>
@@ -70,13 +70,13 @@ export default function News() {
                 <article key={p.title} data-reveal="up" style={{ '--reveal-i': i % 3 }} className="group row-span-6 grid grid-rows-subgrid content-start gap-y-3.5">
                   <Media src={p.image} alt={p.title} label={t('news.image')} className="aspect-[16/10] rounded-card" sizes="(min-width: 1024px) 27vw, 100vw" />
                   <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                    <span className="eyebrow text-[10px] text-bronze-deep">{p.cat}</span>
-                    <span className="eyebrow text-[10px] text-ink-soft">{p.date}</span>
+                    <span className="eyebrow text-xs text-bronze-deep">{p.cat}</span>
+                    <span className="eyebrow text-xs text-ink-soft">{p.date}</span>
                   </div>
-                  <p className="eyebrow text-[10px] text-hoadau">{p.src}</p>
+                  <p className="eyebrow text-xs text-hoadau">{p.src}</p>
                   <h3 className="heading-3">{p.title}</h3>
                   <p className="m-0 leading-relaxed text-ink-soft">{p.body}</p>
-                  <a href="#list" className="inline-flex min-h-11 items-center font-sub text-[11px] font-semibold uppercase tracking-[0.16em] no-underline">{t('np.readOn', { src: p.src })}</a>
+                  <a href="#list" className="inline-flex min-h-11 items-center font-sub text-xs font-semibold uppercase tracking-[0.16em] no-underline">{t('np.readOn', { src: p.src })}</a>
                 </article>
               ))}
             </div>

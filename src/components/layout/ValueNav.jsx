@@ -58,7 +58,8 @@ function usePastHero() {
 }
 
 const PHONE = 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2';
-const barItem = 'flex min-h-16 flex-col items-center justify-center gap-1 font-sub text-[10px] font-semibold uppercase tracking-[0.08em] no-underline';
+/* cao đúng --np-bar-h (trừ viền 1px) để khung hình --np-screen tính chính xác; máy ngang thấp: icon + chữ nằm ngang */
+const barItem = 'flex h-[calc(var(--np-bar-h)-1px)] flex-col items-center justify-center gap-1 font-sub text-xs font-semibold uppercase tracking-[0.06em] no-underline [@media(max-height:31.25rem)]:flex-row [@media(max-height:31.25rem)]:gap-2';
 
 const IDS = ITEMS.map((i) => i.id).filter(Boolean);
 
@@ -102,8 +103,9 @@ export default function ValueNav() {
 
       {/* máy tính: cột nhãn dọc mép trái, hiện sau hero */}
       <nav aria-label={t('values.nav')}
-        className={`fixed left-4 top-1/2 z-30 hidden -translate-y-1/2 transition-all duration-700 lg:block ${pastHero && active !== 'position' ? 'opacity-100' : 'pointer-events-none -translate-x-4 opacity-0'}`}>
-        {/* items-start: mỗi nút chỉ rộng bằng biểu tượng (không bị kéo giãn theo nút rộng nhất) */}
+        className={`fixed left-4 top-1/2 z-30 hidden -translate-y-1/2 transition-all duration-700 xl:block ${pastHero && active !== 'position' ? 'opacity-100' : 'pointer-events-none -translate-x-4 opacity-0'}`}>
+        {/* chỉ từ 1280px: ở 1024–1279px khung nội dung sát mép, cột icon sẽ đè lên chữ.
+            items-start: mỗi nút chỉ rộng bằng biểu tượng (không bị kéo giãn theo nút rộng nhất) */}
         <ul className="m-0 flex list-none flex-col items-start gap-1.5 p-0">
           {ITEMS.map((it) => (
             <li key={it.key}>
@@ -113,7 +115,7 @@ export default function ValueNav() {
                 <Icon d={it.icon} />
                 {/* nhãn: chỉ hiện khi rê chuột / focus bàn phím, nổi bên phải, không chiếm chỗ */}
                 <span aria-hidden="true"
-                  className="pointer-events-none absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full bg-hoadau px-3 py-1.5 font-sub text-[11px] font-semibold uppercase tracking-[0.12em] text-ivory opacity-0 shadow-float transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  className="pointer-events-none absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full bg-hoadau px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.12em] text-ivory opacity-0 shadow-float transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                   {t(`values.${it.key}`)}
                 </span>
               </Link>

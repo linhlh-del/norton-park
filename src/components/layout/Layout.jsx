@@ -37,7 +37,7 @@ export default function Layout() {
       </main>
       <SiteFooter />
       {/* chừa chỗ cho thanh CTA dưới đáy trên điện thoại / máy tính bảng */}
-      <div aria-hidden="true" className="h-[calc(4rem+env(safe-area-inset-bottom))] bg-hoadau-deep lg:hidden" />
+      <div aria-hidden="true" className="h-[var(--np-bar)] bg-hoadau-deep lg:hidden" />
       <ValueNav />
       <FloatingButtons />
     </ContactPopupProvider>

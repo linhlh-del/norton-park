@@ -179,7 +179,7 @@ function ContactPopup({ position, onClose }) {
               [t('contact.address'), contact.address, contact.mapUrl, true],
             ].map(([k, v, href, ext]) => (
               <div key={k} className="flex flex-col gap-1">
-                <span className="eyebrow text-[10px] text-on-dark-soft">{k}</span>
+                <span className="eyebrow text-xs text-on-dark-soft">{k}</span>
                 <a href={href} {...(ext ? { target: '_blank', rel: 'noopener' } : {})} className="leading-snug text-on-dark no-underline hover:text-on-dark-soft hover:underline">{v}</a>
               </div>
             ))}

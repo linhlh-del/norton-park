@@ -50,31 +50,42 @@ function useScrolledPast(px) {
   return past;
 }
 
-/* bản đồ đang chiếm giữa màn hình → ẩn cụm nút để không che bản đồ, bảng thông tin và thanh kéo
-   bảng thông tin (thanh CTA dưới đáy vẫn còn nút Tư vấn) */
-function useMapActive() {
-  const [on, setOn] = useState(false);
+/* Ẩn cả cụm khi bản đồ (#position — panel thông tin nằm sát mép phải), form đăng ký (#register) hoặc footer chiếm
+   nửa dưới màn hình — đúng vùng cụm nút đang đứng — để nút không đè lên chữ, bộ lọc, nút gửi. Thanh liên hệ dưới đáy
+   (< 1024px) và nút Tư vấn trên header vẫn luôn có. */
+function useAvoidOverlap() {
+  const [hidden, setHidden] = useState(false);
   useEffect(() => {
-    let frame = 0;
-    const check = () => {
-      frame = 0;
-      const r = document.getElementById('position')?.getBoundingClientRect();
-      setOn(Boolean(r && r.top < innerHeight * 0.35 && r.bottom > innerHeight * 0.65));
+    if (!('IntersectionObserver' in window)) return undefined;
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      setHidden(visible.size > 0);
+    }, { rootMargin: '-50% 0px 0px 0px' });
+    /* bản đồ được gắn trễ (thay phần tử giữ chỗ cùng id) → theo dõi lại khi DOM của <main> đổi */
+    const observe = () => {
+      io.disconnect();
+      visible.clear();
+      ['position', 'register'].forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+      const footer = document.querySelector('footer');
+      if (footer) io.observe(footer);
     };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(check); };
-    check();
-    addEventListener('scroll', onScroll, { passive: true });
-    return () => { removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
+    observe();
+    const mo = new MutationObserver(observe);
+    const main = document.getElementById('main');
+    if (main) mo.observe(main, { childList: true });
+    return () => { io.disconnect(); mo.disconnect(); };
   }, []);
-  return on;
+  return hidden;
 }
 
 export default function FloatingButtons() {
   const t = useT();
   const { contact } = useSite();
   const popup = useContactPopup();
-  const showTop = useScrolledPast(700);
-  const mapActive = useMapActive();
+  /* nút ↑ chỉ hiện sau khi đã qua ~2 section */
+  const showTop = useScrolledPast(typeof window === 'undefined' ? 1400 : window.innerHeight * 1.8);
+  const hidden = useAvoidOverlap();
 
   const toTop = () => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -83,14 +94,17 @@ export default function FloatingButtons() {
   };
 
   return (
-    <div className={`floating-buttons fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col items-center gap-2.5 transition-opacity duration-500 sm:right-5 lg:bottom-6 lg:gap-3.5 ${mapActive ? 'pointer-events-none opacity-0' : ''}`}>
+    /* chỉ trên máy tính (≥ 1024px): điện thoại / máy tính bảng đã có thanh liên hệ dưới đáy — không để nút nào nổi
+       đè lên chữ (kể cả nút ↑) */
+    <div aria-hidden={hidden || undefined}
+      className={`floating-buttons fixed bottom-6 right-5 z-40 hidden flex-col items-center gap-3.5 transition-[opacity,transform] duration-500 lg:flex ${hidden ? 'pointer-events-none translate-x-3 opacity-0' : ''}`}>
       {/* ── Lên đầu trang ── */}
       <button
         type="button"
         onClick={toTop}
         title={t('fb.top')}
         aria-label={t('fb.top')}
-        tabIndex={showTop ? 0 : -1}
+        tabIndex={showTop && !hidden ? 0 : -1}
         aria-hidden={showTop ? undefined : 'true'}
         className={`btn-cta grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-on-dark/40 bg-hoadau text-on-dark shadow-float transition-all duration-500 hover:-translate-y-0.5 hover:bg-hoadau-deep lg:h-12 lg:w-12 ${showTop ? 'opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}
       >

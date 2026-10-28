@@ -2,7 +2,7 @@ import { useSite, useT } from '@/i18n';
 
 const Row = ({ label, children }) => (
   <div className="flex flex-col gap-1.5">
-    <p className="eyebrow text-[10px] text-on-dark-soft">{label}</p>
+    <p className="eyebrow text-xs text-on-dark-soft">{label}</p>
     <p className="m-0 leading-relaxed">{children}</p>
   </div>
 );
@@ -12,7 +12,7 @@ export default function ContactPanel() {
   const t = useT();
   const { contact, disclaimer } = useSite();
   return (
-    <aside className="flex flex-col gap-6 rounded-panel bg-hoadau p-6 text-on-dark sm:p-12">
+    <aside className="flex flex-col gap-[clamp(0.75rem,2.6svh,1.5rem)] rounded-panel bg-hoadau p-[clamp(1.25rem,4svh,3rem)] text-on-dark">
       <h2 className="heading-3 text-[2rem]">{t('contact.title')}</h2>
       <Row label={t('contact.address')}>{contact.address}</Row>
       <Row label="Hotline"><a href={contact.hotlineHref} className="text-xl text-on-dark no-underline hover:underline">{contact.hotline}</a></Row>

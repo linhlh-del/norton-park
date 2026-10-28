@@ -13,11 +13,11 @@ export default function StoryBackdrop({ id, image, imageAlt = '', imageLabel, ey
   const dir = align === 'right' ? 'right' : 'left';
   const n = Children.count(children);
   return (
-    <section id={id} className="relative isolate flex min-h-[clamp(640px,100svh,920px)] items-center overflow-hidden bg-hoadau text-on-dark">
+    <section id={id} className="relative isolate flex min-h-[max(var(--np-screen),30rem)] items-center overflow-hidden bg-hoadau text-on-dark">
       <Media src={image} alt={imageAlt} label={imageLabel} tone="dark" className="media-backdrop !absolute inset-0 -z-20" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hoadau-deep/55" />
       <div className={`container-site flex py-section ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
-        <div className="flex max-w-xl flex-col gap-6">
+        <div className="flex max-w-xl flex-col gap-[clamp(1rem,2.6svh,1.5rem)]">
           <p data-reveal={dir} className="eyebrow text-on-dark-soft">{eyebrow}</p>
           <KeywordHeading seo={seoTitle} data-reveal={dir} style={{ '--reveal-i': 1 }} className="heading-2">{title}</KeywordHeading>
           <div className="flex flex-col gap-5 text-stone">

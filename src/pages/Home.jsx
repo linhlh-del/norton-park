@@ -46,18 +46,38 @@ function useSectionSnap() {
 
     const onWheel = (event) => {
       if (reduceMotion.matches || !event.cancelable || Math.abs(event.deltaY) < 1 || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      if (event.target instanceof Element && event.target.closest('#lm, input, textarea, select, [contenteditable="true"]')) return;
+      if (event.target instanceof Element) {
+        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        /* Bản đồ: chỉ nhường lăn chuột khi bản đồ đã được "đánh thức" (#lm.live — lăn để zoom), hoặc khi đang lăn
+           trong danh sách của panel thông tin còn cuộn được. Bản đồ đang "ngủ" → chuyển section như mọi nơi khác
+           (trước đây lăn trên bản đồ bị kẹt: không zoom, không sang section). */
+        const lm = event.target.closest('#lm');
+        if (lm) {
+          if (lm.classList.contains('live')) return;
+          const list = event.target.closest('.bd-body');
+          if (list && (event.deltaY > 0
+            ? list.scrollTop + list.clientHeight < list.scrollHeight - 1
+            : list.scrollTop > 0)) return;
+        }
+      }
       if (locked) {
         event.preventDefault();
         return;
       }
 
+      /* Điểm dừng = đầu section NẰM NGAY DƯỚI header dính (trùng điểm snap CSS: scroll-padding-top = header).
+         Bản cũ cuộn tới mép trên tuyệt đối của section (bị header che 72px) rồi CSS snap kéo lại → mỗi section phải
+         lăn 2 lần. Vùng nhìn thấy nội dung: từ đáy header tới đáy màn hình (trừ thanh liên hệ dưới đáy nếu có). */
+      const headerH = document.querySelector('header')?.getBoundingClientRect().height || 0;
+      const barH = parseFloat(getComputedStyle(root).getPropertyValue('--np-bar-h')) || 0;
+      const viewTop = headerH;
+      const viewBottom = window.innerHeight - barH;
       const sections = [...document.querySelectorAll('main > section')];
       const footer = document.querySelector('footer');
       const targets = [
         ...sections.map((element) => ({
           element,
-          top: element.getBoundingClientRect().top + window.scrollY,
+          top: element.getBoundingClientRect().top + window.scrollY - headerH,
         })),
         ...(footer ? [{
           element: footer,
@@ -66,7 +86,7 @@ function useSectionSnap() {
       ];
       if (!targets.length) return;
 
-      const center = window.innerHeight / 2;
+      const center = (viewTop + viewBottom) / 2;
       let activeIndex = targets.findIndex(({ element }) => {
         const rect = element.getBoundingClientRect();
         return rect.top <= center && rect.bottom > center;
@@ -76,9 +96,10 @@ function useSectionSnap() {
           Math.abs(target.top - window.scrollY) < Math.abs(targets[closest].top - window.scrollY) ? index : closest, 0);
       }
 
+      /* section dài hơn khung (vd. mặt bằng trên màn thấp): cho cuộn tự do tới hết rồi mới chuyển section */
       const current = targets[activeIndex].element.getBoundingClientRect();
-      if ((event.deltaY > 0 && current.bottom > window.innerHeight + 2) ||
-          (event.deltaY < 0 && current.top < -2)) return;
+      if ((event.deltaY > 0 && current.bottom > viewBottom + 2) ||
+          (event.deltaY < 0 && current.top < viewTop - 2)) return;
 
       const nextIndex = activeIndex + (event.deltaY > 0 ? 1 : -1);
       if (nextIndex < 0 || nextIndex >= targets.length) return;

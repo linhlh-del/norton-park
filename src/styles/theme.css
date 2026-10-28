@@ -55,17 +55,19 @@
   --text-display-3--line-height: 1.15;
   --text-lead: clamp(1.02rem, 1.3vw, 1.18rem);
   --text-lead--line-height: 1.7;
-  --text-eyebrow: 0.6875rem;
-  --text-eyebrow--line-height: 1.4;
+  /* ≥ 12px: chữ in hoa nhỏ hơn khó đọc trên điện thoại (audit 5.14) */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.45;
 
-  --tracking-eyebrow: 0.32em;
+  --tracking-eyebrow: 0.24em;
   --tracking-button: 0.16em;
   --tracking-logo: 0.2em;
 
   /* ---------- khoảng cách, bo góc, chuyển động ---------- */
-  --spacing-section: clamp(4.5rem, 9vw, 7.5rem);
+  --spacing-section: clamp(4.5rem, 9vw, 7.5rem);   /* trang con; trang chủ cuộn theo section dùng bản theo svh (index.css) */
   --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
-  --header-h: 72px;               /* chiều cao header dính (SiteHeader min-h-[72px]) */
+  --header-h: 72px;               /* chiều cao header dính — < 1024px thu còn 60px, máy ngang thấp 52px (index.css) */
+  --np-bar-h: 0px;                /* thanh liên hệ dính đáy (ValueNav) — chỉ có < 1024px (index.css) */
   --container-site: 84vw;          /* khung nội dung chiếm 80–86% chiều rộng cửa sổ (từ màn ≥1024px) */
   --container-site-min: 80vw;
   --container-site-max: 86vw;

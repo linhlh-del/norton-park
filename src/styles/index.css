@@ -63,19 +63,45 @@
   .carousel-track::-webkit-scrollbar { display: none; }
   .carousel-track:focus-visible { outline-offset: 6px; }
   /* ---------- trang chủ: cuộn theo từng section ---------- */
-  /* html.np-snap do Home.jsx bật. Mỗi section ≥ 1 màn hình (trừ header), nội dung căn giữa theo chiều dọc;
-     một lần vuốt / lăn chuột dừng đúng đầu section kế (scroll-snap-stop: always không cho trượt qua nhiều section).
-     Section cao hơn màn hình (mặt bằng, form, FAQ trên điện thoại) vẫn cuộn tự do bên trong rồi mới sang section sau. */
-  html.np-snap { scroll-snap-type: y mandatory; }
-  html.np-snap main > section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+  /* html.np-snap do Home.jsx bật. "Khung hình" thực = màn hình − header dính − thanh liên hệ dưới đáy (< 1024px)
+     = --np-screen (khai báo cuối file). Mọi section tối thiểu cao đúng 1 khung, nội dung căn giữa dọc, nên điểm dừng
+     snap (đầu section, sau scroll-padding = header) trùng khớp đầu section — không còn bước trượt 72px thừa.
+     - Máy tính (chuột): mandatory + snap-stop always → mỗi nấc lăn đi đúng 1 section.
+     - Cảm ứng / < 1024px: proximity → section dài hơn màn hình vẫn đọc trọn, không bị giật bỏ nội dung. */
+  html.np-snap { scroll-snap-type: y proximity; }
+  @media (min-width: 64rem) and (pointer: fine) {
+    html.np-snap { scroll-snap-type: y mandatory; }
+    html.np-snap main > section { scroll-snap-stop: always; }
   }
+  html.np-snap main > section { scroll-snap-align: start; }
   html.np-snap main > section:not(#position) {
-    min-height: calc(100svh - var(--header-h));
+    min-height: var(--np-screen);
     display: grid;
     grid-template-columns: minmax(0, 1fr); /* carousel bên trong không được nới rộng cột */
     align-content: center;
+  }
+  /* padding dọc theo chiều cao màn hình (trang chủ): màn thấp không phí khoảng trắng; trang con giữ nhịp rộng */
+  html.np-snap { --spacing-section: clamp(1.25rem, 4.5svh, 4rem); }
+
+  /* Dải trượt ngang trên điện thoại (< 768px) thay cho danh sách xếp dọc dài 2–3 màn hình (Story, Facts, Phân khu,
+     Developer, Bảng tính giá). Thẻ kế tiếp ló ra ở mép phải để người dùng biết còn nội dung; tràn ra hết lề
+     (margin âm = gutter) nên thẻ chạm mép màn hình như app. Từ 768px trở lên là lưới bình thường của component.
+     --rail-item: bề rộng mỗi thẻ (mặc định 84%). */
+  @media (max-width: 47.99rem) {
+    .m-rail {
+      display: flex !important; /* thắng grid/flex-col của component */
+      flex-direction: row !important;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: 0.75rem !important;
+      margin-inline: calc(-1 * var(--spacing-gutter));
+      padding-inline: var(--spacing-gutter);
+      scroll-padding-inline: var(--spacing-gutter);
+    }
+    .m-rail::-webkit-scrollbar { display: none; }
+    .m-rail > * { flex: 0 0 var(--rail-item, 84%); min-width: 0; scroll-snap-align: start; }
   }
   /* chiều cao bản đồ (#position): xem cuối file — phải nằm ngoài @layer để thắng location-map.css */
   html.np-snap footer { scroll-snap-align: end; }
@@ -302,17 +328,29 @@
    Ngoài @layer vì location-map.css (không layer) đặt .np-locmap { height: clamp(…) } — CSS không layer luôn thắng CSS
    trong layer. Bản đồ (giá trị chính) vừa khít phần màn hình giữa header và thanh CTA dưới đáy, để thanh kéo
    bảng thông tin của bản đồ trên điện thoại không bị che. Khung giữ chỗ (trước khi tải bản đồ) cao bằng. */
-html.np-snap #position { height: calc(100svh - var(--header-h)); }
-@media (max-width: 1023.98px) {
-  html.np-snap #position { height: calc(100svh - var(--header-h) - 4rem - env(safe-area-inset-bottom)); }
+html.np-snap #position { height: var(--np-screen); }
+
+/* ---------- khung hình dùng chung ----------
+   --np-bar: thanh liên hệ dính đáy (ValueNav, < 1024px) gồm cả vùng an toàn của iPhone.
+   --np-screen: phần màn hình thực sự nhìn thấy nội dung = 100svh − header − thanh đáy (svh: không nhảy khi thanh
+   địa chỉ trình duyệt di động ẩn/hiện). Hero, 2 section kể chuyện và mọi section trang chủ cao đúng giá trị này. */
+:root {
+  --np-bar: calc(var(--np-bar-h) + env(safe-area-inset-bottom, 0px));
+  --np-screen: calc(100svh - var(--header-h) - var(--np-bar));
+}
+@media (max-width: 63.99rem) {
+  :root { --header-h: 60px; --np-bar-h: 65px; }
+  /* nội dung cuối section / anchor không nằm dưới thanh liên hệ */
+  html { scroll-padding-bottom: var(--np-bar); }
+}
+/* điện thoại xoay ngang (màn thấp): header và thanh đáy gọn lại, chừa chỗ cho nội dung */
+@media (max-height: 31.25rem) and (orientation: landscape) {
+  :root { --header-h: 52px; --np-bar-h: 49px; }
 }
 
-/* Trên desktop, ba section mở đầu phủ trọn vùng nhìn thấy dưới header.
-   Quy tắc ngoài @layer để thắng min-height clamp trong utility Tailwind của từng section. */
-@media (min-width: 64rem) {
-  html.np-snap main > #hero,
-  html.np-snap main > #design-story,
-  html.np-snap main > #landscape-story {
-    min-height: 100svh;
-  }
+/* Laptop màn thấp (1366×657, 1280×720…): tiêu đề / đoạn dẫn co theo chiều cao màn hình để mỗi section vẫn vừa
+   1 khung hình. Ngoài @layer để thắng cỡ chữ của .heading-2 / .lead. */
+@media (min-width: 64rem) and (max-height: 47.5rem) {
+  main .heading-2 { font-size: clamp(1.9rem, 6.2svh, 3.3rem); line-height: 1.08; }
+  main .lead { font-size: 0.9375rem; line-height: 1.6; }
 }

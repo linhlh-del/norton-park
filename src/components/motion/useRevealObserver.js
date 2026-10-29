@@ -23,7 +23,10 @@ export default function useRevealObserver() {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add('is-revealed');
+          // dùng thuộc tính riêng (không phải class) vì React quản lý toàn bộ `className` theo render — một
+          // class gắn ngoài React sẽ bị className mới của lần render sau ghi đè mất (vd. đổi tab làm đổi
+          // grid-cols-2/3), khiến phần tử ẩn vĩnh viễn dù đã từng hiện. Thuộc tính data-* thì React không đụng tới.
+          e.target.setAttribute('data-revealed', '');
           io.unobserve(e.target);
         }
       });
@@ -31,8 +34,8 @@ export default function useRevealObserver() {
 
     const scan = (node) => {
       if (!(node instanceof Element)) return;
-      if (node.matches('[data-reveal]:not(.is-revealed)')) io.observe(node);
-      node.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach((el) => io.observe(el));
+      if (node.matches('[data-reveal]:not([data-revealed])')) io.observe(node);
+      node.querySelectorAll('[data-reveal]:not([data-revealed])').forEach((el) => io.observe(el));
     };
     scan(document.body);
 

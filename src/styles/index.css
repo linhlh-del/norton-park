@@ -67,13 +67,15 @@
      = --np-screen (khai báo cuối file). Mọi section tối thiểu cao đúng 1 khung, nội dung căn giữa dọc, nên điểm dừng
      snap (đầu section, sau scroll-padding = header) trùng khớp đầu section — không còn bước trượt 72px thừa.
      - Máy tính (chuột): mandatory + snap-stop always → mỗi nấc lăn đi đúng 1 section.
-     - Cảm ứng / < 1024px: proximity → section dài hơn màn hình vẫn đọc trọn, không bị giật bỏ nội dung. */
-  html.np-snap { scroll-snap-type: y proximity; }
+     - Cảm ứng / < 1024px: KHÔNG bật scroll-snap — không có JS nào hoàn tất việc "nhảy" hẳn sang section kế trên
+       cảm ứng, nên proximity một mình chỉ kéo giật trang giữa chừng khi vuốt rồi bỏ dở (CSS phải tính lại điểm dừng
+       mỗi khung hình trong lúc vuốt) — cảm giác giật/lag mà vẫn không auto-lướt được — tệ hơn để cuộn tự nhiên,
+       mượt theo quán tính hệ điều hành. */
   @media (min-width: 64rem) and (pointer: fine) {
     html.np-snap { scroll-snap-type: y mandatory; }
     html.np-snap main > section { scroll-snap-stop: always; }
+    html.np-snap main > section { scroll-snap-align: start; }
   }
-  html.np-snap main > section { scroll-snap-align: start; }
   html.np-snap main > section:not(#position) {
     min-height: var(--np-screen);
     display: grid;
@@ -132,11 +134,14 @@
   }
   @media (max-width: 47.99rem) {
     .np-img-story { height: clamp(100px, 16svh, 75cqw); }
-    .np-img-block { height: clamp(120px, 17svh, 66.7cqw); }
+    /* fit="contain" (xem Blocks.jsx) → ảnh không còn bị cắt, nhưng khung quá thấp làm ảnh bé tí giữa hai dải màu nền;
+       nới khung cao hơn hẳn story/news để tận dụng khoảng trắng cuối section vẫn còn dư trên điện thoại. */
+    .np-img-block { height: clamp(160px, 26svh, 70cqw); }
   }
   /* điện thoại thấp (≤ 700px: iPhone SE, 360×640…) — ảnh 14–16svh */
   @media (max-width: 47.99rem) and (max-height: 43.75rem) {
-    .np-img-story, .np-img-block, .np-img-news { height: clamp(96px, 15svh, 75cqw); }
+    .np-img-story, .np-img-news { height: clamp(96px, 15svh, 75cqw); }
+    .np-img-block { height: clamp(140px, 22svh, 70cqw); }
     .np-img-lifestyle { height: clamp(200px, 42svh, 125cqw); }
   }
 
@@ -174,7 +179,7 @@
   .reveal-ready [data-reveal="left"] { transform: translate3d(-64px, 0, 0); }
   .reveal-ready [data-reveal="right"] { transform: translate3d(64px, 0, 0); }
   .reveal-ready [data-reveal="zoom"] { transform: scale(0.95); }
-  .reveal-ready [data-reveal].is-revealed { opacity: 1; transform: none; }
+  .reveal-ready [data-reveal][data-revealed] { opacity: 1; transform: none; }
 
   /* hero: vào cảnh ngay khi tải trang (không chờ cuộn) */
   .hero-in { animation: np-rise 1.4s var(--ease-soft) both; animation-delay: calc(var(--reveal-i, 0) * 180ms + 200ms); }

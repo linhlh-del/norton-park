@@ -7,6 +7,8 @@ import { useContactPopup } from '@/components/popup/ContactPopup';
 
 /* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const blockMedia = 'np-img-block rounded-card'; /* chiều cao: index.css (.np-img-*) */
+/* fit="contain": ảnh phân khu là bản vẽ/phối cảnh toàn khối — cắt theo object-cover sẽ mất nội dung quan trọng
+   (nhà, tên toà…) ở rìa; giữ trọn ảnh quan trọng hơn lấp kín khung, nhất là trên điện thoại (khung thấp). */
 
 /* Hai phân khu trượt vào từ hai bên rồi gặp nhau ở giữa: B từ trái, C từ phải. */
 export default function Blocks() {
@@ -26,7 +28,7 @@ export default function Blocks() {
         <MobileTabs label={t('blocks.eyebrow')} tabs={[t('blocks.b'), t('blocks.c')]} active={zone} onChange={setZone} idPrefix={tabsId} />
         <div className="grid gap-8 md:grid-cols-2">
           <article id={`${tabsId}-0`} role="tabpanel" className={`@container flex flex-col ${panelClass(0, zone)} gap-[clamp(0.75rem,2.2svh,1.5rem)]`}>
-            <Media src={images.blockB} alt={t('blocks.bAlt')} label={t('blocks.bAlt')} className={blockMedia}
+            <Media src={images.blockB} alt={t('blocks.bAlt')} label={t('blocks.bAlt')} className={blockMedia} fit="contain"
               style={{ '--media-bg': 'var(--color-taupe)', '--media-ink': '#3c3c3c' }} sizes="(min-width: 1024px) 42vw, 100vw" />
             <h3 className="heading-3 !text-[clamp(1.6rem,2.6vw,2.4rem)]">{t('blocks.b')}</h3>
             <p className="m-0 leading-relaxed max-md:line-clamp-3">{t('blocks.bBody')}</p>
@@ -41,7 +43,7 @@ export default function Blocks() {
           </article>
           <article id={`${tabsId}-1`} role="tabpanel" className={`@container flex flex-col ${panelClass(1, zone)} gap-[clamp(0.75rem,2.2svh,1.5rem)]`}>
             <div className="relative">
-              <Media src={images.blockC} alt={t('blocks.cAlt')} label={t('blocks.cAlt')} className={blockMedia}
+              <Media src={images.blockC} alt={t('blocks.cAlt')} label={t('blocks.cAlt')} className={blockMedia} fit="contain"
                 style={{ '--media-bg': 'var(--color-sage)', '--media-ink': 'var(--color-ivory)' }} sizes="(min-width: 1024px) 42vw, 100vw" />
               <span className="absolute left-4 top-4 rounded-full bg-hoadau px-4 py-2 font-sub text-xs font-semibold tracking-[0.2em] text-on-dark">{t('blocks.soon')}</span>
             </div>

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import FloatingButtons from './FloatingButtons';
 import ValueNav from './ValueNav';
-import { langFromPath, localizePath, stripLang, useT } from '@/i18n';
-import { sectionForPath, urlForSection } from '@/lib/sections';
+import { stripLang, useT } from '@/i18n';
+import { sectionForPath } from '@/lib/sections';
 import { ContactPopupProvider } from '@/components/popup/ContactPopup';
 import useRevealObserver from '@/components/motion/useRevealObserver';
 import Seo from '@/components/seo/Seo';
@@ -16,16 +16,10 @@ import Seo from '@/components/seo/Seo';
    dừng ngay khi người dùng tự cuộn / chạm / gõ phím. */
 function useScrollToSection() {
   const { pathname, hash, key } = useLocation();
-  const navigate = useNavigate();
   useEffect(() => {
-    const lang = langFromPath(pathname);
     const base = stripLang(pathname.replace(/\/+$/, '') || '/');
     const fromHash = hash ? decodeURIComponent(hash.slice(1)) : '';
-    if (fromHash && base === '/') {
-      const url = urlForSection(fromHash);
-      if (url) { navigate(localizePath(url, lang), { replace: true }); return undefined; }
-    }
-    const id = sectionForPath(base) || fromHash;
+    const id = fromHash || sectionForPath(base);
     if (!id) { window.scrollTo(0, 0); return undefined; }
     const el = () => document.getElementById(id);
     const t = setTimeout(() => el()?.scrollIntoView({ block: 'start' }), 0);
@@ -41,7 +35,7 @@ function useScrollToSection() {
     const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
     evs.forEach((ev) => window.addEventListener(ev, quit, { passive: true, once: true }));
     return () => { clearTimeout(t); clearTimeout(timer); quit(); evs.forEach((ev) => window.removeEventListener(ev, quit)); };
-  }, [pathname, hash, key, navigate]);
+  }, [pathname, hash, key]);
 }
 
 export default function Layout() {

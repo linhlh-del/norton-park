@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link as RRLink, useLocation } from 'react-router-dom';
-import { LANGS, Link, NavLink, localizePath, stripLang, useLang, useSite, useT } from '@/i18n';
+import { LANGS, localizePath, stripLang, useLang, useSite, useT } from '@/i18n';
 import { menuSubtitle } from '@/seo/site-meta';
 import Wordmark from '@/components/ui/Wordmark';
 import { CloseIcon, MenuIcon } from '@/components/ui/Icons';
@@ -33,6 +33,11 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
   const popup = useContactPopup();
+  const sectionHref = (to) => `${lang === 'en' ? '/en' : '/'}#${to.slice(2)}`;
+  const headerHref = (to) => {
+    const section = to.startsWith('/#') ? to : { '/bang-tinh-gia': '/#calc', '/tin-tuc': '/#news' }[to];
+    return section ? sectionHref(section) : localizePath(to, lang);
+  };
 
   useEffect(() => setOpen(false), [pathname, hash]);
 
@@ -44,15 +49,9 @@ export default function SiteHeader() {
         <Wordmark />
 
         <nav aria-label={t('nav.main')} className="hidden items-center gap-7 lg:flex">
-          {mainNav.map((item) =>
-            item.to.startsWith('/#') ? (
-              <Link key={item.to} to={item.to} title={menuSubtitle(item.to, lang)} className={navCls}>{item.label}</Link>
-            ) : (
-              <NavLink key={item.to} to={item.to} title={menuSubtitle(item.to, lang)} className={({ isActive }) => `${navCls} ${isActive ? '!text-on-dark-soft' : ''}`}>
-                {item.label}
-              </NavLink>
-            ),
-          )}
+          {mainNav.map((item) => (
+            <RRLink key={item.to} to={headerHref(item.to)} title={menuSubtitle(item.to, lang)} className={navCls}>{item.label}</RRLink>
+          ))}
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-4">
@@ -74,7 +73,7 @@ export default function SiteHeader() {
           <ul className="container-site flex flex-col py-4">
             {mainNav.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className={`${navCls} flex min-h-12 items-center border-b border-line-dark`}>{item.label}</Link>
+                <RRLink to={headerHref(item.to)} onClick={() => setOpen(false)} className={`${navCls} flex min-h-12 items-center border-b border-line-dark`}>{item.label}</RRLink>
               </li>
             ))}
             <li className="flex items-center justify-between pt-3 sm:hidden">

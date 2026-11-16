@@ -10,12 +10,21 @@ import Blocks from '@/sections/home/Blocks';
 import Residences from '@/sections/home/Residences';
 import CalcTeaser from '@/sections/home/CalcTeaser';
 import Register from '@/sections/home/Register';
+import Developer from '@/sections/home/Developer';
+import NewsPreview from '@/sections/home/NewsPreview';
+import { DeveloperBody, FaqBody, OverviewBody, PolicyBody, PriceBody, ProgressBody } from '@/sections/detail/DetailBodies';
 
-/* Section tái sử dụng từ trang chủ cho từng trang con */
+/* Section tái sử dụng từ trang chủ (và thân trang chi tiết) cho từng trang con */
 const SECTIONS = {
+  '/tong-quan': () => (<><OverviewBody /><Facts /></>),
   '/vi-tri': () => (<><Location /><DeferredMap onTrack={track} /><Facts /></>),
   '/tien-ich': () => (<><LandscapeStory /><ProjectSpirit /><Lifestyle /></>),
   '/mat-bang': () => (<><Blocks /><Residences /><CalcTeaser /></>),
+  '/gia-ban': () => (<><PriceBody /><CalcTeaser /></>),
+  '/chinh-sach-ban-hang': () => <PolicyBody />,
+  '/chu-dau-tu': () => (<><Developer /><DeveloperBody /></>),
+  '/tien-do': () => (<><ProgressBody /><NewsPreview /></>),
+  '/hoi-dap': () => <FaqBody />,
 };
 
 /**

@@ -1,6 +1,7 @@
 import { Link, useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
 import KeywordHeading from '@/components/ui/KeywordHeading';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 export default function Location() {
   const t = useT();
@@ -18,10 +19,11 @@ export default function Location() {
           <div data-reveal="left" style={{ '--reveal-i': 1 }} className="flex flex-col gap-4">
             <p className="lead">{t('location.p1')}</p>
             <p className="lead max-md:line-clamp-3">{t('location.p2')}</p>
-            <div className="pt-1">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
               <Link to="/#position" className="btn btn-solid" data-track="cta_click" data-track-label="location_map">
                 {t('location.cta')} <span aria-hidden="true">↓</span>
               </Link>
+              <DetailLinks links={[['/vi-tri', 'more.location']]} />
             </div>
           </div>
         </div>

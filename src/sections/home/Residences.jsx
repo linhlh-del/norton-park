@@ -4,6 +4,7 @@ import FloorPlans from '@/components/ui/FloorPlans';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { isFilled } from '@/lib/filled';
 import { shortTitle } from '@/lib/text';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 const ZoomIcon = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -119,6 +120,7 @@ export default function Residences() {
             {ctas()}
           </div>
         </div>
+        <DetailLinks links={[['/gia-ban', 'more.price'], ['/mat-bang', 'more.plans']]} />
       </div>
 
       {/* Bottom-sheet thông số (điện thoại): <dialog> gốc — Esc / bấm nền / nút Đóng để đóng, khoá focus */}

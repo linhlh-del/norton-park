@@ -142,6 +142,152 @@ export const pages = {
       ],
     },
   },
+  /* Trang chi tiết bổ sung — thân trang ở src/sections/detail/DetailBodies.jsx, nội dung src/data/details.js */
+  '/tong-quan': {
+    title: 'Tổng quan dự án Norton Park — Gamuda Land Bình Dương',
+    description:
+      'Thông tin tổng quan Norton Park: 7,9 ha, 6 toà tháp 19 tầng, 1.286 sản phẩm, mật độ xây dựng 20%, sở hữu lâu dài, bàn giao dự kiến Q3/2029. Xem chi tiết dự án.',
+    breadcrumb: 'Tổng quan',
+    h1: 'Tổng quan dự án căn hộ Norton Park — Gamuda Land',
+    intro: [
+      'Norton Park là cộng đồng căn hộ của Gamuda Land trên khu đất 7,9 ha mặt tiền Đại lộ Bình Dương, Phường Thuận Giao, TP.HCM, với mật độ xây dựng 20% và 2,5 ha cảnh quan.',
+      'Dự án gồm hai phân khu, sáu toà tháp cao 19 tầng và 1.286 sản phẩm từ Studio đến Duplex, Podium Shop; bàn giao dự kiến Quý 3/2029.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.9,
+    image: '/images/imgi_12_masterplan-birdview-r16.webp',
+    en: {
+      title: 'Norton Park overview — Gamuda Land in Binh Duong',
+      description:
+        'Norton Park at a glance: 7.9 ha, 6 towers of 19 floors, 1,286 units, 20% building density, long-term ownership and expected handover in Q3/2029. See details.',
+      breadcrumb: 'Overview',
+      h1: 'Norton Park project overview — Gamuda Land',
+      intro: [
+        'Norton Park is a Gamuda Land residential community on a 7.9 ha site fronting Binh Duong Boulevard in Thuan Giao Ward, Ho Chi Minh City, with 20% building density and 2.5 ha of landscape.',
+        'The project has two zones, six 19-storey towers and 1,286 units from Studios to Duplexes and Podium Shops, with handover expected in Q3/2029.',
+      ],
+    },
+  },
+  '/gia-ban': {
+    title: 'Giá bán Norton Park 11/2026 — Từ 66 triệu/m²',
+    description:
+      'Giá bán Norton Park theo bảng giá 11/2026: từ 66 triệu/m², Studio từ khoảng 2,78 tỷ, 2PN từ 4,38 tỷ, 3PN từ 6,29 tỷ. Xem giá từng loại căn và nhận báo giá.',
+    breadcrumb: 'Giá bán',
+    h1: 'Giá bán căn hộ Norton Park — Bảng giá tham khảo 11/2026',
+    intro: [
+      'Bảng giá Norton Park Phân khu B tháng 11/2026 có đơn giá tham khảo từ 66 triệu/m², áp dụng cho các loại căn Studio, 1PN+, 2PN, 2PN+, 3PN và căn hộ sân vườn.',
+      'Giá từng căn thay đổi theo tầng, hướng, tầm nhìn và phương thức thanh toán. Tra cứu chi tiết 63 layout tại Bảng tính giá hoặc đăng ký để nhận báo giá chính thức.',
+    ],
+    changefreq: 'weekly',
+    priority: 0.9,
+    image: '/images/block-b.jpg',
+    en: {
+      title: 'Norton Park prices 11/2026 — From VND 66 million/m²',
+      description:
+        'Norton Park prices under the 11/2026 list: from VND 66 million/m², Studios from about VND 2.78 bn, 2BR from 4.38 bn, 3BR from 6.29 bn. See prices and get a quote.',
+      breadcrumb: 'Prices',
+      h1: 'Norton Park apartment prices — Reference price list 11/2026',
+      intro: [
+        'The November 2026 price list for Norton Park Zone B starts from VND 66 million/m² for Studio, 1BR+, 2BR, 2BR+, 3BR and garden homes.',
+        'Each unit’s price depends on floor, orientation, view and payment plan. Look up all 63 layouts in the price calculator or register for an official quote.',
+      ],
+    },
+  },
+  '/chinh-sach-ban-hang': {
+    title: 'Chính sách bán hàng Norton Park — 5 phương thức thanh toán',
+    description:
+      'Chính sách bán hàng Norton Park: 5 phương thức thanh toán, chiết khấu đến 10%, vay ngân hàng có hỗ trợ lãi suất, ký HĐMB 12/2026 và bàn giao 09/2029. Xem ngay.',
+    breadcrumb: 'Chính sách bán hàng',
+    h1: 'Chính sách bán hàng và phương thức thanh toán Norton Park',
+    intro: [
+      'Norton Park áp dụng 5 phương thức thanh toán với mức chiết khấu từ 1% đến 10%, cùng phương án vay ngân hàng có hỗ trợ lãi suất.',
+      'Khách hàng thanh toán 10–15% khi ký hợp đồng mua bán (dự kiến 12/2026), 25–35% khi bàn giao (dự kiến 09/2029) và 5% khi nhận sổ.',
+    ],
+    changefreq: 'weekly',
+    priority: 0.8,
+    en: {
+      title: 'Norton Park sales policy — 5 payment plans',
+      description:
+        'Norton Park sales policy: 5 payment plans, discounts up to 10%, bank loans with interest support, SPA signing in 12/2026 and handover in 09/2029. Read more.',
+      breadcrumb: 'Sales policy',
+      h1: 'Norton Park sales policy and payment plans',
+      intro: [
+        'Norton Park offers five payment plans with discounts from 1% to 10%, plus a bank-loan option with interest support.',
+        'Buyers pay 10–15% at SPA signing (expected 12/2026), 25–35% at handover (expected 09/2029) and 5% on receiving the title deed.',
+      ],
+    },
+  },
+  '/chu-dau-tu': {
+    title: 'Chủ đầu tư Norton Park — Gamuda Land Việt Nam',
+    description:
+      'Chủ đầu tư Norton Park là Gamuda Land, thuộc Tập đoàn Gamuda Berhad (Malaysia), 11 dự án tại Việt Nam như Gamuda City, Celadon City. Tìm hiểu đơn vị phát triển.',
+    breadcrumb: 'Chủ đầu tư',
+    h1: 'Chủ đầu tư Norton Park — Gamuda Land',
+    intro: [
+      'Norton Park được phát triển bởi Gamuda Land, đơn vị bất động sản của Tập đoàn Gamuda Berhad (Malaysia), có mặt tại Việt Nam từ năm 2007.',
+      'Gamuda Land đã phát triển 11 dự án tại Việt Nam và áp dụng hệ thống kiểm soát chất lượng công trình GQUAS cho từng toà tháp trước khi bàn giao.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.7,
+    image: '/images/vendor/gamuda.webp',
+    en: {
+      title: 'Norton Park developer — Gamuda Land Vietnam',
+      description:
+        'Norton Park is developed by Gamuda Land, part of Gamuda Berhad (Malaysia), with 11 projects in Vietnam including Gamuda City and Celadon City. Meet the developer.',
+      breadcrumb: 'Developer',
+      h1: 'Norton Park developer — Gamuda Land',
+      intro: [
+        'Norton Park is developed by Gamuda Land, the property arm of Gamuda Berhad (Malaysia), in Vietnam since 2007.',
+        'Gamuda Land has developed 11 projects in Vietnam and applies the GQUAS construction quality system to each tower before handover.',
+      ],
+    },
+  },
+  '/tien-do': {
+    title: 'Tiến độ Norton Park — Cập nhật công trường và pháp lý',
+    description:
+      'Tiến độ xây dựng Norton Park tháng 11/2026: thi công cọc, tường vây và tầng hầm Phân khu B; mốc ký HĐMB 12/2026, bàn giao Q3/2029 và hồ sơ pháp lý dự án.',
+    breadcrumb: 'Tiến độ',
+    h1: 'Tiến độ xây dựng và pháp lý dự án Norton Park',
+    intro: [
+      'Công trường Norton Park đang thi công phần ngầm Phân khu B: cọc và tường vây cơ bản hoàn tất ở khu phía phải, khu phía trái đang san lấp và ép cọc.',
+      'Theo kế hoạch, hợp đồng mua bán dự kiến ký vào tháng 12/2026 và căn hộ dự kiến bàn giao vào Quý 3/2029.',
+    ],
+    changefreq: 'weekly',
+    priority: 0.7,
+    en: {
+      title: 'Norton Park progress — Site and legal updates',
+      description:
+        'Norton Park construction progress in November 2026: piling, diaphragm wall and Zone B basement works; SPA signing in 12/2026, handover in Q3/2029 and legal status.',
+      breadcrumb: 'Progress',
+      h1: 'Norton Park construction progress and legal status',
+      intro: [
+        'Norton Park is building the Zone B substructure: piling and the diaphragm wall are largely complete in the right-hand area, while the left-hand area is being levelled and piled.',
+        'Sale and purchase agreements are expected to be signed in December 2026, with handover expected in Q3/2029.',
+      ],
+    },
+  },
+  '/hoi-dap': {
+    title: 'Hỏi đáp Norton Park — Giá, thanh toán, pháp lý, bàn giao',
+    description:
+      'Giải đáp câu hỏi thường gặp về Norton Park: vị trí, quy mô, giá bán, 5 phương thức thanh toán, sở hữu lâu dài, tiêu chuẩn bàn giao, vay ngân hàng và nhà mẫu.',
+    breadcrumb: 'Hỏi đáp',
+    h1: 'Hỏi đáp về dự án căn hộ Norton Park',
+    intro: [
+      'Tổng hợp câu hỏi khách hàng quan tâm nhất về Norton Park: vị trí, quy mô, loại căn, giá bán, chính sách thanh toán, hình thức sở hữu và tiến độ bàn giao.',
+    ],
+    changefreq: 'monthly',
+    priority: 0.7,
+    en: {
+      title: 'Norton Park FAQ — Prices, payment, legal, handover',
+      description:
+        'Answers to common questions about Norton Park: location, scale, prices, 5 payment plans, long-term ownership, handover standard, bank loans and the show apartment.',
+      breadcrumb: 'FAQ',
+      h1: 'Norton Park frequently asked questions',
+      intro: [
+        'The questions buyers ask most about Norton Park: location, scale, home types, prices, payment plans, ownership and handover schedule.',
+      ],
+    },
+  },
   '/bang-tinh-gia': {
     title: 'Bảng tính giá Norton Park — 63 layout, giá dự kiến từng căn',
     description:
@@ -261,7 +407,7 @@ export const sectionsOf = (lang = 'vi') => sections.map((s) => (lang === 'en' &&
 
 /* Snippet cho các mục menu trỏ sang trang khác */
 /* Trang con theo chủ đề (hiện ở chân trang để liên kết nội bộ) */
-export const topicPaths = ['/vi-tri', '/tien-ich', '/mat-bang'];
+export const topicPaths = ['/tong-quan', '/vi-tri', '/tien-ich', '/mat-bang', '/gia-ban', '/chinh-sach-ban-hang', '/chu-dau-tu', '/tien-do', '/hoi-dap'];
 
 export const menuPages = {
   '/bang-tinh-gia': { subtitle: 'Giá dự kiến 63 layout', en: { subtitle: 'Estimated prices for 63 layouts' } },

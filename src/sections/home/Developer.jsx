@@ -5,6 +5,7 @@ import CountUp from '@/components/motion/CountUp';
 import { isFilled } from '@/lib/filled';
 import { useRef } from 'react';
 import RailHint from '@/components/ui/RailHint';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 export default function Developer() {
   const t = useT();
@@ -20,9 +21,12 @@ export default function Developer() {
             <Media src="/images/vendor/gamuda.webp" alt="Gamuda Land" label={t('dev.logo')} fit="contain"
               className="media-static h-20 w-60 rounded-md" style={{ '--media-bg': 'transparent' }} sizes="240px" />
           </div>
-          <p data-reveal="right" className="lead max-md:line-clamp-6">
-            {t('dev.body1')} <CountUp value="30" /> {t('dev.body2')} <CountUp value="11" /> {t('dev.body3')}
-          </p>
+          <div className="flex flex-col gap-4">
+            <p data-reveal="right" className="lead m-0 max-md:line-clamp-6">
+              {t('dev.body1')} <CountUp value="30" /> {t('dev.body2')} <CountUp value="11" /> {t('dev.body3')}
+            </p>
+            <DetailLinks links={[['/chu-dau-tu', 'more.developer'], ['/tien-do', 'more.progress']]} />
+          </div>
         </div>
         <div className="flex flex-col gap-[clamp(0.75rem,2.5svh,1.5rem)]">
           <p data-reveal="up" className="eyebrow text-bronze-deep">{t('dev.team')}</p>

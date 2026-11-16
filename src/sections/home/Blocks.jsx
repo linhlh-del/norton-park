@@ -4,6 +4,7 @@ import MobileTabs, { panelClass, useTabsId } from '@/components/ui/MobileTabs';
 import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useContactPopup } from '@/components/popup/ContactPopup';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 /* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const blockMedia = 'np-img-block rounded-card'; /* chiều cao: index.css (.np-img-*) */
@@ -60,6 +61,7 @@ export default function Blocks() {
           </article>
         </div>
         </div>
+        <DetailLinks align="center" links={[['/mat-bang', 'more.plans'], ['/tien-do', 'more.progress']]} />
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import { Link, useSite, useT } from '@/i18n';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useRef } from 'react';
 import RailHint from '@/components/ui/RailHint';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 export default function CalcTeaser() {
   const t = useT();
@@ -28,6 +29,7 @@ export default function CalcTeaser() {
           ))}
         </div>
         <RailHint railRef={railRef} />
+        <DetailLinks links={[['/gia-ban', 'more.price'], ['/chinh-sach-ban-hang', 'more.policy']]} />
       </div>
     </section>
   );

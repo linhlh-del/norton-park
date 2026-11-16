@@ -17,10 +17,12 @@ import { loadEnv } from 'vite';
 
 process.env.NODE_ENV = 'production'; // React / React Router bản production khi render
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const dist = join(root, 'dist');
+/* DIST_DIR / SSR_DIR: build nhiều domain vào thư mục riêng (scripts/sites.mjs) — mặc định dist/ và .ssr/ */
+const dist = resolve(root, process.env.DIST_DIR || 'dist');
+const ssrDir = resolve(root, process.env.SSR_DIR || '.ssr');
 const env = { ...loadEnv('production', root, ''), ...process.env };
 
-const ssr = await import(pathToFileURL(join(root, '.ssr/entry-server.js')).href);
+const ssr = await import(pathToFileURL(join(ssrDir, 'entry-server.js')).href);
 const { render, headHtml, routes, SITE_URL, SITE, sections, pages, absUrl, langUrl } = ssr;
 
 const write = (rel, content) => {
@@ -207,5 +209,5 @@ write('cms-schema.json', JSON.stringify(ssr.buildCmsSchema(), null, 2));
   write('cms-status.json', JSON.stringify({ ...status, prerender: { ok: true, pages: total, total, engine: 'react-ssr' } }, null, 2));
 }
 
-rmSync(join(root, '.ssr'), { recursive: true, force: true });
+rmSync(ssrDir, { recursive: true, force: true });
 console.log(`Xong — SITE_URL = ${SITE_URL}`);

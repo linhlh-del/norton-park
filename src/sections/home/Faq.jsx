@@ -1,5 +1,6 @@
 import { useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 export default function Faq() {
   const t = useT();
@@ -31,6 +32,7 @@ export default function Faq() {
               <p className="mb-0 mt-3 leading-relaxed">{item.a}</p>
             </details>
           ))}
+          <DetailLinks className="pt-4" links={[['/hoi-dap', 'more.faq'], ['/chinh-sach-ban-hang', 'more.policy']]} />
         </div>
       </div>
     </section>

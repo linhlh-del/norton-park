@@ -5,6 +5,7 @@ import { shortTitle } from '@/lib/text';
 import SectionHeading from '@/components/ui/SectionHeading';
 import CountUp from '@/components/motion/CountUp';
 import QuachoMark from '@/components/ui/QuachoMark';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 export default function Facts() {
   const t = useT();
@@ -54,7 +55,10 @@ export default function Facts() {
           ))}
           </div>
         </div>
-        <p className="m-0 text-sm text-ink-soft">{t('facts.note')}</p>
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2">
+          <p className="m-0 text-sm text-ink-soft">{t('facts.note')}</p>
+          <DetailLinks links={[['/tong-quan', 'more.overview'], ['/mat-bang', 'more.plans']]} />
+        </div>
       </div>
     </section>
   );

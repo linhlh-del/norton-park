@@ -2,6 +2,7 @@ import { Link, useSite, useT } from '@/i18n';
 import Media from '@/components/ui/Media';
 import { CarouselDots, CarouselNav } from '@/components/ui/CarouselControls';
 import KeywordHeading from '@/components/ui/KeywordHeading';
+import DetailLinks from '@/components/ui/DetailLinks';
 import useCarousel from '@/hooks/useCarousel';
 
 const Arrow = () => (
@@ -55,7 +56,10 @@ export default function NewsPreview() {
           ))}
         </div>
 
-        <CarouselDots {...c} tone="dark" />
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <CarouselDots {...c} tone="dark" />
+          <DetailLinks tone="dark" links={[['/tien-do', 'more.progress']]} />
+        </div>
       </div>
     </section>
   );

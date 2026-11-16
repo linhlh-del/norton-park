@@ -13,7 +13,9 @@
     "cms:fetch": "node scripts/fetch-cms.mjs",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node scripts/prerender-seo.mjs",
     "preview": "vite preview",
-    "extract:map": "node scripts/extract-location-map.mjs"
+    "extract:map": "node scripts/extract-location-map.mjs",
+    "build:release": "node scripts/release.mjs",
+    "build:sites": "node scripts/build-sites.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

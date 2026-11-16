@@ -1,6 +1,7 @@
 import { getSite } from '@/i18n';
 import { LANG_META, SITE, SITE_URL, absUrl, langUrl, pageMeta, pages, sectionsOf } from './site-meta';
 import { MODIFIED } from './build-date';
+import { fullFaq } from '@/data/details';
 
 /* ============================================================
    DỮ LIỆU CÓ CẤU TRÚC (schema.org JSON-LD) — một @graph cho mỗi trang, các node nối nhau bằng @id
@@ -183,6 +184,27 @@ const perPage = {
   '/vi-tri': (lang) => [webPage('/vi-tri', lang)],
   '/tien-ich': (lang) => [webPage('/tien-ich', lang)],
   '/mat-bang': (lang) => [webPage('/mat-bang', lang)],
+  '/tong-quan': (lang) => [webPage('/tong-quan', lang)],
+  '/gia-ban': (lang) => [webPage('/gia-ban', lang)],
+  '/chinh-sach-ban-hang': (lang) => [webPage('/chinh-sach-ban-hang', lang)],
+  '/chu-dau-tu': (lang) => [webPage('/chu-dau-tu', lang, 'AboutPage')],
+  '/tien-do': (lang) => [webPage('/tien-do', lang)],
+  '/hoi-dap': (lang) => {
+    const url = langUrl('/hoi-dap', lang);
+    return [
+      { ...webPage('/hoi-dap', lang), mainEntity: { '@id': url + '#faq' } },
+      {
+        '@type': 'FAQPage',
+        '@id': url + '#faq',
+        inLanguage: LANG_META[lang].inLanguage,
+        mainEntity: fullFaq(getSite(lang), lang).map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ];
+  },
   '/tin-tuc': (lang) => [
     {
       ...webPage('/tin-tuc', lang, 'CollectionPage'),

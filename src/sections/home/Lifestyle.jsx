@@ -3,6 +3,7 @@ import Media from '@/components/ui/Media';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { CarouselDots, CarouselNav } from '@/components/ui/CarouselControls';
 import useCarousel from '@/hooks/useCarousel';
+import DetailLinks from '@/components/ui/DetailLinks';
 
 /* Chiều cao ảnh: .np-img-* trong styles/index.css (tỉ lệ đẹp trên màn cao · vừa khung trên màn thấp) */
 const mediaTone = { '--media-bg': 'var(--color-sandstone)', '--media-ink': '#3c3c3c' };
@@ -40,7 +41,10 @@ export default function Lifestyle() {
           ))}
         </div>
 
-        <div data-reveal="fade"><CarouselDots {...c} /></div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div data-reveal="fade"><CarouselDots {...c} /></div>
+          <DetailLinks links={[['/tien-ich', 'more.amenities']]} />
+        </div>
       </div>
     </section>
   );

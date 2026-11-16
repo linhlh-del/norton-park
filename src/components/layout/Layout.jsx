@@ -43,7 +43,7 @@ export default function Layout() {
   useRevealObserver();
   const t = useT();
   return (
-    <ContactPopupProvider autoOpenMs={25000}>
+    <ContactPopupProvider>
       <Seo />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ivory focus:px-4 focus:py-2">
         {t('skip')}

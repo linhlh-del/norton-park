@@ -19,10 +19,15 @@ const storage = {
   set: () => { try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* chế độ riêng tư: bỏ qua */ } },
 };
 
+/* Section "Tổng quan dự án" (Facts): popup tự mở khi khách đã lướt qua section này */
+const OVERVIEW_ID = 'facts';
+/* trang không có section tổng quan: tự mở khi đã cuộn quá nửa trang */
+const FALLBACK_DEPTH = 0.5;
+
 /**
- * Provider + popup "Nhận tư vấn". autoOpenMs: thời gian tối thiểu trước khi tự mở (0 = tắt).
+ * Provider + popup "Nhận tư vấn". autoOpen = false để tắt popup tự mở.
  */
-export function ContactPopupProvider({ children, autoOpenMs = 25000 }) {
+export function ContactPopupProvider({ children, autoOpen = true }) {
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState('popup');
   const lastFocus = useRef(null);
@@ -39,24 +44,28 @@ export function ContactPopupProvider({ children, autoOpenMs = 25000 }) {
     lastFocus.current?.focus?.();
   }, []);
 
-  /* Tự mở MỘT lần mỗi phiên, chỉ khi khách đã ở lại đủ lâu VÀ đã cuộn xem nội dung (≥ 40% trang).
-     Không bật ngay khi vào trang: Google coi popup che nội dung lúc vừa tới từ trang tìm kiếm (nhất là trên điện thoại)
-     là "intrusive interstitial" và hạ thứ hạng. Không mở trên trang cảm ơn. */
+  /* Tự mở MỘT lần mỗi phiên, KHÔNG mở khi vừa vào trang: chỉ mở khi khách đã lướt qua section "Tổng quan dự án"
+     (đáy section lên tới 30% trên của màn hình, tức section kế tiếp đã chiếm phần lớn màn hình).
+     Trang không có section này: mở khi đã cuộn quá nửa trang. Không mở trên trang cảm ơn, không cắt ngang khi khách
+     đang gõ vào một form khác (thử lại ở lần cuộn sau).
+     Không bật ngay khi vào trang: Google coi popup che nội dung lúc vừa tới từ trang tìm kiếm là "intrusive interstitial". */
   useEffect(() => {
-    if (!autoOpenMs || storage.get()) return undefined;
-    let timeUp = false;
-    let scrolled = false;
-    const tryOpen = () => {
-      if (timeUp && scrolled && !storage.get() && !location.pathname.includes('/cam-on')) open('popup_auto');
+    if (!autoOpen || storage.get()) return undefined;
+    const passed = () => {
+      const el = document.getElementById(OVERVIEW_ID);
+      if (el) return el.getBoundingClientRect().bottom <= innerHeight * 0.3;
+      const max = document.documentElement.scrollHeight - innerHeight;
+      return max > 0 && scrollY / max >= FALLBACK_DEPTH;
     };
     const onScroll = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      if (max > 0 && scrollY / max >= 0.4) { scrolled = true; removeEventListener('scroll', onScroll); tryOpen(); }
+      if (storage.get()) { removeEventListener('scroll', onScroll); return; }
+      if (location.pathname.includes('/cam-on') || document.activeElement?.closest?.('form') || !passed()) return;
+      removeEventListener('scroll', onScroll);
+      open('popup_auto');
     };
-    const t = setTimeout(() => { timeUp = true; tryOpen(); }, autoOpenMs);
     addEventListener('scroll', onScroll, { passive: true });
-    return () => { clearTimeout(t); removeEventListener('scroll', onScroll); };
-  }, [autoOpenMs, open]);
+    return () => removeEventListener('scroll', onScroll);
+  }, [autoOpen, open]);
 
   return (
     <PopupCtx.Provider value={{ open, close }}>
@@ -71,7 +80,9 @@ const inputCls = 'min-h-12 w-full rounded-lg border border-line-strong bg-ivory 
 
 function ContactPopup({ position, onClose }) {
   const t = useT();
-  const { contact } = useSite();
+  const { contact, priceTypes } = useSite();
+  /* "Nhu cầu": các loại căn hộ trong bảng giá (bỏ shop thương mại) */
+  const needs = priceTypes.map((p) => p.name).filter((n) => !/shop/i.test(n));
   const panel = useRef(null);
   const firstInput = useRef(null);
   const [errors, setErrors] = useState({});
@@ -110,7 +121,7 @@ function ContactPopup({ position, onClose }) {
       return;
     }
     /* thành công → đóng popup, chuyển sang /cam-on (honeypot "website" được Worker xử lý) */
-    const ok = await send({ name: fd.fullname, phone: fd.phone, website: fd.website });
+    const ok = await send({ name: fd.fullname, phone: fd.phone, unitType: fd.need, website: fd.website });
     if (ok) onClose();
   };
 
@@ -143,6 +154,15 @@ function ContactPopup({ position, onClose }) {
                   <input id="pPhone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder={t('form.phone')} className={inputCls} {...field('phone')} />
                   <span id="err-p-phone" className={errCls} aria-live="polite">{errors.phone}</span>
                 </div>
+              </div>
+
+              {/* nhu cầu: loại căn hộ quan tâm (không bắt buộc) → cột apartment_types trên Sheet */}
+              <div className="flex flex-col gap-1">
+                <label htmlFor="pNeed" className="sr-only">{t('form.need')}</label>
+                <select id="pNeed" name="need" defaultValue="" className={`${inputCls} cursor-pointer`}>
+                  <option value="">{t('form.needPlaceholder')}</option>
+                  {needs.map((n) => <option key={n} value={n}>{n}</option>)}
+                </select>
               </div>
 
               {/* chống spam: ô ẩn với người dùng */}

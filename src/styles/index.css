@@ -385,7 +385,7 @@ html.np-snap #position { height: var(--np-screen); }
   --np-screen: calc(100svh - var(--header-h) - var(--np-bar));
 }
 @media (max-width: 63.99rem) {
-  :root { --header-h: 60px; --np-bar-h: 65px; }
+  :root { --header-h: 60px; --np-bar-h: 56px; } /* thanh đáy chỉ biểu tượng → thấp hơn, chừa chỗ cho nội dung */
   /* nội dung cuối section / anchor không nằm dưới thanh liên hệ */
   html { scroll-padding-bottom: var(--np-bar); }
 }

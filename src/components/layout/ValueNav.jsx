@@ -17,8 +17,8 @@ const ITEMS = [
   { key: 'price', to: '/bang-tinh-gia', id: null, icon: 'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6' },
 ];
 
-const Icon = ({ d }) => (
-  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
+const Icon = ({ d, size = 20 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 );
 
 /* section đang nằm giữa màn hình (chỉ trên trang chủ). Tra lại getElementById mỗi nhịp cuộn vì bản đồ được
@@ -59,8 +59,8 @@ function usePastHero() {
 
 const PHONE = 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2';
 const GRID = 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z';
-/* cao đúng --np-bar-h (trừ viền 1px) để khung hình --np-screen tính chính xác; máy ngang thấp: icon + chữ nằm ngang */
-const barItem = 'flex h-[calc(var(--np-bar-h)-1px)] flex-col items-center justify-center gap-1 font-sub text-xs font-semibold uppercase tracking-[0.06em] no-underline [@media(max-height:31.25rem)]:flex-row [@media(max-height:31.25rem)]:gap-2';
+/* cao đúng --np-bar-h (trừ viền 1px) để khung hình --np-screen tính chính xác. Chỉ biểu tượng — nhãn nằm ở aria-label/title */
+const barItem = 'flex h-[calc(var(--np-bar-h)-1px)] items-center justify-center no-underline';
 
 const IDS = ITEMS.map((i) => i.id).filter(Boolean);
 
@@ -108,31 +108,28 @@ export default function ValueNav() {
         <ul className="m-0 grid list-none grid-cols-4 p-0">
           <li>
             <button type="button" onClick={() => setExplore((v) => !v)} aria-expanded={explore} aria-controls="explore-sheet"
-              aria-label={explore ? t('values.close') : t('values.explore')} data-track="sticky_bar" data-track-label="explore"
+              aria-label={explore ? t('values.close') : t('values.explore')} title={t('values.explore')} data-track="sticky_bar" data-track-label="explore"
               className={`${barItem} w-full cursor-pointer border-0 border-r border-line-dark ${explore ? 'bg-on-dark/10' : 'bg-transparent'} text-on-dark`}>
-              <Icon d={GRID} />
-              {t('values.explore')}
+              <Icon d={GRID} size={24} />
             </button>
           </li>
           <li>
             <a href={contact.hotlineHref} data-track="sticky_bar" data-track-label="call" aria-label={t('fb.call', { phone: contact.hotline })}
               className={`${barItem} text-on-dark`}>
-              <Icon d={PHONE} />
-              {t('values.call')}
+              <Icon d={PHONE} size={24} />
             </a>
           </li>
           <li>
             <a href={contact.zaloUrl} target="_blank" rel="noopener" data-track="sticky_bar" data-track-label="zalo" aria-label={t('fb.zalo')}
               className={`${barItem} border-x border-line-dark text-on-dark`}>
-              <img src="/images/logo-zalo.webp" alt="" width="20" height="20" className="size-5 object-contain" />
-              {t('values.zalo')}
+              <img src="/images/logo-zalo.webp" alt="" width="20" height="20" className="size-7 object-contain" />
             </a>
           </li>
           <li>
             <button type="button" onClick={() => popup.open('sticky_price')} data-track="sticky_bar" data-track-label="price"
+              aria-label={t('values.price')} title={t('values.price')}
               className={`btn-cta ${barItem} h-full w-full cursor-pointer border-0 bg-bronze-deep text-ivory`}>
-              <Icon d={ITEMS.find((i) => i.key === 'price').icon} />
-              {t('values.price')}
+              <Icon d={ITEMS.find((i) => i.key === 'price').icon} size={24} />
             </button>
           </li>
         </ul>

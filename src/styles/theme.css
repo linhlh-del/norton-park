@@ -42,8 +42,10 @@
   --color-line-dark: rgb(244 240 231 / 0.22);
 
   /* ---------- font (đổi sang font thương hiệu tại src/styles/fonts.css) ---------- */
-  --font-display: "Norton Seasons", Georgia, "Times New Roman", serif;
-  --font-sub: "Norton Futura", "Century Gothic", system-ui, sans-serif;
+  /* font dự phòng PHẢI có đủ dấu tiếng Việt: Georgia và Century Gothic (Windows) thiếu ố, ắ, ầ, ơ, ư… → khi font
+     thương hiệu chưa kịp tải (font-display: optional) dấu bị tách rời khỏi chữ. Times New Roman / Segoe UI đủ dấu. */
+  --font-display: "Norton Seasons", "Times New Roman", "Noto Serif", serif;
+  --font-sub: "Norton Futura", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-body: "Norton Gotham", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* ---------- cỡ chữ ---------- */

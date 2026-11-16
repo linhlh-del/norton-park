@@ -5,7 +5,7 @@ import { langFromPath, localizePath, stripLang, useSite, useT } from '@/i18n';
 import { useContactPopup } from '@/components/popup/ContactPopup';
 
 /* Nút nổi góc phải (chỉ biểu tượng, nhãn nằm ở aria-label/title): ↑ Lên đầu trang · Gọi · Zalo · Bảng giá.
-   Trên điện thoại / máy tính bảng chỉ còn nút ↑ — Gọi · Zalo · Bảng giá nằm ở thanh sticky dưới đáy (ValueNav).
+   Trên điện thoại / máy tính bảng chỉ còn nút ↑ (nổi trên thanh đáy) — Gọi · Zalo · Bảng giá nằm ở thanh sticky (ValueNav).
    Chuyển động: src/styles/floating-buttons.css */
 
 /* ── Icon (Tabler icons, inline SVG để co giãn theo nút) ── */
@@ -100,10 +100,10 @@ export default function FloatingButtons() {
   };
 
   return (
-    /* chỉ trên máy tính (≥ 1024px): điện thoại / máy tính bảng đã có thanh liên hệ dưới đáy — không để nút nào nổi
-       đè lên chữ (kể cả nút ↑) */
+    /* máy tính (≥ 1024px): ↑ · Gọi · Zalo · Bảng giá. Điện thoại / máy tính bảng: chỉ nút ↑, nổi ngay trên thanh liên
+       hệ dưới đáy (Gọi · Zalo · Bảng giá đã nằm ở thanh đó) */
     <div aria-hidden={hidden || undefined}
-      className={`floating-buttons fixed bottom-6 right-5 z-40 hidden flex-col items-center gap-3.5 transition-[opacity,transform] duration-500 lg:flex ${hidden ? 'pointer-events-none translate-x-3 opacity-0' : ''}`}>
+      className={`floating-buttons fixed bottom-[calc(var(--np-bar)+0.75rem)] right-4 z-40 flex flex-col items-center gap-3.5 transition-[opacity,transform] duration-500 lg:bottom-6 lg:right-5 ${hidden ? 'pointer-events-none translate-x-3 opacity-0' : ''}`}>
       {/* ── Lên đầu trang ── */}
       <button
         type="button"

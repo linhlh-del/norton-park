@@ -13,7 +13,11 @@
 
 const tt = typeof window !== 'undefined' ? window.trustedTypes : undefined;
 
-const np = tt?.createPolicy ? tt.createPolicy('np', { createHTML: (s) => s }) : null;
+/* createScript: chỉ dùng cho JSON-LD do site tự sinh (gán textContent của <script> cũng là sink TrustedScript).
+   createScriptURL: chỉ dùng cho URL script cố định của site (GTM). */
+const np = tt?.createPolicy
+  ? tt.createPolicy('np', { createHTML: (s) => s, createScript: (s) => s, createScriptURL: (s) => s })
+  : null;
 
 if (tt?.createPolicy && import.meta.env?.VITE_GTM_ID && !tt.defaultPolicy) {
   tt.createPolicy('default', {
@@ -25,3 +29,9 @@ if (tt?.createPolicy && import.meta.env?.VITE_GTM_ID && !tt.defaultPolicy) {
 
 /** Đánh dấu chuỗi HTML do site tự sinh là tin cậy */
 export const html = (s) => (np ? np.createHTML(s) : s);
+
+/** Nội dung <script> (JSON-LD) do site tự sinh */
+export const script = (s) => (np ? np.createScript(s) : s);
+
+/** URL script cố định của site */
+export const scriptUrl = (s) => (np ? np.createScriptURL(s) : s);

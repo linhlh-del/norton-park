@@ -8,6 +8,7 @@
    ============================================================ */
 
 import { cmsPageView, cmsTrack, initCmsTracker } from './cmsTracker';
+import { scriptUrl } from './trustedTypes';
 
 const GTM_ID = import.meta.env?.VITE_GTM_ID || '';
 
@@ -143,7 +144,7 @@ function loadGtm() {
   const s = document.createElement('script');
   s.id = 'gtm-js';
   s.async = true;
-  s.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`;
+  s.src = scriptUrl(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`);
   /* CSP nonce (nếu server chèn) — GTM chuyển tiếp nonce cho tag Custom HTML có thuộc tính nonce */
   const nonce = document.querySelector('script[nonce]')?.nonce;
   if (nonce) s.nonce = nonce;

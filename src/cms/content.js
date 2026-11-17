@@ -8,6 +8,9 @@
    - settings["site.contact.hotline"]→ thông tin chung
    - giá trị chữ: "chuỗi" (chỉ tiếng Việt) hoặc { vi, en }
    ============================================================ */
+import { applyList, inLists } from './lists-core';
+import { CMS_LISTS } from './lists';
+
 const files = import.meta.glob('../generated/cms-content.json', { eager: true, import: 'default' });
 export const cms = Object.values(files)[0] || {};
 
@@ -32,18 +35,28 @@ function setPath(root, path, value) {
   return out;
 }
 
+const getPath = (obj, path) => path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+
 /** Áp nội dung CMS vào object site (src/data/site.js đã gộp bản dịch) */
 export function applySiteOverrides(site, lang) {
   let s = site;
+  /* danh sách thêm/bớt được: thay cả mảng; khoá phẳng cũ cùng tiền tố bị bỏ qua */
+  const lists = cms.lists || {};
+  for (const spec of CMS_LISTS) {
+    const items = lists[spec.key];
+    const path = spec.key.slice(5);
+    const defaults = getPath(s, path);
+    if (Array.isArray(items) && Array.isArray(defaults)) s = setPath(s, path, applyList(defaults, items, spec, (v) => pick(v, lang)));
+  }
   for (const [key, v] of Object.entries(cms.texts || {})) {
     const val = pick(v, lang);
-    if (key.startsWith('site.') && val !== undefined) s = setPath(s, key.slice(5), val);
+    if (key.startsWith('site.') && val !== undefined && !inLists(key, lists)) s = setPath(s, key.slice(5), val);
   }
   for (const [key, v] of Object.entries(cms.settings || {})) {
     if (key.startsWith('site.') && v) s = setPath(s, key.slice(5), v);
   }
   for (const [key, v] of Object.entries(cms.images || {})) {
-    if (key.startsWith('site.') && v?.src) s = setPath(s, key.slice(5), v.src);
+    if (key.startsWith('site.') && v?.src && !inLists(key, lists)) s = setPath(s, key.slice(5), v.src);
   }
   return s;
 }

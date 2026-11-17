@@ -7,6 +7,8 @@ import ui from '@/i18n/ui';
 import * as vi from '@/data/site';
 import en from '@/data/site.en';
 import { pageDefaults as pages, SITE } from '@/seo/site-meta';
+import { listSchema } from './lists-core';
+import { CMS_LISTS } from './lists';
 
 /* Section trang chủ theo thứ tự mặc định. locked: luôn hiển thị, giữ vị trí. variants: phần tử đầu là mặc định. */
 export const HOME_SECTIONS = [
@@ -16,18 +18,18 @@ export const HOME_SECTIONS = [
     variants: [['left', 'Chữ bên trái'], ['right', 'Chữ bên phải']] },
   { id: 'landscape-story', label: 'Câu chuyện cảnh quan', ui: ['landscape'], images: [['site.images.landscapeStory', 'Ảnh nền', 'landscape.imageAlt', '16/9']],
     variants: [['right', 'Chữ bên phải'], ['left', 'Chữ bên trái']] },
-  { id: 'story', label: 'Tinh thần dự án — 3 trạm sạc', ui: ['spirit'], lists: [['stations', 'Trạm', ['title', 'body'], 'image', 'imageLabel']] },
-  { id: 'facts', label: 'Thông tin & số liệu', ui: ['facts'], lists: [['facts', 'Số liệu', ['value', 'label']]] },
+  { id: 'story', label: 'Tinh thần dự án — 3 trạm sạc', ui: ['spirit'] },
+  { id: 'facts', label: 'Thông tin & số liệu', ui: ['facts'] },
   { id: 'location', label: 'Vị trí', ui: ['location'], images: [['site.images.masterplan', 'Ảnh phối cảnh tổng thể', 'location.imageAlt', '16/9']] },
   { id: 'position', label: 'Bản đồ vị trí tương tác', ui: [] },
-  { id: 'lifestyle', label: 'Tiện ích (carousel)', ui: ['lifestyle'], lists: [['lifestyle', 'Tiện ích', ['tag', 'title', 'body'], 'image', 'imageLabel']] },
+  { id: 'lifestyle', label: 'Tiện ích (carousel)', ui: ['lifestyle'] },
   { id: 'blocks', label: 'Phân khu B & C', ui: ['blocks'], images: [['site.images.blockB', 'Ảnh phân khu B', 'blocks.bAlt', '4/3'], ['site.images.blockC', 'Ảnh phân khu C', 'blocks.cAlt', '4/3']] },
   { id: 'residences', label: 'Mặt bằng căn hộ', ui: ['res'] },
-  { id: 'news', label: 'Tin tức (carousel)', ui: ['news'], lists: [['homeNews', 'Bài', ['title', 'excerpt', 'src', 'url'], 'image', 'alt']] },
+  { id: 'news', label: 'Tin tức (carousel)', ui: ['news'] },
   { id: 'register', label: 'Form đăng ký', locked: true, ui: ['form', 'contact'], images: [['site.images.register', 'Ảnh nền section', null, '16/9']] },
   { id: 'developer', label: 'Chủ đầu tư', ui: ['dev'] },
   { id: 'calc', label: 'Giới thiệu bảng tính giá', ui: ['calc'] },
-  { id: 'faq', label: 'Câu hỏi thường gặp', ui: ['faq'], lists: [['faq', 'Câu hỏi', ['q', 'a']]] },
+  { id: 'faq', label: 'Câu hỏi thường gặp', ui: ['faq'] },
 ];
 
 /* Các trang / khối khác sửa được chữ (không nằm trong bố cục trang chủ) */
@@ -81,9 +83,16 @@ function build(s) {
       }
     });
   }
+  /* danh sách thêm/bớt được (src/cms/lists.js): mặc định vi + en (en gộp theo chỉ số như src/i18n) */
+  const lists = CMS_LISTS.filter((l) => l.section === s.id).map((l) => {
+    const path = l.key.slice(5);
+    const viList = get(vi, path) || [];
+    const enList = viList.map((it, i) => (it && typeof it === 'object' ? { ...it, ...(get(en, path)?.[i] || {}) } : get(en, path)?.[i] ?? it));
+    return listSchema(l, { vi: viList, en: enList });
+  });
   return {
     id: s.id, label: s.label, locked: Boolean(s.locked), inLayout: s.inLayout !== false,
-    variants: s.variants?.map(([id, label]) => ({ id, label })), fields, images,
+    variants: s.variants?.map(([id, label]) => ({ id, label })), fields, images, lists,
   };
 }
 
@@ -102,10 +111,12 @@ const SETTINGS = [
 ];
 
 /** Toàn bộ schema cho CMS */
-export function buildCmsSchema() {
+export function buildCmsSchema({ domains = [] } = {}) {
   return {
     version: 1,
     project: 'norton-park',
+    /* domain của dự án (sites/<domain>) — CMS dùng cho "Thẻ head & tracking" theo domain */
+    domains,
     langs: ['vi', 'en'],
     sections: [...HOME_SECTIONS.map(build), ...OTHER_SECTIONS.map((s) => ({ ...build(s), inLayout: false }))],
     seo: Object.entries(pages).map(([path, p]) => ({

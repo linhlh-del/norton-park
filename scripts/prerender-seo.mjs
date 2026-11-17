@@ -14,6 +14,7 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadEnv } from 'vite';
+import { cmsDomains } from './cms-head.mjs';
 
 process.env.NODE_ENV = 'production'; // React / React Router bản production khi render
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -198,7 +199,7 @@ write('_headers', `# Sinh tự động bởi scripts/prerender-seo.mjs — hash 
 write('csp-hash.txt', [loaderHash, ...cmsHashes].join('\n') + '\n');
 
 /* ---------- 4. Schema cho CMS (norton-park-cms đọc file này) ---------- */
-write('cms-schema.json', JSON.stringify(ssr.buildCmsSchema(), null, 2));
+write('cms-schema.json', JSON.stringify(ssr.buildCmsSchema({ domains: cmsDomains(root) }), null, 2));
 
 /* ---------- 5. Kết quả prerender → cms-status.json (CMS hiển thị trạng thái website) ---------- */
 {
